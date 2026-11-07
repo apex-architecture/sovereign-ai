@@ -1,0 +1,547 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark">
+<meta name="description" content="The Verse Map: all 44 APEX modules as a rotatable 3D graph — layers, dependencies, declared routes and honest statuses. Zero modules are live. The same data is printed as a table for anyone who cannot see the canvas.">
+<title>The Verse Map — 44 Modules, Every Status From the Record | Sovereign AI Film Verse</title>
+<link rel="stylesheet" href="styles.css">
+
+
+
+
+
+<!-- apex-meta:start -->
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+<link rel="canonical" href="https://filmverse-1mil8xwzv4y.qoder.website/verse.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Sovereign AI Film Verse">
+<meta property="og:title" content="The Verse Map">
+<meta property="og:description" content="The Verse Map: all 44 APEX modules as a rotatable 3D graph — layers, dependencies, declared routes and honest statuses. Zero modules are live. The same data is printed as a table for anyone who cannot see the canvas.">
+<meta property="og:url" content="https://filmverse-1mil8xwzv4y.qoder.website/verse.html">
+<meta property="og:image" content="https://filmverse-1mil8xwzv4y.qoder.website/assets/dailies/frame-at-2s.jpg">
+<meta property="og:image:width" content="1280">
+<meta property="og:image:height" content="720">
+<meta property="og:image:alt" content="One frame from the pipeline's own master, extracted at two seconds.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="The Verse Map">
+<meta name="twitter:description" content="The Verse Map: all 44 APEX modules as a rotatable 3D graph — layers, dependencies, declared routes and honest statuses. Zero modules are live. The same data is printed as a table for anyone who cannot see the canvas.">
+<meta name="twitter:image" content="https://filmverse-1mil8xwzv4y.qoder.website/assets/dailies/frame-at-2s.jpg">
+<!-- apex-meta:end -->
+</head>
+<body data-page="verse" data-crumb="The Verse Map">
+<div class="shell">
+  <div class="main">
+    <main class="page">
+
+      <section class="stack" aria-labelledby="map-title">
+        <div class="card gold">
+          <div class="row" id="map-chips"></div>
+          <h1 id="map-title">The Verse Map</h1>
+          <p class="hint">Four layers, every module in the record, every dependency edge that the module table declares.
+            The shape is a way to read the graph — the words below it are the same data, so nothing you can learn from the
+            picture is only in the picture.</p>
+          <div id="map-fence"></div>
+        </div>
+        <noscript><div class="note bad">Without JavaScript the graph cannot be drawn. The module table on this page is built by the same script — <a href="console.html">the operator console</a> prints the snapshot as plain figures.</div></noscript>
+      </section>
+
+      <section class="section" aria-labelledby="view-h">
+        <h2 id="view-h">The map</h2>
+        <div class="row" id="map-controls"></div>
+        <div class="grid g-side">
+          <div class="card">
+            <canvas id="verse-canvas" width="900" height="480" role="img"
+                    aria-label="Three-dimensional map of the 44 APEX modules, grouped by layer and joined by dependency edges. The identical data is available as a table below this map.">
+              This browser does not draw canvas graphics. Use the module table below — it holds the same rows.
+            </canvas>
+            <p class="note" id="motion-state"></p>
+          </div>
+          <div class="stack">
+            <div class="card" id="detail" aria-live="polite">
+              <h3>What is this module?</h3>
+              <p class="hint">Hover a node, tap it, or press <strong>show</strong> on a table row. The panel prints name, purpose, status and route exactly as the record holds them.</p>
+            </div>
+            <div class="card">
+              <h3>Legend</h3>
+              <div id="legend"></div>
+              <p class="note">A line is a <span class="mono">dependsOn</span> edge: the module at the far end is the one that must exist first. A gold ring is the node you have picked. There is no colour that means “finished”, because none of them are.</p>
+            </div>
+            <div class="card">
+              <h3>Status counts, from the data</h3>
+              <div class="grid g2" id="status-stats"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" aria-labelledby="table-h">
+        <h2 id="table-h">The same 44 modules as a table</h2>
+        <p class="note">The map filters with these buttons; this table filters with them too. Statuses are copied from the module record — nothing on this page can promote one. <strong>Exists</strong> is what the record says is there; <strong>needs a screen</strong> is what the record itself leaves undeclared.</p>
+        <div class="card" style="overflow-x:auto">
+          <div id="verse-empty" class="empty" hidden>No module rows in this snapshot.</div>
+          <table class="t" id="verse-table">
+            <caption class="note">Every module: layer, status, declared route, engine, and the count of edges it depends on.</caption>
+            <thead>
+              <tr>
+                <th scope="col">Module</th>
+                <th scope="col">Layer</th>
+                <th scope="col">Status</th>
+                <th scope="col">Declared route</th>
+                <th scope="col">Engine</th>
+                <th scope="col">Depends on</th>
+                <th scope="col">Show</th>
+              </tr>
+            </thead>
+            <tbody id="verse-tbody"></tbody>
+          </table>
+        </div>
+        <div class="grid g2">
+          <div class="card">
+            <h3>What exists now</h3>
+            <ul class="note" id="exists-list"></ul>
+          </div>
+          <div class="card">
+            <h3>What is only declared</h3>
+            <ul class="note" id="declared-list"></ul>
+          </div>
+        </div>
+        <div class="note warn" id="disk-note"></div>
+      </section>
+
+      <footer class="foot">
+        <span class="mono" id="foot-gen"></span>
+        <a href="workflow.html">Production Rail</a>
+        <a href="console.html">Operator Console</a>
+      </footer>
+    </main>
+  </div>
+</div>
+
+<script src="data.generated.min.js"></script>
+<script src="shell.min.js"></script>
+<script>
+(function () {
+  if (!window.V || !V.data || !Array.isArray(V.data.modules)) return;
+
+  var mods = V.data.modules;
+  var LAYERS = ["platform", "intelligence", "execution", "trust-portability"];
+  var byId = {};
+  mods.forEach(function (m) { byId[m.id] = m; });
+
+  function esc(s) {
+    return String(s == null ? "" : s).replace(/[&<>"]/g, function (c) {
+      return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c];
+    });
+  }
+
+  /* colours come from the stylesheet tokens, so the map cannot invent a palette */
+  function tok(name, fallback) {
+    var v = getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+    return v || fallback;
+  }
+  var LAYER_COLOR = {
+    platform: tok("--gold", "#d8b25c"),
+    intelligence: tok("--drive", "#6fc7f2"),
+    execution: tok("--ok", "#5fd6a4"),
+    "trust-portability": tok("--warn", "#f0b866"),
+  };
+  var INK = tok("--panel", "#121019");
+  var TEXT = tok("--text", "#ece7dd");
+  var MUTED = tok("--muted", "#9c94a8");
+  var LINE = tok("--line", "#2a2436");
+
+  function statusChip(st) {
+    var cls = st === "live" ? "ok" : st === "partial" ? "warn" : st === "gated" ? "bad" : "";
+    return '<span class="chip ' + cls + '">' + esc(st) + "</span>";
+  }
+
+  /* ---------- honest header ---------- */
+  var live = mods.filter(function (m) { return m.status === "live"; }).length;
+  var routed = mods.filter(function (m) { return !!m.route; }).length;
+  var edges = mods.reduce(function (n, m) { return n + (m.dependsOn || []).length; }, 0);
+  var chipsHtml =
+    '<span class="chip gold">' + V.num(mods.length) + " modules</span>" +
+    '<span class="chip bad">' + V.num(live) + " live</span>" +
+    '<span class="chip warn">' + V.num(routed) + " declare a route</span>" +
+    '<span class="chip">' + V.num(mods.length - routed) + " declare none</span>" +
+    '<span class="chip">' + V.num(edges) + " dependency edges</span>";
+  document.getElementById("map-chips").innerHTML = chipsHtml;
+  document.getElementById("map-fence").innerHTML = V.fence(
+    "No module on this map is live. Statuses are copied from the module record, which reports " + V.num(live) +
+    " live, " + V.num(mods.filter(function (m) { return m.status === "partial"; }).length) + " partial, " +
+    V.num(mods.filter(function (m) { return m.status === "planned"; }).length) + " planned and " +
+    V.num(mods.filter(function (m) { return m.status === "gated"; }).length) + " gated. " +
+    "There is no progress bar on this page, because a bar would claim a rate nobody has measured."
+  );
+
+  var counts = {};
+  ["live", "partial", "planned", "gated"].forEach(function (k) {
+    counts[k] = mods.filter(function (m) { return m.status === k; }).length;
+  });
+  document.getElementById("status-stats").innerHTML =
+    V.stat(V.num(counts.live), "live", counts.live ? "" : "bad") +
+    V.stat(V.num(counts.partial), "partial", "plain") +
+    V.stat(V.num(counts.planned), "planned", "plain") +
+    V.stat(V.num(counts.gated), "gated", "bad");
+
+  /* ---------- layer filter ---------- */
+  var active = {};
+  LAYERS.forEach(function (l) { active[l] = true; });
+
+  var ctrlHtml = '<span class="chip">filter by layer</span>';
+  LAYERS.forEach(function (l) {
+    var n = mods.filter(function (m) { return m.layer === l; }).length;
+    ctrlHtml += '<button type="button" class="btn ghost" data-layer="' + esc(l) +
+                '" aria-pressed="true">' + esc(l) + " · " + n + "</button>";
+  });
+  ctrlHtml += '<button type="button" class="btn" id="spin-btn" aria-pressed="false">rotate the map</button>';
+  ctrlHtml += '<button type="button" class="btn ghost" id="reset-btn">show all layers</button>';
+  document.getElementById("map-controls").innerHTML = ctrlHtml;
+
+  /* ---------- legend ---------- */
+  var legendHtml = '<div class="stack">';
+  LAYERS.forEach(function (l) {
+    var n = mods.filter(function (m) { return m.layer === l; }).length;
+    legendHtml += '<div class="row"><span style="width:12px;height:12px;display:inline-block;background:' +
+                  LAYER_COLOR[l] + '"></span><span class="mono">' + esc(l) + "</span><span class=\"note\">" + n + " modules</span></div>";
+  });
+  legendHtml += "</div>";
+  document.getElementById("legend").innerHTML = legendHtml;
+
+  /* ---------- 3D positions, deterministic ---------- */
+  function hash(str) { var h = 0; for (var i = 0; i < str.length; i++) h = (h * 31 + str.charCodeAt(i)) | 0; return Math.abs(h); }
+  var NODE = [];
+  LAYERS.forEach(function (layer, li) {
+    var inLayer = mods.filter(function (m) { return m.layer === layer; });
+    var y = (li - 1.5) * 128;
+    var radius = 250 + li * 24;
+    inLayer.forEach(function (m, idx) {
+      var ang = (idx / Math.max(inLayer.length, 1)) * Math.PI * 2 + li * 0.55;
+      var jitter = (hash(m.id) % 70) - 35;
+      NODE.push({
+        m: m,
+        x: Math.cos(ang) * (radius + jitter),
+        y: y + ((hash(m.id + "y") % 34) - 17),
+        z: Math.sin(ang) * (radius + jitter),
+        sx: 0, sy: 0, z2: 0, scale: 1, r: 7,
+      });
+    });
+  });
+  var BY_ID = {};
+  NODE.forEach(function (n) { BY_ID[n.m.id] = n; });
+
+  /* ---------- canvas ---------- */
+  var canvas = document.getElementById("verse-canvas");
+  var ctx = canvas && canvas.getContext ? canvas.getContext("2d") : null;
+  var yaw = 0.6, pitch = 0.34, spinning = false, rafId = null, motionMsg = "";
+  var hover = null, picked = null;
+  var reduceQuery = window.matchMedia ? window.matchMedia("(prefers-reduced-motion: reduce)") : null;
+  var prefersReduced = !!(reduceQuery && reduceQuery.matches);
+
+  var W = 900, H = 480;
+
+  function sizeCanvas() {
+    if (!ctx) return;
+    var holder = canvas.parentNode;
+    var cssW = Math.floor((holder.clientWidth || 900) - 36);
+    W = Math.max(280, cssW);
+    H = W < 620 ? 360 : 480;
+    var dpr = Math.min(window.devicePixelRatio || 1, 2);
+    canvas.style.width = W + "px";
+    canvas.style.height = H + "px";
+    canvas.width = Math.floor(W * dpr);
+    canvas.height = Math.floor(H * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+
+  function visible(m) { return !!active[m.layer]; }
+
+  function project() {
+    var cy = Math.cos(yaw), sy = Math.sin(yaw);
+    var cp = Math.cos(pitch), sp = Math.sin(pitch);
+    var fov = 1100;
+    NODE.forEach(function (n) {
+      var x1 = n.x * cy - n.z * sy;
+      var z1 = n.x * sy + n.z * cy;
+      var y1 = n.y * cp - z1 * sp;
+      var z2 = n.y * sp + z1 * cp;
+      var k = fov / (fov + z2 + 260);
+      n.sx = W / 2 + x1 * k;
+      n.sy = H / 2 + y1 * k;
+      n.z2 = z2;
+      n.scale = k;
+      n.r = (n.m.route ? 8 : 6) * k * (1.6 + (n.m.id === "core" ? 0.6 : 0));
+    });
+  }
+
+  function draw() {
+    if (!ctx) return;
+    project();
+    ctx.clearRect(0, 0, W, H);
+    ctx.fillStyle = INK;
+    ctx.fillRect(0, 0, W, H);
+
+    var shown = NODE.filter(function (n) { return visible(n.m); });
+
+    /* edges first, far to near */
+    var lines = [];
+    shown.forEach(function (n) {
+      (n.m.dependsOn || []).forEach(function (dep) {
+        var d = BY_ID[dep];
+        if (d && visible(d.m)) lines.push([n, d]);
+      });
+    });
+    lines.sort(function (a, b) { return (b[0].z2 + b[1].z2) - (a[0].z2 + a[1].z2); });
+    ctx.lineWidth = 1;
+    lines.forEach(function (pair) {
+      var from = pair[0], to = pair[1];
+      var depth = (from.z2 + to.z2) / 2;
+      var alpha = Math.max(0.06, Math.min(0.42, 0.5 - depth / 1400));
+      var lit = picked && (from.m.id === picked.m.id || to.m.id === picked.m.id);
+      ctx.strokeStyle = lit ? LAYER_COLOR[to.m.layer] : LINE;
+      ctx.globalAlpha = lit ? 0.85 : alpha;
+      ctx.beginPath();
+      ctx.moveTo(from.sx, from.sy);
+      ctx.lineTo(to.sx, to.sy);
+      ctx.stroke();
+    });
+    ctx.globalAlpha = 1;
+
+    /* nodes, far to near */
+    shown.sort(function (a, b) { return b.z2 - a.z2; });
+    shown.forEach(function (n) {
+      var depth = n.z2;
+      var alpha = Math.max(0.25, Math.min(1, 1.05 - depth / 1100));
+      ctx.globalAlpha = alpha;
+      ctx.beginPath();
+      ctx.arc(n.sx, n.sy, Math.max(3, n.r), 0, Math.PI * 2);
+      ctx.fillStyle = LAYER_COLOR[n.m.layer];
+      if (n.m.status === "planned") ctx.globalAlpha = alpha * 0.45;
+      ctx.fill();
+      ctx.globalAlpha = alpha;
+      ctx.lineWidth = 1;
+      ctx.strokeStyle = n.m.route ? TEXT : MUTED;
+      ctx.stroke();
+      if (n.m.status === "gated") {
+        ctx.beginPath();
+        ctx.moveTo(n.sx - n.r, n.sy - n.r);
+        ctx.lineTo(n.sx + n.r, n.sy + n.r);
+        ctx.strokeStyle = tok("--bad", "#e8697a");
+        ctx.stroke();
+      }
+      if (picked && picked.m.id === n.m.id) {
+        ctx.beginPath();
+        ctx.arc(n.sx, n.sy, Math.max(3, n.r) + 5, 0, Math.PI * 2);
+        ctx.strokeStyle = tok("--gold-hi", "#f4d998");
+        ctx.lineWidth = 2;
+        ctx.stroke();
+      }
+      if (hover && hover.m.id === n.m.id) {
+        ctx.beginPath();
+        ctx.arc(n.sx, n.sy, Math.max(3, n.r) + 3, 0, Math.PI * 2);
+        ctx.strokeStyle = TEXT;
+        ctx.lineWidth = 1;
+        ctx.stroke();
+      }
+      var label = (hover && hover.m.id === n.m.id) || (picked && picked.m.id === n.m.id) || (n.scale > 0.86 && n.m.route);
+      if (label) {
+        ctx.globalAlpha = 1;
+        ctx.fillStyle = TEXT;
+        ctx.font = "11px ui-monospace, Consolas, monospace";
+        ctx.fillText(n.m.name, n.sx + n.r + 4, n.sy + 3);
+      }
+    });
+    ctx.globalAlpha = 1;
+
+    /* layer plane captions */
+    LAYERS.forEach(function (l) {
+      if (!active[l]) return;
+      var group = shown.filter(function (n) { return n.m.layer === l; });
+      if (!group.length) return;
+      var cx = group.reduce(function (s, n) { return s + n.sx; }, 0) / group.length;
+      var cyv = group.reduce(function (s, n) { return s + n.sy; }, 0) / group.length;
+      ctx.globalAlpha = 0.55;
+      ctx.fillStyle = LAYER_COLOR[l];
+      ctx.font = "10px ui-monospace, Consolas, monospace";
+      ctx.fillText(l.toUpperCase(), cx - 40, cyv - 6);
+      ctx.globalAlpha = 1;
+    });
+  }
+
+  function tick() {
+    if (!spinning) return;
+    yaw += 0.0035;
+    draw();
+    rafId = window.requestAnimationFrame ? window.requestAnimationFrame(tick) : null;
+  }
+
+  function setSpin(on) {
+    spinning = !!on && !!ctx;
+    var btn = document.getElementById("spin-btn");
+    if (btn) {
+      btn.setAttribute("aria-pressed", spinning ? "true" : "false");
+      btn.textContent = spinning ? "stop rotating" : "rotate the map";
+    }
+    if (rafId && window.cancelAnimationFrame) window.cancelAnimationFrame(rafId);
+    rafId = null;
+    if (spinning) tick(); else draw();
+    motionState();
+  }
+
+  function motionState() {
+    var el = document.getElementById("motion-state");
+    if (!ctx) {
+      el.textContent = "No canvas in this browser — the graph is the table below, which carries the same " + V.num(mods.length) + " rows and every edge.";
+      return;
+    }
+    el.textContent = prefersReduced && !spinning
+      ? "Reduced motion is set in your browser, so the map is drawn once and stays still. “rotate the map” is a real switch: press it and the same projection animates."
+      : spinning
+        ? "Animating: a hand-written 3D projection (rotate, perspective divide, depth sort) on a plain 2D canvas. No library, no asset, no network."
+        : "Still. Every node position is derived from the layer and the module id, so the map looks the same on every machine.";
+  }
+
+  function detail(m, source) {
+    var el = document.getElementById("detail");
+    var deps = (m.dependsOn || []).map(function (d) { return byId[d] ? byId[d].name : d + " (not in the module list)"; });
+    var dependents = mods.filter(function (o) { return (o.dependsOn || []).indexOf(m.id) >= 0; });
+    el.innerHTML =
+      '<div class="row"><h3>' + esc(m.name) + "</h3>" + statusChip(m.status) + "</div>" +
+      '<p class="hint">' + esc(m.purpose) + "</p>" +
+      '<table class="t"><tbody>' +
+      "<tr><td class=\"mono\">layer</td><td>" + esc(m.layer) + "</td></tr>" +
+      "<tr><td class=\"mono\">status</td><td>" + esc(m.status) + (m.status === "live" ? "" : " — the record does not call this live") + "</td></tr>" +
+      "<tr><td class=\"mono\">route</td><td>" + (m.route ? '<span class="mono">' + esc(m.route) + "</span> (declared)" : "no route declared — nothing to open") + "</td></tr>" +
+      "<tr><td class=\"mono\">engine</td><td>" + esc(m.engine) + " — " + (m.engine === "F" ? "creative demand side" : m.engine === "P" ? "proof rails" : "shared") + "</td></tr>" +
+      "<tr><td class=\"mono\">depends on</td><td>" + (deps.length ? esc(deps.join(", ")) : "nothing — this one is a root") + "</td></tr>" +
+      "<tr><td class=\"mono\">depended on by</td><td>" + (dependents.length ? esc(dependents.map(function (d) { return d.name; }).join(", ")) : "nothing yet") + "</td></tr>" +
+      "</tbody></table>" +
+      (source ? '<p class="note">Reached from ' + esc(source) + ".</p>" : "");
+  }
+
+  function pick(node, source) {
+    picked = node;
+    if (node) detail(node.m, source);
+    draw();
+  }
+
+  function nodeAt(mx, my) {
+    var best = null, bestZ = Infinity;
+    NODE.forEach(function (n) {
+      if (!visible(n.m)) return;
+      var rr = Math.max(9, n.r + 4);
+      var dx = n.sx - mx, dy = n.sy - my;
+      if (dx * dx + dy * dy <= rr * rr && n.z2 < bestZ) { best = n; bestZ = n.z2; }
+    });
+    return best;
+  }
+
+  if (ctx) {
+    canvas.addEventListener("mousemove", function (ev) {
+      var b = canvas.getBoundingClientRect();
+      hover = nodeAt(ev.clientX - b.left, ev.clientY - b.top);
+      if (hover) detail(hover.m, "hover");
+      if (!spinning) draw();
+    });
+    canvas.addEventListener("mouseleave", function () { hover = null; if (!spinning) draw(); });
+    canvas.addEventListener("click", function (ev) {
+      var b = canvas.getBoundingClientRect();
+      var n = nodeAt(ev.clientX - b.left, ev.clientY - b.top);
+      if (n) pick(n, "tap on the map");
+    });
+  }
+
+  /* ---------- table ---------- */
+  function renderTable() {
+    var list = mods.filter(visible);
+    var body = document.getElementById("verse-tbody");
+    var empty = document.getElementById("verse-empty");
+    empty.hidden = list.length > 0;
+    document.getElementById("verse-table").style.display = list.length ? "" : "none";
+    body.innerHTML = list.map(function (m) {
+      return "<tr><td><strong>" + esc(m.name) + "</strong><div class=\"note\">" + esc(m.purpose) + "</div></td>" +
+        "<td>" + esc(m.layer) + "</td>" +
+        "<td>" + statusChip(m.status) + "</td>" +
+        "<td class=\"mono\">" + (m.route ? esc(m.route) : "—") + "</td>" +
+        "<td class=\"mono\">" + esc(m.engine) + "</td>" +
+        "<td>" + ((m.dependsOn || []).length ? V.num(m.dependsOn.length) + ": " + esc(m.dependsOn.join(", ")) : "none") + "</td>" +
+        '<td><button type="button" class="btn ghost" data-show="' + esc(m.id) + '">show</button></td></tr>';
+    }).join("");
+  }
+
+  document.getElementById("verse-tbody").addEventListener("click", function (ev) {
+    var btn = ev.target && ev.target.closest ? ev.target.closest("button[data-show]") : null;
+    if (!btn) return;
+    var node = BY_ID[btn.getAttribute("data-show")];
+    if (!node) return;
+    var layer = node.m.layer;
+    if (!active[layer]) { active[layer] = true; syncButtons(); renderTable(); draw(); }
+    pick(node, "the table row");
+  });
+
+  function syncButtons() {
+    document.querySelectorAll("button[data-layer]").forEach(function (b) {
+      var on = !!active[b.getAttribute("data-layer")];
+      b.setAttribute("aria-pressed", on ? "true" : "false");
+      b.textContent = b.getAttribute("data-layer") + " · " + mods.filter(function (m) {
+        return m.layer === b.getAttribute("data-layer");
+      }).length;
+    });
+  }
+
+  document.getElementById("map-controls").addEventListener("click", function (ev) {
+    var t = ev.target;
+    if (t.id === "spin-btn") { setSpin(!spinning); return; }
+    if (t.id === "reset-btn") { LAYERS.forEach(function (l) { active[l] = true; }); syncButtons(); renderTable(); draw(); return; }
+    var l = t.getAttribute && t.getAttribute("data-layer");
+    if (!l) return;
+    var others = LAYERS.filter(function (x) { return x !== l; });
+    var onlyThis = active[l] && others.every(function (x) { return !active[x]; });
+    if (onlyThis) LAYERS.forEach(function (x) { active[x] = true; });
+    else { others.forEach(function (x) { active[x] = false; }); active[l] = true; }
+    if (picked && !visible(picked.m)) picked = null;
+    syncButtons(); renderTable(); draw();
+  });
+
+  /* ---------- exists vs declared lists ---------- */
+  var withRoute = mods.filter(function (m) { return m.route; });
+  var noRoute = mods.filter(function (m) { return !m.route; });
+  var roots = mods.filter(function (m) { return !(m.dependsOn || []).length; });
+  document.getElementById("exists-list").innerHTML =
+    "<li>" + V.num(mods.length) + " modules in the record, of which " + V.num(counts.partial) + " are marked partial — code exists, none of it is called live.</li>" +
+    "<li>" + V.num(withRoute.length) + " declare a route someone could navigate to: " + esc(withRoute.map(function (m) { return m.route; }).join(", ")) + ".</li>" +
+    "<li>" + V.num(roots.length) + " modules depend on nothing and are the ground the rest stands on: " + esc(roots.map(function (m) { return m.name; }).join(", ")) + ".</li>" +
+    "<li>" + V.num(edges) + " declared edges — the map is drawn from them, not from an idea of them.</li>";
+  document.getElementById("declared-list").innerHTML =
+    "<li>" + V.num(counts.planned) + " modules are planned: the record names them and their code does not exist yet.</li>" +
+    "<li>" + V.num(noRoute.length) + " modules declare no route at all — they cannot be opened, only built.</li>" +
+    "<li>" + V.num(counts.gated) + " module is gated by decision, not by deadline; its own record says it is built only once real supply and demand exist.</li>" +
+    "<li>" + V.num(live) + " modules are live. The headline of this map is that gap.</li>";
+
+  document.getElementById("disk-note").innerHTML =
+    "Route presence here is the <span class=\"mono\">route</span> field in the module record. A declared route is not a file on disk: " +
+    "the disk check (does the route exist in the generated route tree) belongs to the operator app in this repo, not to a static page. " +
+    "Until that check runs here, this page says “declared” and means it.";
+
+  document.getElementById("foot-gen").textContent = V.generated();
+
+  /* ---------- boot ---------- */
+  syncButtons();
+  renderTable();
+  if (ctx) {
+    sizeCanvas();
+    draw();
+    motionState();
+    if (window.addEventListener) window.addEventListener("resize", function () { sizeCanvas(); draw(); });
+    if (!prefersReduced) setSpin(true);
+  } else {
+    canvas.style.display = "none";
+    motionState();
+  }
+  detail(byId["core"] || mods[0], "the default selection");
+})();
+</script>
+</body>
+</html>

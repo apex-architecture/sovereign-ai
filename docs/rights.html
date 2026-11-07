@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Rights &amp; Licensing — the honest ledger | Sovereign AI Film Verse</title>
+<meta name="description" content="What the APEX registry actually records about licences: family posture counted from the data, the meaning of every field in the ten-field contract, the queue of unread licences that stops client work, and the rented services that can be taken away.">
+<meta name="color-scheme" content="dark">
+<link rel="stylesheet" href="styles.css">
+
+
+
+
+
+<!-- apex-meta:start -->
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+<link rel="canonical" href="https://filmverse-1mil8xwzv4y.qoder.website/rights.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Sovereign AI Film Verse">
+<meta property="og:title" content="Rights &amp; Licensing">
+<meta property="og:description" content="What the APEX registry actually records about licences: family posture counted from the data, the meaning of every field in the ten-field contract, the queue of unread licences that stops client work, and the rented services that can be taken away.">
+<meta property="og:url" content="https://filmverse-1mil8xwzv4y.qoder.website/rights.html">
+<meta property="og:image" content="https://filmverse-1mil8xwzv4y.qoder.website/assets/dailies/frame-at-2s.jpg">
+<meta property="og:image:width" content="1280">
+<meta property="og:image:height" content="720">
+<meta property="og:image:alt" content="One frame from the pipeline's own master, extracted at two seconds.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Rights &amp; Licensing">
+<meta name="twitter:description" content="What the APEX registry actually records about licences: family posture counted from the data, the meaning of every field in the ten-field contract, the queue of unread licences that stops client work, and the rented services that can be taken away.">
+<meta name="twitter:image" content="https://filmverse-1mil8xwzv4y.qoder.website/assets/dailies/frame-at-2s.jpg">
+<!-- apex-meta:end -->
+</head>
+<body data-page="rights" data-crumb="Rights &amp; Licensing">
+<div class="shell">
+  <div class="main">
+    <main class="page">
+
+      <header class="section" style="margin-top:0">
+        <h1>Rights &amp; Licensing</h1>
+        <p class="note" style="max-width:76ch;margin-top:10px">
+          This is the ledger, not a promise. Every number here is counted from the registry file this site
+          loads, in your browser, right now. Where the registry does not know something, this page says so
+          and leaves it in plain view instead of guessing. An unread licence is shown as
+          <span class="chip warn">unverified</span> — a real state, neither a tick nor a failure.
+        </p>
+      </header>
+
+      <section class="section" aria-labelledby="h-posture">
+        <h2 id="h-posture">The posture, counted</h2>
+        <div class="grid g4" id="band"></div>
+        <div class="card gold" style="margin-top:12px">
+          <h3>What may be claimed to a client today</h3>
+          <div class="row" style="margin-top:8px" id="claim"></div>
+          <p class="note" id="claimNote" style="margin-top:10px"></p>
+        </div>
+      </section>
+
+      <section class="section" aria-labelledby="h-family">
+        <h2 id="h-family">Licence families, grouped from the strings the registry holds</h2>
+        <p class="note" id="familyMethod" style="max-width:80ch"></p>
+        <div class="card" style="margin-top:12px;overflow-x:auto">
+          <table class="t">
+            <caption class="note" style="text-align:left;padding:0 0 10px">
+              Grouped by the licence text recorded per row. Nothing in the right-hand columns is inferred:
+              a family is only as safe as the number of rows inside it that a human has actually read.
+            </caption>
+            <thead>
+              <tr>
+                <th scope="col">Family (derived from the recorded licence)</th>
+                <th scope="col">Rows</th>
+                <th scope="col">Share of registry</th>
+                <th scope="col">Self-hostable</th>
+                <th scope="col">Runs locally</th>
+                <th scope="col">At $0</th>
+                <th scope="col">Licence strings counted</th>
+                <th scope="col">Commercial use permitted and read</th>
+              </tr>
+            </thead>
+            <tbody id="families"></tbody>
+            <tfoot>
+              <tr id="familyTotal"></tr>
+            </tfoot>
+          </table>
+        </div>
+      </section>
+
+      <section class="section" aria-labelledby="h-fields">
+        <h2 id="h-fields"><span id="fieldCount"></span> — what each field lets you say</h2>
+        <p class="note" style="max-width:80ch">
+          One row of the registry is a contract. The table below lists the rights fields in it, and the
+          heading counts them from the data as the page loads. Each field answers a different question:
+          can I use this for a paying client, can I ship it inside the platform, and can I claim rights over
+          what it made. Those are separate questions and a licence answers only the first two. The final
+          column of every row says so out loud.
+        </p>
+        <div class="card" style="margin-top:12px;overflow-x:auto">
+          <table class="t">
+            <caption class="note" style="text-align:left;padding:0 0 10px">
+              The “recorded in the data” column is computed from the rows themselves at page load.
+            </caption>
+            <thead>
+              <tr>
+                <th scope="col">Key</th>
+                <th scope="col">Plain English</th>
+                <th scope="col">(a) Using a tool for a client</th>
+                <th scope="col">(b) Shipping it inside the platform</th>
+                <th scope="col">(c) Claiming rights over the output</th>
+                <th scope="col">Recorded in the data</th>
+              </tr>
+            </thead>
+            <tbody id="fields"></tbody>
+          </table>
+        </div>
+        <p class="note" id="extraFields" style="margin-top:10px"></p>
+      </section>
+
+      <section class="section" aria-labelledby="h-queue">
+        <h2 id="h-queue">The review queue — the licences a human has to read</h2>
+        <div class="grid g-side">
+          <div class="card" style="overflow-x:auto">
+            <div class="row" style="justify-content:space-between">
+              <h3>First reading, in a fixed order</h3>
+              <p class="note" id="queueCount" role="status" aria-live="polite" style="margin:0"></p>
+            </div>
+            <table class="t" aria-describedby="queueCount">
+              <thead>
+                <tr>
+                  <th scope="col">Tool</th>
+                  <th scope="col">Category</th>
+                  <th scope="col">Licence as recorded</th>
+                  <th scope="col">Priority</th>
+                  <th scope="col">Why it is at the top of the queue</th>
+                  <th scope="col">Open in tool map</th>
+                </tr>
+              </thead>
+              <tbody id="queue"></tbody>
+            </table>
+            <div class="empty" id="queueEmpty" hidden>The queue is empty — that would mean every licence has been read.</div>
+            <div class="row" style="margin-top:12px">
+              <button class="btn" type="button" id="queueMore">Load the next rows</button>
+              <a class="btn ghost" id="queueAll" href="tools.html">Read the whole registry in the tool map</a>
+            </div>
+          </div>
+          <div class="stack" style="gap:12px">
+            <div class="card gold">
+              <h3>The rule that stops the work</h3>
+              <p class="hint">An unread licence stops client work at the moment of use — not at invoice time, not at delivery.</p>
+              <ol class="note" style="margin:10px 0 0 18px;padding:0;line-height:1.9">
+                <li>A run asks the registry for a tool.</li>
+                <li>If that row's licence has not been read, the run is recorded as <b>blocked, not forbidden</b>: the answer is unknown.</li>
+                <li>The job may continue on a row that is read and clear, or by hand, or with a written exit that replaces it.</li>
+                <li>The block itself is sealed. A seal on a block is a receipt that we stopped — it says nothing about who was right.</li>
+              </ol>
+              <p class="note bad" id="gateNote" style="margin-top:12px"></p>
+            </div>
+            <div class="card">
+              <h3>Reading order, and why</h3>
+              <p class="note" id="queueWhy"></p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" aria-labelledby="h-spof">
+        <h2 id="h-spof">Single points of failure</h2>
+        <div class="grid g2" id="spof"></div>
+        <div class="card gold" style="margin-top:12px">
+          <h3>If a rented service disappears</h3>
+          <p class="note" id="rentVanish" style="margin-top:8px"></p>
+          <ul class="note" style="margin:10px 0 0 18px;padding:0;line-height:1.9" id="rentList"></ul>
+        </div>
+      </section>
+
+      <section class="section" aria-labelledby="h-fence">
+        <h2 id="h-fence">The fence</h2>
+        <div id="fence"></div>
+        <p class="note warn" style="margin-top:12px" id="notLegal"></p>
+      </section>
+
+      <footer class="foot">
+        <span id="gen"></span>
+        <a href="tools.html">Open Source Power</a>
+        <a href="verify.html">Verify a Receipt</a>
+        <a href="passport.html">Creator Passport</a>
+      </footer>
+
+    </main>
+  </div>
+</div>
+
+<script src="data.generated.min.js"></script>
+<script src="shell.min.js"></script>
+<script>
+(function () {
+  const D = (window.APEX_VERSE) || {};
+  const R = D.rows || [];
+  const S = D.stats || {};
+  const CN = D.connections || [];
+  const TOTAL = R.length;
+  const QUEUE_PAGE = 40;
+
+  function esc(v) {
+    return String(v === null || v === undefined ? "" : v)
+      .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;").replace(/'/g, "&#39;");
+  }
+  const countBy = (rows, f) => rows.reduce((m, r) => { const k = f(r); m.set(k, (m.get(k) || 0) + 1); return m; }, new Map());
+  const n = (x) => V.num(x);
+  const pct = (a, b) => (b ? Math.round((a / b) * 100) + "%" : "—");
+
+  // ---------------------------------------------------------------- licence families
+  // One ordered rule, applied to the recorded licence string. First match wins, so a
+  // row lands in exactly one family and the column of rows adds back up to the registry.
+  const RULES = [
+    ["No licence string recorded — nothing to reason from", (s) => s === "unverified"],
+    ["Non-commercial terms present", (s) => /(^|[^a-z])nc([^a-z]|$)/.test(s) || /non-commercial/.test(s)],
+    ["Per-asset terms, unread", (s) => /per-asset/.test(s)],
+    ["Network copyleft — AGPL / SSPL", (s) => /agpl|sspl/.test(s)],
+    ["Source-available with extra limits — BUSL / BSL / FSL / fair-code", (s) => /busl|bsl|fsl|sustainable use|fair-code|source-available/.test(s)],
+    ["Strong copyleft — GPL", (s) => /(^|[^a-z])gpl/.test(s)],
+    ["Weak copyleft — LGPL", (s) => /lgpl/.test(s)],
+    ["Other copyleft or attribution — MPL / EPL / CeCILL / CC-BY / ODbL", (s) => /mpl|epl|cddl|cpl|osl|cecill|lppl|odbl|psf|cc[- ]by|cc by|creative commons/.test(s)],
+    ["Permissive — MIT / BSD / Apache / ISC / public domain", (s) =>
+      /\bmit\b/.test(s) || /mit-like|mit-style/.test(s) || /apache/.test(s) || /bsd/.test(s) ||
+      /\bisc\b/.test(s) || /zlib|wxwindows/.test(s) || /boost/.test(s) || /cc0/.test(s) ||
+      /public domain|public-domain/.test(s) || /postgresql/.test(s) || /\bftl\b/.test(s) || /edl-1\.0/.test(s)],
+    ["Proprietary or hosted-only", (s) => /proprietary/.test(s)],
+    ["A standard or spec, not a code licence", (s) => /standard|spec|ietf|w3c|oasis|iso|unicode|smpte|c2pa|iptc|openid|alliance|royalty-free|\brf \(/.test(s)],
+    ["Custom open / community terms", (s) => /custom-open|community|university of edinburgh|stable ai|volatility|tools; licences/.test(s)],
+    ["String names nothing this rule knows — a human must read it", () => true],
+  ];
+  const familyOf = (l) => {
+    const s = String(l || "").toLowerCase();
+    for (const [name, test] of RULES) if (test(s)) return name;
+    return RULES[RULES.length - 1][0];
+  };
+
+  const fam = new Map();
+  for (const r of R) {
+    const k = familyOf(r.l);
+    let f = fam.get(k);
+    if (!f) fam.set(k, (f = { rows: 0, strings: new Set(), sh: 0, le: 0, zero: 0, cleared: 0 }));
+    f.rows++; f.strings.add(r.l);
+    if (r.sh) f.sh++;
+    if (r.le) f.le++;
+    if (r.co === "$0") f.zero++;
+    if (r.v && r.cu === "yes") f.cleared++;
+  }
+  const fams = [...fam.entries()].sort((a, b) => b[1].rows - a[1].rows);
+
+  const stringsTotal = new Set(R.map((r) => r.l)).size;
+  const noString = R.filter((r) => !r.l || r.l === "unverified").length;
+  const dualStrings = R.filter((r) => /[/(]/.test(String(r.l))).length;
+  const cuYes = R.filter((r) => r.cu === "yes").length;
+  const cuUnverified = R.filter((r) => r.cu === "unverified").length;
+  const rdUnverified = R.filter((r) => r.rd === "unverified").length;
+  const readRows = R.filter((r) => r.v).length;
+  const notSelfHost = R.filter((r) => !r.sh).length;
+  const paid = R.filter((r) => r.co !== "$0").length;
+
+  document.getElementById("band").innerHTML = [
+    V.stat(n(TOTAL), "registry rows counted from data"),
+    V.stat(n(stringsTotal), "distinct licence strings recorded"),
+    V.stat(n(noString), "rows with no licence string at all", "plain"),
+    V.stat(n(readRows), "licences a human has read", "bad"),
+  ].join("");
+
+  document.getElementById("claim").innerHTML =
+    '<span class="chip ok">may be used: ' + n(cuYes) + "</span>" +
+    '<span class="chip warn">unverified commercial use: ' + n(cuUnverified) + "</span>" +
+    '<span class="chip warn">unverified redistribution: ' + n(rdUnverified) + "</span>" +
+    '<span class="chip bad">cleared for client work: ' + n(S.clearedForClientWork) + "</span>";
+
+  document.getElementById("claimNote").innerHTML =
+    "The registry records <code>" + n(cuYes) + "</code> rows as permitted for commercial use and " +
+    "<code>" + n(cuUnverified) + "</code> rows as <b>unverified</b> — that is every row in it. " +
+    "This is not a bad omen and not a green light: it is the honest state of the paperwork. " +
+    "Nothing on this site may say a tool is cleared while that count is " + n(cuYes) +
+    " against a registry of " + n(TOTAL) + " rows.";
+
+  // ---------------------------------------------------------------- families table
+  document.getElementById("familyMethod").innerHTML =
+    "Method, so the grouping can be argued with: each row's recorded licence string is matched against an " +
+    "ordered rule list, first match wins, so every row lands in exactly one family and the Rows column adds " +
+    "back up to " + n(TOTAL) + ". " + n(dualStrings) + " rows carry a string that names more than one licence " +
+    "(a slash or brackets in the recorded text); the rule takes the strongest obligation it can see and the " +
+    "rest is still for a human to read. " + n(fams.length) + " families came out of the data today.";
+
+  document.getElementById("families").innerHTML = fams.map(([k, f]) => "<tr>" +
+    `<td>${esc(k)}</td>` +
+    `<td class="mono">${n(f.rows)}</td>` +
+    `<td class="mono">${pct(f.rows, TOTAL)}</td>` +
+    `<td class="mono">${n(f.sh)} <span class="note">(${pct(f.sh, f.rows)})</span></td>` +
+    `<td class="mono">${n(f.le)}</td>` +
+    `<td class="mono">${n(f.zero)}</td>` +
+    `<td class="mono">${n(f.strings.size)}</td>` +
+    `<td>${f.cleared ? n(f.cleared) + " read" : '<span class="chip warn">unverified ×' + n(f.rows) + "</span>"}</td>` +
+  "</tr>").join("");
+
+  document.getElementById("familyTotal").innerHTML =
+    `<th scope="row" class="mono">Total</th><td class="mono">${n(fams.reduce((a, x) => a + x[1].rows, 0))}</td>` +
+    `<td class="mono">100%</td><td class="mono">${n(R.filter((r) => r.sh).length)}</td>` +
+    `<td class="mono">${n(R.filter((r) => r.le).length)}</td>` +
+    `<td class="mono">${n(R.filter((r) => r.co === "$0").length)}</td>` +
+    `<td class="mono">${n(stringsTotal)}</td>` +
+    `<td class="mono">${n(R.reduce((a, x) => a + (x.v && x.cu === "yes" ? 1 : 0), 0))}</td>`;
+
+  // ---------------------------------------------------------------- the field contract
+  const keys = (() => { const s = new Set(); for (const r of R) Object.keys(r).forEach((k) => s.add(k)); return s; })();
+  const TEN = [
+    ["n", "The tool's name, exactly as we record it.",
+      "Names what a client is actually being run on. If a name is wrong, the receipt is wrong.",
+      "The string a driver and a seal must match. A tool absent here is not integrated, however well known it is.",
+      "Naming a tool grants nothing over what the tool made."],
+    ["c", "Category — the job it does in the pipeline.",
+      "How you find a second option when the first is blocked.",
+      "Which module is allowed to depend on it.",
+      "No bearing on output rights."],
+    ["l", "Licence: the words we hold, or the honest admission that we hold none.",
+      "The text that decides whether a paid job may touch this tool at all. Unread means unknown — not permitted, not forbidden.",
+      "Decides whether shipping it inside the platform obliges us to publish source, and under what terms.",
+      "A tool licence usually stops at the tool. Per-asset, CC-NC and dataset terms reach the output, which is why unread rows cannot be shipped."],
+    ["cu", "Commercial use: may it be used for money.",
+      "The one answer a client job needs before work starts.",
+      "Whether the platform may invoice for a run built on it.",
+      "Never proves you own the output; it only says the tool may be paid work."],
+    ["rd", "Redistribution: may the tool, its model or its files be handed on.",
+      "Whether the client can be given the working thing, or only the result.",
+      "Whether we may bundle it in a platform image or a download.",
+      "If redistribution of the assets is refused, the deliverable may not be resold either."],
+    ["sh", "Self hosting: can it run on hardware you control.",
+      "Whether the job survives the vendor changing terms, pricing or existing.",
+      "Whether the platform quietly depends on somebody else's server.",
+      "Nothing directly — but a hosted tool means the output left the building."],
+    ["le", "Local execution: does the work run on your machine.",
+      "Confidentiality: whether unreleased footage, voices or scripts ever leave the client.",
+      "Whether a run is possible with the network off.",
+      "Nothing, except that local runs are the ones a receipt can honestly re-create."],
+    ["co", "Cost shape, not a price: $0, per job, or subscription.",
+      "What you bill, and what you must not promise. The registry records a shape; a number never appears here because we do not hold one.",
+      "Whether the platform carries an ongoing rent someone must approve.",
+      "Nothing."],
+    ["pr", "Priority: now, after the foundation exists, or only when justified.",
+      "Whether we may reach for this tool on today's job or must route around it.",
+      "Build order: what a driver has to support first.",
+      "Nothing."],
+    ["im", "Integration method: cli, http-api, python-api, node-graph, web-app, desktop-app, plugin-or-cli, library, protocol.",
+      "What a run costs in human time — a CLI is drivable, a web app is a person clicking.",
+      "Which driver module must exist before the word 'automated' is allowed.",
+      "A driver that saves a file is the thing a seal can point at; a person in a browser is not."],
+  ];
+
+  function recorded(key, max) {
+    if (key === "n") return n(countBy(R, (r) => r.n).size) + " distinct names — one per row, so a receipt can point at exactly one tool";
+    const m = countBy(R, (r) => String(r[key]));
+    const items = [...m.entries()].sort((a, b) => b[1] - a[1]);
+    const shown = items.slice(0, max || 4).map(([v, c]) => `${esc(v === "" ? "(empty)" : v)} ×${n(c)}`).join(", ");
+    return `${n(items.length)} value${items.length === 1 ? "" : "s"}: ${shown}` +
+      (items.length > (max || 4) ? ` — ${n(items.length - (max || 4))} more in the tool map` : "");
+  }
+
+  const ten = TEN.filter(([k]) => keys.has(k));
+  document.getElementById("fieldCount").textContent = "The " + n(ten.length) + "-field contract";
+  document.getElementById("fields").innerHTML = ten.map(([k, plain, a, b, c]) => "<tr>" +
+    `<td class="mono">${esc(k)}</td><td>${esc(plain)}</td><td>${esc(a)}</td><td>${esc(b)}</td><td>${esc(c)}</td>` +
+    `<td class="note mono">${recorded(k, k === "l" ? 4 : 5)}</td>` +
+  "</tr>").join("");
+
+  const rest = [...keys].filter((k) => !ten.some(([t]) => t === k));
+  document.getElementById("extraFields").innerHTML =
+    "The rows carry " + n(keys.size) + " keys in total. The other " + n(rest.length) +
+    " — <span class=\"mono\">" + esc(rest.join(", ")) + "</span> — are context, not rights: <code>cap</code> is what the tool is for, " +
+    "<code>ex</code> is the written exits (the tools you can swap to), and <code>v</code> is whether a human has verified the licence. " +
+    "Today <code>v</code> reads true on " + n(readRows) + " rows out of " + n(TOTAL) + ". " +
+    "Written exits per row: " + [...countBy(R, (r) => (r.ex || []).length).entries()].sort((a, b) => a[0] - b[0])
+      .map(([k, c]) => `<span class="mono">${esc(k)} exit${k === 1 ? "" : "s"} ×${n(c)}</span>`).join(" ") +
+      " — " + n(S.rowsWithoutExit) + " row" + (S.rowsWithoutExit === 1 ? "" : "s") + " with no exit at all.";
+
+  // ---------------------------------------------------------------- review queue
+  function why(r) {
+    const w = [];
+    if (r.pr === "now") w.push("priority is <b>now</b> — a client job can hit it today");
+    if (!r.l || r.l === "unverified") w.push("no licence string recorded");
+    const f = familyOf(r.l);
+    if (/AGPL|SSPL|Non-commercial|Per-asset|Source-available|Proprietary|nothing this rule knows|Custom open/.test(f))
+      w.push("terms that can bite a delivered piece");
+    if (!r.sh) w.push("cannot self host — a dependency on someone else");
+    if (r.co !== "$0") w.push("costs money per use, and we hold no price");
+    if (!r.le) w.push("does not run on your machine — material may leave it");
+    if (!w.length) w.push("licence unread like every other row");
+    return w;
+  }
+  const rank = (r) => (r.pr === "now" ? 0 : 1) * 10 + (r.l === "unverified" ? 0 : 5) +
+    (/AGPL|SSPL/.test(familyOf(r.l)) ? 1 : 0);
+  const queue = R.map((r, i) => ({ r, i })).sort((a, b) =>
+    rank(a.r) - rank(b.r) || a.r.pr.localeCompare(b.r.pr) || a.r.n.localeCompare(b.r.n) || a.i - b.i
+  ).map((x) => x.r);
+
+  let shown = QUEUE_PAGE;
+  function drawQueue() {
+    const vis = queue.slice(0, Math.min(shown, queue.length));
+    document.getElementById("queue").innerHTML = vis.map((r) => "<tr>" +
+      `<td class="mono">${esc(r.n)}</td>` +
+      `<td class="mono">${esc(r.c)}</td>` +
+      `<td>${r.l === "unverified" ? '<span class="chip warn">unverified</span>' : `<span class="mono">${esc(r.l)}</span>`}</td>` +
+      `<td class="mono">${esc(r.pr)}</td>` +
+      `<td class="note">${why(r).join("; ")}</td>` +
+      `<td><a class="mono" href="tools.html?q=${encodeURIComponent(r.n)}">open</a></td>` +
+    "</tr>").join("");
+    document.getElementById("queueEmpty").hidden = queue.length !== 0;
+    document.getElementById("queueCount").textContent =
+      "Showing " + n(vis.length) + " of " + n(queue.length) + " rows that need a human read" +
+      " (capped at " + n(QUEUE_PAGE) + " on screen)";
+    const b = document.getElementById("queueMore");
+    b.disabled = vis.length >= queue.length;
+    b.textContent = b.disabled ? "End of the queue" : "Load the next " + n(Math.min(QUEUE_PAGE, queue.length - vis.length));
+  }
+  document.getElementById("queueMore").addEventListener("click", () => { shown += QUEUE_PAGE; drawQueue(); });
+  document.getElementById("queueAll").href = "tools.html?pr=now";
+  document.getElementById("queueAll").textContent = "Open these " + n(R.filter((r) => r.pr === "now").length) + " priority-now rows in the tool map";
+
+  document.getElementById("queueWhy").innerHTML =
+    "Sorted by what a human can act on: priority <code>now</code> first, then rows carrying no licence string, " +
+    "then rows whose recorded terms reach a delivered piece. Every row in the registry is in this queue — " +
+    "that is not a bug in the page, it is <code>awaitingLicenceRead = " + n(S.awaitingLicenceRead) + "</code> " +
+    "in the data. The queue length is the size of the work, not a warning light.";
+
+  document.getElementById("gateNote").innerHTML =
+    "With " + n(S.clearedForClientWork) + " rows cleared and " + n(S.awaitingLicenceRead) +
+    " awaiting a read, the gate today blocks on <b>every</b> registry tool a run could touch. " +
+    "Which is why client work ships through hand-run tools and written exits until the queue is read, " +
+    "and why this page does not advertise a cleared stack.";
+
+  // ---------------------------------------------------------------- single points of failure
+  const risky = fams.filter(([k, f]) => /AGPL|Non-commercial|Per-asset|Proprietary|Source-available|Custom open|nothing this rule knows/.test(k));
+  const wiredNames = new Map(CN.map((c) => [c.name.toLowerCase(), c]));
+  const rented = CN.filter((c) => !/your machine|your server/.test(c.where));
+
+  document.getElementById("spof").innerHTML = [
+    '<div class="card"><h3>Families the data leans on hardest</h3><p class="hint">Concentration, counted: if one family\'s terms turn out hostile, this is how many rows move with it.</p><table class="t" style="margin-top:10px"><thead><tr><th scope="col">Family</th><th scope="col">Rows</th><th scope="col">Share</th></tr></thead><tbody>' +
+      fams.slice(0, 4).map(([k, f]) => `<tr><td>${esc(k)}</td><td class="mono">${n(f.rows)}</td><td class="mono">${pct(f.rows, TOTAL)}</td></tr>`).join("") +
+      "</tbody></table></div>",
+    '<div class="card"><h3>Terms that reach a delivered piece</h3><p class="hint">The families a client deliverable can trip over, counted from the same rule.</p><table class="t" style="margin-top:10px"><thead><tr><th scope="col">Family</th><th scope="col">Rows</th><th scope="col">Self-hostable</th><th scope="col">Read</th></tr></thead><tbody>' +
+      (risky.length ? risky.map(([k, f]) => `<tr><td>${esc(k)}</td><td class="mono">${n(f.rows)}</td><td class="mono">${n(f.sh)}</td><td class="mono">${f.cleared ? n(f.cleared) : '<span class="chip warn">none</span>'}</td></tr>`).join("")
+        : '<tr><td colspan="4" class="note">No family in the data carries terms of this kind.</td></tr>') +
+      "</tbody></table></div>",
+    '<div class="card"><h3>Things that do not run on your hardware</h3><p class="hint">Counted from the self-hosting field: <span class="mono">' + n(notSelfHost) + "</span> of " + n(TOTAL) +
+      " rows (" + pct(notSelfHost, TOTAL) + ") are recorded as not self-hostable, and " + n(R.filter((r) => !r.le).length) +
+      " do not execute locally at all.</p><p class=\"note\">Integration methods behind those rows: " + esc([...countBy(R.filter((r) => !r.sh), (r) => r.im).entries()].sort((a, b) => b[1] - a[1]).slice(0, 4).map(([k, v]) => k + " ×" + n(v)).join(", ")) + ".</p></div>",
+    '<div class="card"><h3>Where we pay someone to keep existing</h3><p class="hint">Cost shapes other than $0, counted: ' +
+      [...countBy(R.filter((r) => r.co !== "$0"), (r) => r.co).entries()].map(([k, v]) => `<span class="chip warn">${esc(k)} ×${n(v)}</span>`).join(" ") +
+      "</p><p class=\"note\">That is " + n(paid) + " rows, " + pct(paid, TOTAL) + " of the registry. No price is written anywhere on this page because no price is in the data — the shape is all we hold.</p></div>",
+  ].join("");
+
+  document.getElementById("rentVanish").innerHTML =
+    "Of the " + n(CN.length) + " tools APEX is wired to, " + n(rented.length) +
+    " do not run on your machine (" + esc(rented.map((c) => c.name + " — " + c.where).join("; ")) + "). " +
+    "A rented service can vanish by price change, by terms change, or by shutting down, and none of those " +
+    "need our permission. What survives is only what you already hold.";
+
+  const minExits = Math.min(...R.map((r) => (r.ex || []).length));
+  const maxExits = Math.max(...R.map((r) => (r.ex || []).length));
+  document.getElementById("rentList").innerHTML = [
+    "<li>The files that already exist keep their seals. A vanished vendor does not retroactively break a receipt — it breaks the <i>next</i> run.</li>",
+    "<li>Replacement is bounded by the written exits: every row carries at least one (" +
+      n(minExits) + " to " + n(maxExits) + " exits per row, " + n(S.rowsWithoutExit) + " rows with none). An exit that is only a name is not a way out.</li>",
+    "<li>An exit only helps if it is drivable. " + n(D.depths ? D.depths.drivable : 0) + " of " + n(CN.length) +
+      " wired tools are drivable today; an exit sitting outside that list is a manual job, priced as one.</li>",
+    "<li>The replacement's licence enters the same queue unread, so swapping a vanished service is rights work, not only engineering work.</li>",
+    "<li>Anything that only ever lived in a rented service — the account, the queue, the model, the stored output — is gone unless it was exported. That is the reason runs write files you keep.</li>",
+  ].map((x) => x).join("");
+
+  // ---------------------------------------------------------------- fence
+  document.getElementById("fence").innerHTML = V.fence(
+    "A seal records a claim. It never proves the claim true. A receipt over a render says which registry row, " +
+    "which inputs and which driver produced a file — it does not say the licence behind that row was read, " +
+    "and it cannot make a client's rights exist. Verification stays free and stays honest: it can show you what " +
+    "we claimed at the moment we claimed it, and it can show you that " + n(S.awaitingLicenceRead) + " of " + n(TOTAL) +
+    " rows still have no human licence read behind them."
+  );
+  document.getElementById("notLegal").innerHTML =
+    "Not legal advice and not a lawyer. This page reports what a registry file records about licences, " +
+    "computed in your browser from " + n(TOTAL) + " rows, and groups them by a rule you can argue with. " +
+    "A read licence means a named person read the text and wrote down a decision — it does not mean a court agreed.";
+
+  document.getElementById("gen").textContent = V.generated();
+
+  drawQueue();
+})();
+</script>
+</body>
+</html>

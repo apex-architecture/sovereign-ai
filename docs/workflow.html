@@ -1,0 +1,354 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark">
+<meta name="description" content="The APEX production rail: ten film stages, the tools routed to each, the depth each stage reaches, what a human must still click, and the real door a run goes through. A plan read from the code — not a live run.">
+<title>Production Rail — Ten Film Stages, Honestly Wired | Sovereign AI Film Verse</title>
+<link rel="stylesheet" href="styles.css">
+
+
+
+
+
+<!-- apex-meta:start -->
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+<link rel="canonical" href="https://filmverse-1mil8xwzv4y.qoder.website/workflow.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Sovereign AI Film Verse">
+<meta property="og:title" content="Production Rail">
+<meta property="og:description" content="The APEX production rail: ten film stages, the tools routed to each, the depth each stage reaches, what a human must still click, and the real door a run goes through. A plan read from the code — not a live run.">
+<meta property="og:url" content="https://filmverse-1mil8xwzv4y.qoder.website/workflow.html">
+<meta property="og:image" content="https://filmverse-1mil8xwzv4y.qoder.website/assets/dailies/frame-at-2s.jpg">
+<meta property="og:image:width" content="1280">
+<meta property="og:image:height" content="720">
+<meta property="og:image:alt" content="One frame from the pipeline's own master, extracted at two seconds.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Production Rail">
+<meta name="twitter:description" content="The APEX production rail: ten film stages, the tools routed to each, the depth each stage reaches, what a human must still click, and the real door a run goes through. A plan read from the code — not a live run.">
+<meta name="twitter:image" content="https://filmverse-1mil8xwzv4y.qoder.website/assets/dailies/frame-at-2s.jpg">
+<!-- apex-meta:end -->
+</head>
+<body data-page="collab" data-crumb="Collaboration">
+<div class="shell">
+  <div class="main">
+    <main class="page">
+
+      <section class="stack" aria-labelledby="rail-title">
+        <div class="card gold">
+          <div class="row" id="rail-chips"></div>
+          <h1 id="rail-title">The Production Rail</h1>
+          <p class="hint">Ten named stages, in the order the pipeline walks them. Every tool, depth and blocker on this page is
+            read from the connection table and the driver code in this repo. Nothing here runs anything: this is the plan,
+            printed honestly, not a live job.</p>
+          <div id="rail-fence"></div>
+        </div>
+
+        <div class="empty" hidden>Nothing to show — the stage table did not load.</div>
+        <noscript><div class="note bad">This page renders the rail from <span class="mono">data.generated.js</span>. With JavaScript off the table below is the only source of truth: <a href="console.html">the operator console</a> prints the same snapshot as text.</div></noscript>
+      </section>
+
+      <section class="section" aria-labelledby="strip-h">
+        <h2 id="strip-h">The rail in order</h2>
+        <div class="strip" id="rail-strip" role="list">
+          <div class="st"><div class="n">—</div><div class="t2">loading</div></div>
+        </div>
+        <p class="note">The strip is the walk order: left to right, the same order the cards below use. A stage with no tool behind it stays in the line — it is not removed.</p>
+      </section>
+
+      <section class="section" aria-labelledby="produced-h">
+        <h2 id="produced-h">What the rail actually produced last time it ran</h2>
+        <p class="note">The plan above is the promise; this is the receipt. Each picture is one frame pulled out of the
+          artefact that stage wrote to disk on the newest run, with that file's measured mean luma and chroma under it.
+          A stage with no picture refused or was never driven, and it is still listed.
+          <a href="dailies.html">The full dailies sheet</a> carries the byte counts, the wall clock and the verbatim reason
+          for every refusal.</p>
+        <div class="frames" id="rail-frames">
+          <p class="note">No run has been printed into this page yet — <span class="mono">node scripts/dailies-site.mjs</span> writes it.</p>
+        </div>
+      </section>
+
+      <section class="section" aria-labelledby="stages-h">
+        <h2 id="stages-h">Stage by stage</h2>
+        <p class="note">“What APEX does” and “what a human must supply or click” are the <span class="mono">does</span> and <span class="mono">needs</span> fields of each routed tool, verbatim. The required output is stated from the driver contracts in <span class="mono">src/lib/apex/drivers/</span> — the files that decide what a stage may claim to have produced.</p>
+        <div class="grid g2" id="stage-cards">
+          <div class="empty">No stage rows in this snapshot.</div>
+        </div>
+      </section>
+
+      <section class="section" aria-labelledby="price-h">
+        <h2 id="price-h">Budget and price — what this snapshot can and cannot say</h2>
+        <div class="grid g-side">
+          <div class="card">
+            <h3>There is no verified price in this snapshot</h3>
+            <p class="hint">A registry row carries a <em>cost class</em> — <span class="mono">$0</span>, <span class="mono">per-job</span> or <span class="mono">subscription</span> — never a price anyone has verified. The only verified-price object in the repo is <span class="mono">PriceEntry</span> in <span class="mono">src/lib/apex/cost.ts</span>, and it needs <span class="mono">verifiedFrom</span> plus <span class="mono">verifiedOn</span> before a number exists. Neither appears in this data file.</p>
+            <div class="grid g3" id="price-stats"></div>
+            <div id="price-fence"></div>
+          </div>
+          <div class="card">
+            <h3>The verdict the code already prints</h3>
+            <p class="hint"><span class="mono">judgeBudget()</span> in <span class="mono">src/lib/apex/cost.ts</span> is a binary gate: <span class="mono">withinBudget</span> is true only when <span class="mono">unknownPrices</span> is empty. While it is not empty the advice is this line, verbatim from the source:</p>
+            <div class="fence mono">“… tools have no verified price — the quote is incomplete, not expensive”</div>
+            <p class="note">Unpaid local work is a separate, measured fact: the rows below are the count of catalogued tools whose cost class is <span class="mono">$0</span>, and the count that runs on your own machine. Neither is a quote for a finished minute.</p>
+            <div class="row" id="zero-facts"></div>
+            <p class="note warn">The only prices this repo holds as code, not copy, are $0 for a seal, $0 for verification and $0 for a receipt export — <span class="mono">FREE_FOREVER</span>, <span class="mono">src/lib/apex/psi.ts</span>. Verification is free forever and is never the paid lock.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" aria-labelledby="run-h">
+        <h2 id="run-h">Run the pipeline — the real door, and why this page does not open it</h2>
+        <div class="grid g-side">
+          <div class="card">
+            <h3>What <span class="mono">runStage()</span> actually does, in code order</h3>
+            <p class="hint">Read from <span class="mono">src/lib/apex/orchestrate.ts</span>, line by line, then cross-checked against <span class="mono">src/lib/apex/drivers/contract.ts</span>. One candidate tool at a time, in the stage's preference order:</p>
+            <ol id="run-steps" class="stack"></ol>
+            <div id="run-discrepancy"></div>
+          </div>
+          <div class="stack">
+            <div class="card gold">
+              <h3>Where the door is</h3>
+              <p class="hint">The function is <span class="mono">runStage(drivers, input, intent, hooks)</span> in <span class="mono">src/lib/apex/orchestrate.ts</span>. Its callers live in the operator app in this repo — <span class="mono">/create</span> (one run) and <span class="mono">/director</span> (the ten stages) — which reach it through <span class="mono">buildDrivers()</span> and <span class="mono">stageRoutes()</span> in <span class="mono">src/lib/apex/drivers/index.ts</span>.</p>
+              <div class="note bad">Today <span class="mono">runStage()</span> has no production caller in this repo. The only file that calls it is the self-check, <span class="mono">scripts/apex-check.mjs</span>. That is a fact about the build, not a bug in this page.</div>
+              <div class="note warn">This static site has no runner, no Node process, no shell access and no database. A button here could only animate. It would be a lie with a progress bar, so there is no button — the plan is printed and the door is named instead.</div>
+            </div>
+            <div class="card">
+              <h3>The two states a stage can honestly end in</h3>
+              <table class="t">
+                <caption class="note">The <span class="mono">StageRun</span> object answers four questions: who produced it, what it cost, how long it ran, what came out.</caption>
+                <thead><tr><th scope="col">State</th><th scope="col">Means</th><th scope="col">Who is holding the film</th></tr></thead>
+                <tbody>
+                  <tr><td class="mono">succeeded</td><td>A driver ran and returned outputs; the loop stopped.</td><td>Nothing to do — the file exists.</td></tr>
+                  <tr><td class="mono">needs-human</td><td>File-exchange depth: a handoff was issued, no run happened.</td><td>The operator opens the app and does the click.</td></tr>
+                  <tr><td class="mono">failed</td><td>Candidates were tried and none produced the artefact.</td><td>The attempt log is the deliverable; it is kept verbatim.</td></tr>
+                  <tr><td class="mono">no-driver</td><td>The stage's tool list was empty. It is reported, never skipped.</td><td>That is <span class="mono">dialogue</span> today.</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="card">
+              <h3>What the run writes afterwards</h3>
+              <p class="hint">Every finished run — success or not — goes through <span class="mono">hooks.onLedger</span> then <span class="mono">hooks.onMemory</span>. Failed attempts are, in the file's own words, “the most valuable rows in the whole system”. A seal records that a statement was made; it never proves the statement true. The ledger tables those hooks would write to are drafted and not yet applied — see <a href="console.html">the operator console</a>.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <footer class="foot">
+        <span class="mono" id="foot-gen"></span>
+        <a href="verse.html">The Verse Map</a>
+        <a href="console.html">Operator Console</a>
+      </footer>
+    </main>
+  </div>
+</div>
+
+<script src="data.generated.min.js"></script>
+<script src="shell.min.js"></script>
+<script src="dailies.data.min.js"></script>
+<script>
+(function () {
+  if (!window.V || !V.data || !Array.isArray(V.data.stages)) return;
+
+  var stages = V.data.stages;
+  var conns = V.data.connections || [];
+  var rows = V.data.rows || [];
+  var stats = V.stats || {};
+  var cov = V.data.coverage || {};
+
+  var BY = {};
+  for (var i = 0; i < conns.length; i++) BY[conns[i].toolId] = conns[i];
+
+  /* Required output per stage — read off the driver contracts in src/lib/apex/drivers/:
+     ffmpeg.ts returns the last argv entry, cli-drivers.ts writes "<base>.srt",
+     comfyui.ts returns history artefacts, studio.ts handoffs name the file a human renders back. */
+  var ARTEFACT = {
+    storyboard: "Still frames per shot — the PNGs a saved ComfyUI graph writes into its history, or a Blender previz render. No graph is stored in this snapshot, so today the stage can produce nothing.",
+    character_lock: "An identity lock sheet: pinned faces from the same graph mechanism, so later stages can be checked against it.",
+    motion: "Video clips per shot — a hosted Replicate render billed to the creator's own key, or a local Wan-class graph. Replicate is the first candidate; local motion is the fall-through.",
+    dialogue: "Voice lines for the script. Nothing in this snapshot produces them — the stage's tool list is empty and its only candidate driver is not-yet.",
+    music: "A session handed to Ardour and stems exported back to a stem folder — a human balances and exports; APEX prepares and ingests.",
+    sound: "A loudness-normalised mix built by ffmpeg from the handed-back stems.",
+    subtitles: "An SRT from offline Whisper transcription, then the same file burned into the picture by ffmpeg.",
+    edit: "A cut list and an editor project (Kdenlive or Resolve); the human confirms the timing by eye and renders a master file APEX records.",
+    finish: "A graded deliverable — an IMF or ProRes master — plus the delivered hash APEX verifies against the record.",
+    publish: "The published URL, recorded. A human presses publish; APEX does not publish.",
+  };
+
+  /* depth label, straight from DEPTH_LABEL in drivers/contract.ts */
+  var DEPTH_MEANS = {
+    drivable: "APEX launches it and reads the result — no human hands",
+    "file-exchange": "APEX prepares inputs and ingests outputs; a human operates the app",
+    "portal-only": "APEX can link and record, not operate",
+    "not-yet": "no driver object exists yet",
+  };
+
+  function esc(s) {
+    return String(s == null ? "" : s).replace(/[&<>"]/g, function (c) {
+      return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c];
+    });
+  }
+
+  function depthChip(d) { return V.depthChip(d || "none"); }
+
+  /* ---------- header chips + fence ---------- */
+  var chips = [];
+  chips.push('<span class="chip gold">' + stages.length + " stages</span>");
+  chips.push('<span class="chip ' + (cov.wired === cov.total ? "ok" : "bad") + '">' +
+    V.num(cov.wired) + " of " + V.num(cov.total) + " stages routed</span>");
+  if ((cov.empty || []).length) {
+    chips.push('<span class="chip bad">no driver: ' + esc(cov.empty.join(", ")) + "</span>");
+  }
+  chips.push('<span class="chip">' + conns.length + " tools in the table</span>");
+  document.getElementById("rail-chips").innerHTML = chips.join(" ");
+
+  document.getElementById("rail-fence").innerHTML = V.fence(
+    "What this page may not say: that a stage is integrated, that a file-exchange tool is driven, that a portal is “supported”, or that any of this ran. " +
+    "Depths are stated per tool; the " + V.num(stats.clearedForClientWork) + " rows cleared for client work is the only licence verdict, and it is zero."
+  );
+
+  /* ---------- strip ---------- */
+  var stripHtml = "";
+  for (var s = 0; s < stages.length; s++) {
+    var st = stages[s];
+    stripHtml += '<div class="st" role="listitem"><div class="n">' + (s + 1) + " / " + stages.length + "</div>" +
+      '<div class="t2">' + esc(st.id) + "</div>" + depthChip(st.best) +
+      '<div class="note">' + (st.tools.length ? st.tools.length + " tool" + (st.tools.length === 1 ? "" : "s") : "no tool") + "</div></div>";
+  }
+  document.getElementById("rail-strip").innerHTML = stripHtml;
+
+  /* ---------- stage cards ---------- */
+  var cards = "";
+  for (var a = 0; a < stages.length; a++) {
+    var sg = stages[a];
+    var tools = (sg.tools || []).map(function (t) { return BY[t]; }).filter(Boolean);
+    var missing = (sg.tools || []).filter(function (t) { return !BY[t]; });
+
+    var body = "";
+    body += '<div class="row"><span class="chip gold">' + (a + 1) + "</span><h3>" + esc(sg.id) + "</h3>" + depthChip(sg.best) + "</div>";
+
+    if (!tools.length) {
+      body += '<div class="note bad"><strong>Named gap — this stage stops the pipeline.</strong> ' +
+              "The stage is declared and its tool list is empty: <span class=\"mono\">" + esc(sg.id) + ": []</span>. " +
+              "It is printed in the rail rather than removed from it.</div>";
+      var cand = conns.filter(function (c) {
+        return c.depth === "not-yet" &&
+          (String(c.does).toLowerCase().indexOf(sg.id) >= 0 || c.toolId === sg.id);
+      });
+      if (!cand.length) cand = conns.filter(function (c) { return c.depth === "not-yet"; });
+      if (cand.length) {
+        body += '<p class="note">The table names no driver for this stage, only candidates: ' +
+                cand.map(function (c) {
+                  return "<strong>" + esc(c.name) + "</strong> (" + esc(c.does) + "; needs " + esc(c.needs) + ")";
+                }).join(" · ") + "</p>";
+      }
+    } else {
+      body += '<table class="t"><thead><tr><th scope="col">Tool</th><th scope="col">Depth</th><th scope="col">Where</th></tr></thead><tbody>';
+      for (var tIdx = 0; tIdx < tools.length; tIdx++) {
+        var c = tools[tIdx];
+        body += '<tr><td class="mono">' + esc(c.name) + "</td><td>" + depthChip(c.depth) + "</td><td>" + esc(c.where) + "</td></tr>";
+      }
+      body += "</tbody></table>";
+
+      var does = tools.map(function (c) { return "<li><strong>" + esc(c.name) + "</strong> — " + esc(c.does) +
+        '. <span class="note">' + esc(DEPTH_MEANS[c.depth] || "") + "</span></li>"; }).join("");
+      var needs = tools.map(function (c) { return "<li><strong>" + esc(c.name) + "</strong> — " + esc(c.needs) + "</li>"; }).join("");
+      body += '<p class="hint"><strong>What APEX does at this stage</strong></p><ul class="note">' + does + "</ul>";
+      body += '<p class="hint"><strong>What a human must supply or click</strong></p><ul class="note">' + needs + "</ul>";
+
+      var humans = tools.filter(function (c) { return c.depth !== "drivable"; });
+      if (humans.length) {
+        body += '<div class="note warn">' + humans.length + " of this stage's " + tools.length +
+          " tools need hands: " + esc(humans.map(function (c) { return c.name + " (" + c.depth + ")"; }).join(", ")) +
+          ". The word for that is not “integrated”.</div>";
+      }
+      if (missing.length) {
+        body += '<div class="note bad">Routed in the stage table but absent from the connection table: ' + esc(missing.join(", ")) + ".</div>";
+      }
+    }
+
+    body += '<p class="hint"><strong>Artefact this stage must produce</strong></p><p class="note">' +
+            esc(ARTEFACT[sg.id] || "Not named in the driver contracts.") + "</p>";
+    body += '<p class="note">A stage may only claim success when the artefact is a file the platform can open. ' +
+            "No hash is taken by <span class=\"mono\">runStage()</span> today — the admission step is a recorded gap, not a behaviour.</p>";
+
+    cards += '<article class="card' + (tools.length ? "" : " gold") + '">' + body + "</article>";
+  }
+  document.getElementById("stage-cards").innerHTML = cards;
+
+  /* ---------- price honesty ---------- */
+  var costClass = {};
+  for (var r = 0; r < rows.length; r++) {
+    var k = rows[r].co || "unlabelled";
+    costClass[k] = (costClass[k] || 0) + 1;
+  }
+  var costKeys = Object.keys(costClass).sort();
+  var priceHtml = "";
+  for (var ck = 0; ck < costKeys.length; ck++) {
+    priceHtml += V.stat(V.num(costClass[costKeys[ck]]), "rows cost-classed “" + costKeys[ck] + "”", "plain");
+  }
+  priceHtml += V.stat(V.num(stats.clearedForClientWork), "rows cleared for client work", "bad");
+  document.getElementById("price-stats").innerHTML = priceHtml;
+
+  document.getElementById("price-fence").innerHTML = V.fence(
+    "A quote from this snapshot is incomplete, not expensive. Nothing here prints a figure for a finished minute, because no " +
+    "verified price exists in the data and the arithmetic that would produce one is not run by a static page. " +
+    V.num(cov.wired) + " of the " + V.num(cov.total) + " stages have a tool routed to them; a routed tool is not a priced tool. " +
+    "A $0 cost class is a class, not a quote, and the tools billed to a creator's account state their own blocker: " +
+    "“the creator's own key and a verified price per model”."
+  );
+
+  document.getElementById("zero-facts").innerHTML =
+    V.stat(V.num(stats.runsAtZero), "rows at a $0 cost class", "plain") +
+    V.stat(V.num(stats.runsOnYourMachine), "rows that run on your machine", "plain") +
+    V.stat(V.num(stats.rows), "rows catalogued", "plain");
+
+  /* ---------- the real door ---------- */
+  var STEPS = [
+    ["Empty driver list is a state, not a skip", "If the stage has no candidates, the run is stamped <span class=\"mono\">no-driver</span> and goes to the ledger anyway. A stage with no driver is reported as a gap, never silently skipped and never reported as done."],
+    ["Depth declaration is tested first", "<span class=\"mono\">driverSatisfiesDepth(driver)</span> — <span class=\"mono\">drivable</span> needs both <span class=\"mono\">run</span> and <span class=\"mono\">probe</span>, <span class=\"mono\">file-exchange</span> needs <span class=\"mono\">handoff</span>, <span class=\"mono\">portal-only</span> needs <span class=\"mono\">portalUrl</span>. A driver that declares more than it implements is logged and stepped over, never quietly downgraded to “integrated”."],
+    ["The licence gate fires at the moment of use", "<span class=\"mono\">gateOnLicence(driver, intent)</span> with intent <span class=\"mono\">personal</span>, <span class=\"mono\">client-work</span> or <span class=\"mono\">redistribute</span>. Unread licence, or a paid or redistribution intent the record does not carry → the attempt is stamped <span class=\"mono\">blocked-by-licence</span> and the next candidate is tried. No driver runs against a row a human has not cleared."],
+    ["Portal-only records, it does not operate", "The portal URL for the input is stored on the attempt and the loop continues: a human publishes, APEX records the result. That is the <span class=\"mono\">publish</span> stage today."],
+    ["Reachability is probed before work is queued", "<span class=\"mono\">await driver.probe()</span> — a cheap check that the binary or service is even there. Not reachable → <span class=\"mono\">probed-unreachable</span>, fall through to the next candidate."],
+    ["File-exchange issues a handoff and stops", "<span class=\"mono\">await driver.handoff(input)</span>, the run state becomes <span class=\"mono\">needs-human</span> and <span class=\"mono\">used</span> names the tool. The instructions are the ones in <span class=\"mono\">drivers/studio.ts</span> — confirm the cuts by eye, export the stems, deliver a master — kept, not summarised."],
+    ["Drivable actually runs, and stops the loop on success", "<span class=\"mono\">await driver.run(input)</span>; <span class=\"mono\">usdSpent</span> and <span class=\"mono\">wallClockSeconds</span> accumulate across every attempt. On <span class=\"mono\">succeeded</span> the outputs are taken and the loop breaks."],
+    ["Failure falls through, then is named", "Any other result continues to the next candidate. If candidates were tried and nothing succeeded, the run is stamped <span class=\"mono\">failed</span> — never <span class=\"mono\">no-driver</span>, never blank."],
+    ["The ledger writes last, for every outcome", "<span class=\"mono\">finish()</span> calls <span class=\"mono\">hooks.onLedger(run)</span> then <span class=\"mono\">hooks.onMemory(run)</span>, success or not. A ledger row records that a statement was made; it does not prove the statement true."],
+  ];
+  var stepHtml = "";
+  for (var sp = 0; sp < STEPS.length; sp++) {
+    stepHtml += "<li><p class=\"hint\"><strong>" + (sp + 1) + ". " + STEPS[sp][0] + "</strong></p><p class=\"note\">" + STEPS[sp][1] + "</p></li>";
+  }
+  document.getElementById("run-steps").innerHTML = stepHtml;
+
+  document.getElementById("run-discrepancy").innerHTML =
+    '<div class="note warn">Found in the code, printed rather than smoothed over: the header of <span class="mono">orchestrate.ts</span> says “licence gate first, reachability probe second”, ' +
+    "but the loop tests the depth declaration (line 62) before the licence gate (line 67). Both orders block the same tools; only the log line differs. Worth a decision before a caller exists.</div>" +
+    '<div class="note bad">Two caps the code does not yet enforce, named in <span class="mono">docs/blueprint/00-MASTER.md</span>: a stage with three candidates can spend three times the cap, because <span class="mono">budgetUsd</span> is applied per candidate; and no output is hashed on admission.</div>';
+
+  /* ---------- footer ---------- */
+  document.getElementById("foot-gen").textContent = V.generated();
+})();
+</script>
+<script>
+(function () {
+  var D = window.APEX_DAILIES;
+  var host = document.getElementById("rail-frames");
+  if (!host || !D || !D.rows) return;
+  var kb = function (n) { return n == null ? "—" : n > 1048576 ? (n / 1048576).toFixed(2) + " MB" : (n / 1024).toFixed(1) + " KB"; };
+  var esc = function (s) { return String(s == null ? "" : s).replace(/[&<>"]/g, function (c) { return ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]; }); };
+  var shown = D.rows.filter(function (r) { return r.img; });
+  var silent = D.rows.filter(function (r) { return !r.img; });
+  host.innerHTML = shown.map(function (r) {
+    return '<figure class="fr"><img src="' + esc(r.img) + '" width="' + (r.frame && r.frame.w || 1280) + '" height="' + (r.frame && r.frame.h || 720) + '" loading="lazy" decoding="async" alt="' +
+      esc(r.stage) + ' stage output, one frame from the file it wrote">' +
+      '<figcaption><b>' + esc(r.stage) + '</b><span class="t">' +
+      (r.stats ? "YAVG " + r.stats.yavg + " · SAT " + r.stats.satavg + " · " + r.stats.frames + " frames · " : "not a measured clip · ") +
+      kb(r.artifact ? r.artifact.bytes : null) + " · " + (r.seconds == null ? "—" : r.seconds + "s") + "</span></figcaption></figure>";
+  }).join("") + (silent.length
+    ? '<p class="note">' + silent.map(function (r) { return '<span class="chip bad">' + esc(r.stage) + " — no file</span>"; }).join(" ") + "</p>"
+    : "");
+})();
+</script>
+</body>
+</html>

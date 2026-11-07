@@ -1,0 +1,60 @@
+{
+  "1": {
+    "class_type": "UNETLoader",
+    "inputs": { "unet_name": "wan2.1_t2v_1.3B_fp16.safetensors", "weight_dtype": "default" }
+  },
+  "2": {
+    "class_type": "CLIPLoader",
+    "_note": "device cpu is not a preference, it is the fit: umt5-xxl is 6.4 GB loaded and the GPU on this machine has 6.1 GB total. The encoder runs in system RAM, the diffusion model streams to the GPU layer by layer.",
+    "inputs": { "clip_name": "umt5_xxl_fp8_e4m3fn_scaled.safetensors", "type": "wan", "device": "cpu" }
+  },
+  "3": {
+    "class_type": "VAELoader",
+    "inputs": { "vae_name": "wan_2.1_vae.safetensors" }
+  },
+  "4": {
+    "class_type": "CLIPTextEncode",
+    "inputs": { "text": "{{PROMPT}}", "clip": ["2", 0] }
+  },
+  "5": {
+    "class_type": "CLIPTextEncode",
+    "inputs": { "text": "{{NEGATIVE}}", "clip": ["2", 0] }
+  },
+  "6": {
+    "class_type": "EmptyHunyuanLatentVideo",
+    "inputs": { "width": "{{WIDTH}}", "height": "{{HEIGHT}}", "length": "{{FRAMES}}", "batch_size": 1 }
+  },
+  "7": {
+    "class_type": "ModelSamplingSD3",
+    "_note": "shift 8.0 is Wan's own recommended sampling shift for the 480p 1.3B model.",
+    "inputs": { "model": ["1", 0], "shift": 8.0 }
+  },
+  "8": {
+    "class_type": "KSampler",
+    "inputs": {
+      "seed": "{{SEED}}",
+      "steps": "{{STEPS}}",
+      "cfg": 6.0,
+      "sampler_name": "euler",
+      "scheduler": "simple",
+      "denoise": 1.0,
+      "model": ["7", 0],
+      "positive": ["4", 0],
+      "negative": ["5", 0],
+      "latent_image": ["6", 0]
+    }
+  },
+  "9": {
+    "class_type": "VAEDecodeTiled",
+    "_note": "Tiled because of the 6 GB card: a plain VAEDecode of 33 frames at 832x480 wants more VRAM than exists, and an out-of-memory render costs the whole run. 512-pixel tiles with 64 of overlap stay inside the card and the seam is not visible in the frame.",
+    "inputs": { "samples": ["8", 0], "vae": ["3", 0], "tile_size": 512, "overlap": 64, "temporal_size": 64, "temporal_overlap": 8 }
+  },
+  "10": {
+    "class_type": "CreateVideo",
+    "inputs": { "images": ["9", 0], "fps": "{{FPS}}" }
+  },
+  "11": {
+    "class_type": "SaveVideo",
+    "inputs": { "video": ["10", 0], "filename_prefix": "apex/{{TAG}}", "format": "auto", "codec": "h264" }
+  }
+}

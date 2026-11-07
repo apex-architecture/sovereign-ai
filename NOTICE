@@ -1,0 +1,14 @@
+Sovereign AI Filmverse (the "Studio")
+Copyright 2026 Kawaljeet Singh (ROCKYFILMS888 PTY LTD, ABN 71 672 237 795)
+
+This product includes software developed by the Sovereign AI Filmverse contributors.
+
+The PSI Film Passport implementation (passport/, src/lib/apex/canonical.ts, src/lib/apex/psi.ts,
+src/lib/apex/proof.ts, src/lib/apex/seal.browser.ts, src/lib/apex/seal.fn.ts) implements the
+public specification in this repository and is interoperable with:
+  - apex-architecture/psi-seal-spec  (the normative spec)
+  - kawal393/apex-psi-verify        (the reference verifier, Python)
+
+Third-party tools are NOT bundled. Each tool keeps its own licence and its own terms, and the
+registry records them. A licence read is only "cleared" when a human has read the actual text;
+see src/lib/apex/schema.ts for the rule that enforces it.

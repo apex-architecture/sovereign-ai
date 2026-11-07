@@ -1,0 +1,30 @@
+import { spawn } from "node:child_process";
+import { mkdtempSync } from "node:fs";
+import os from "node:os"; import path from "node:path";
+const CHROME="C:/Program Files/Google/Chrome/Application/chrome.exe";
+const PORT=9346;
+const BASE="https://filmverse-1mil8xwzv4y.qoder.website";
+const profile=mkdtempSync(path.join(os.tmpdir(),"apex-live2-"));
+const chrome=spawn(CHROME,["--headless=new","--enable-unsafe-swiftshader",`--remote-debugging-port=${PORT}`,`--user-data-dir=${profile}`,"about:blank"],{stdio:"ignore"});
+const sleep=(ms)=>new Promise(r=>setTimeout(r,ms));
+async function ep(){for(let i=0;i<60;i++){try{const l=await (await fetch(`http://127.0.0.1:${PORT}/json/list`)).json();const p=l.find(t=>t.type==="page");if(p?.webSocketDebuggerUrl)return p.webSocketDebuggerUrl;}catch{}await sleep(250);}throw new Error("no cdp");}
+const ws=new WebSocket(await ep()); await new Promise(r=>ws.addEventListener("open",r,{once:true}));
+let id=0; const waiting=new Map(); const events=[]; const failed=[]; const resp={};
+ws.addEventListener("message",e=>{const m=JSON.parse(e.data);
+ if(m.id&&waiting.has(m.id)){waiting.get(m.id)(m);waiting.delete(m.id);} else if(m.method){
+   events.push(m.method);
+   if(m.method==="Network.loadingFailed") failed.push(m.params.errorText+" "+(m.params.type||""));
+   if(m.method==="Network.responseReceived"&&m.params.response.status>=400) resp[m.params.response.url]=m.params.response.status;
+ }});
+const send=(method,params={})=>new Promise((res,rej)=>{const i=(id+=1);waiting.set(i,m=>m.error?rej(new Error(method+": "+m.error.message)):res(m.result));ws.send(JSON.stringify({id:i,method,params}));});
+const evalJS=async(expr)=>{const r=await send("Runtime.evaluate",{expression:expr,returnByValue:true,awaitPromise:true});if(r.exceptionDetails)throw new Error(JSON.stringify(r.exceptionDetails).slice(0,300));return r.result.value;};
+await send("Page.enable"); await send("Runtime.enable"); await send("Network.enable");
+await send("Emulation.setDeviceMetricsOverride",{width:1440,height:900,deviceScaleFactor:1,mobile:false});
+await send("Page.navigate",{url:BASE+"/dailies.html"});
+events.length=0; for(let i=0;i<100&&!events.includes("Page.loadEventFired");i++) await sleep(100);
+await sleep(4000); await evalJS(`window.scrollTo(0,document.body.scrollHeight)`); await sleep(3000); await evalJS(`window.scrollTo(0,0)`); await sleep(1500);
+console.log("images:", await evalJS(`JSON.stringify([...document.images].map(i=>({src:i.getAttribute("src"),ok:i.complete&&i.naturalWidth>0})),null,0)`));
+console.log("videos:", await evalJS(`JSON.stringify([...document.querySelectorAll("video")].map(v=>({src:v.getAttribute("src"),ready:v.readyState})),null,0)`));
+console.log("http>=400:", JSON.stringify(resp));
+console.log("failed:", JSON.stringify(failed));
+ws.close(); chrome.kill();

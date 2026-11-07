@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Verify a Receipt — free, no account | Sovereign AI Film Verse</title>
+<meta name="description" content="Verify a Film Verse receipt for free, with no account. A receipt makes exactly four statements about a set of bytes; this page lists them, names the limit of each, states what no seal can ever prove, and runs a real SHA-256 hash of your own file offline in your browser.">
+<meta name="color-scheme" content="dark">
+<link rel="stylesheet" href="styles.css">
+
+
+
+
+
+<!-- apex-meta:start -->
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+<link rel="canonical" href="https://filmverse-1mil8xwzv4y.qoder.website/verify.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Sovereign AI Film Verse">
+<meta property="og:title" content="Verify a Receipt">
+<meta property="og:description" content="Verify a Film Verse receipt for free, with no account. A receipt makes exactly four statements about a set of bytes; this page lists them, names the limit of each, states what no seal can ever prove, and runs a real SHA-256 hash of your own file offline in your browser.">
+<meta property="og:url" content="https://filmverse-1mil8xwzv4y.qoder.website/verify.html">
+<meta property="og:image" content="https://filmverse-1mil8xwzv4y.qoder.website/assets/dailies/frame-at-2s.jpg">
+<meta property="og:image:width" content="1280">
+<meta property="og:image:height" content="720">
+<meta property="og:image:alt" content="One frame from the pipeline's own master, extracted at two seconds.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Verify a Receipt">
+<meta name="twitter:description" content="Verify a Film Verse receipt for free, with no account. A receipt makes exactly four statements about a set of bytes; this page lists them, names the limit of each, states what no seal can ever prove, and runs a real SHA-256 hash of your own file offline in your browser.">
+<meta name="twitter:image" content="https://filmverse-1mil8xwzv4y.qoder.website/assets/dailies/frame-at-2s.jpg">
+<!-- apex-meta:end -->
+</head>
+<body data-page="verify" data-crumb="Verify a Receipt">
+<div class="shell">
+  <div class="main">
+    <main class="page">
+      <div class="stack">
+
+        <!-- 1. OPENING -->
+        <header class="section" style="margin-top:0">
+          <h1>Verify a receipt</h1>
+          <p class="note" style="max-width:78ch;margin-top:10px">
+            A receipt is the record this platform attaches to finished work: which bytes went in,
+            which hash came out, which stages ran, and what was left unchecked. Anyone can check one —
+            you, a client, a stranger — with <b>no account, no key, and no payment</b>.
+            Checking a receipt costs nothing and always will: free verification is a product rule here,
+            not a promotion that can lapse. What a receipt proves is narrower than most people expect,
+            and this page says exactly how narrow, before it shows you the tools that run right here.
+          </p>
+          <div class="row" style="margin-top:12px">
+            <a class="btn" href="#hash">Jump to the local hash tool</a>
+            <a class="btn" href="#receipt">Jump to the receipt checker</a>
+            <span class="chip ok">Free forever · no account</span>
+          </div>
+        </header>
+
+        <!-- 2. WHAT A RECEIPT SAYS -->
+        <section class="section" aria-labelledby="h-says">
+          <h2 id="h-says">What a receipt says — and nothing more</h2>
+          <p class="note" style="max-width:78ch">
+            A receipt may make exactly four statements. Each one carries its own limit, printed with it.
+            Anything outside these four is not a weak claim on a receipt — it is a claim a receipt cannot make at all.
+          </p>
+          <div class="grid g2" style="margin-top:12px">
+            <article class="card">
+              <h3>1 · The bytes matched the commit hash</h3>
+              <p class="hint">At seal time, this exact set of bytes hashed to the commit hash recorded on the receipt.</p>
+              <p class="note warn">Limit: the match binds the receipt to those bytes and nothing else. Change one bit and the hash is a different hash — the receipt then describes a file you no longer hold.</p>
+            </article>
+            <article class="card">
+              <h3>2 · The seal existed on a date</h3>
+              <p class="hint">A ledger entry for this seal existed on the date printed on the receipt.</p>
+              <p class="note warn">Limit: existence is not truth. A false statement sealed on a date is still a false statement — the date proves <i>a statement was made</i> then, not that it was correct then.</p>
+            </article>
+            <article class="card">
+              <h3>3 · Which stages produced which hashes</h3>
+              <p class="hint">Each production stage that ran is recorded with the artifact hash it handed on.</p>
+              <p class="note warn">Limit: it records what the platform measured between stages. Inside a tool, the platform sees only the files it passed in and the files it received back.</p>
+            </article>
+            <article class="card">
+              <h3>4 · What was not checked</h3>
+              <p class="hint">The receipt lists the checks the platform deliberately did not run on this job.</p>
+              <p class="note warn">Limit: it is a policy disclosure, not a proof of absence. It tells you what was skipped; you decide what that costs the claim.</p>
+            </article>
+          </div>
+          <div id="says-fence" style="margin-top:12px"></div>
+        </section>
+
+        <!-- 3. WHAT A RECEIPT CANNOT SAY -->
+        <section class="section" aria-labelledby="h-cant">
+          <h2 id="h-cant">What no receipt can ever say</h2>
+          <p class="note" style="max-width:78ch">
+            A seal is an audit trail. It is not digital truth. Plainly, a receipt cannot say:
+          </p>
+          <div class="grid g2" style="margin-top:12px">
+            <div class="card"><p class="note bad" style="margin:0">That the content is <b>true</b>. A sealed sentence can be a sealed lie.</p></div>
+            <div class="card"><p class="note bad" style="margin:0">That the material is <b>authentic</b> or original. The seal never saw its way back to a camera.</p></div>
+            <div class="card"><p class="note bad" style="margin:0">That anyone <b>authorised</b> this. Consent, licence and rights are separate questions with separate records.</p></div>
+            <div class="card"><p class="note bad" style="margin:0">That two things <b>coexisted</b> or were made together. Matching receipts do not merge into one history.</p></div>
+            <div class="card"><p class="note bad" style="margin:0">That the film is <b>good</b>. There is no hash for craft.</p></div>
+            <div class="card"><p class="note bad" style="margin:0">That the record is <b>permanent</b> or tamper-proof. Seals age with the systems that hold them; none of them are ours to guarantee.</p></div>
+          </div>
+        </section>
+
+        <!-- 4. THE MECHANICS -->
+        <section class="section" aria-labelledby="h-mech">
+          <h2 id="h-mech">How it works: commit, seal, anchor, verify</h2>
+          <div class="grid g4">
+            <article class="card">
+              <h3>Commit</h3>
+              <p class="hint">The output files are hashed into one commit hash — a fixed-length fingerprint of exactly these bytes, in this arrangement.</p>
+              <p class="note">Depends on: nothing external. It is arithmetic on a file.</p>
+            </article>
+            <article class="card">
+              <h3>Seal</h3>
+              <p class="hint">The commit hash and the receipt's statements are written into the studio ledger, dated at entry.</p>
+              <p class="note">Depends on: the ledger's own clock and retention. A seal is an audit trail entry, not a guarantee of duration.</p>
+            </article>
+            <article class="card">
+              <h3>Anchor</h3>
+              <p class="hint">Optionally, the ledger's root is published to third-party canonical roots so a stranger can locate the entry without trusting our database.</p>
+              <p class="note">Depends on: external systems we do not own — the roots a seal reaches belong to their operators, not to this platform. Anchoring is opt-in, on finished work only.</p>
+            </article>
+            <article class="card gold">
+              <h3>Verify</h3>
+              <p class="hint">Anyone recomputes the hash of the bytes they hold and compares it to the receipt, then checks the seal entry exists. It costs nothing, needs no account, and that is not going to change.</p>
+              <p class="note">Depends on: you having the bytes and an honest copy of the receipt.</p>
+            </article>
+          </div>
+          <p class="note" style="margin-top:10px">The chain's honest shape: commit fixes the bytes, seal dates the statement, anchor (when opted in) makes the statement findable outside our walls, verify is a comparison anyone can do. No link in that chain makes a claim true.</p>
+        </section>
+
+        <!-- 5. THE LOCAL HASH TOOL -->
+        <section class="section" aria-labelledby="h-hash" id="hash">
+          <h2 id="h-hash">Hash your own bytes — computed on your machine, offline, right now</h2>
+          <div class="card gold">
+            <div class="grid g-side">
+              <div class="stack" style="gap:12px">
+                <div>
+                  <label class="f" for="hf">Choose a file</label>
+                  <input id="hf" type="file">
+                </div>
+                <div>
+                  <label class="f" for="ht">— or paste text to hash exactly as typed</label>
+                  <textarea id="ht" rows="4" placeholder="Paste the text here if you have no file. Leading, trailing and invisible characters count."></textarea>
+                </div>
+                <div class="row">
+                  <button class="btn solid" type="button" id="hbtn">Compute SHA-256</button>
+                  <span class="note">If both are filled, the file wins — its bytes are unambiguous.</span>
+                </div>
+              </div>
+              <div class="stack" style="gap:12px">
+                <div class="note">What you get: the real SHA-256 digest of exactly the bytes you supplied, computed by your browser with <span class="mono">crypto.subtle</span>. No request leaves this page.</div>
+                <div class="note">Why it matters: paste that digest against the commit hash on a receipt. A match means the bytes you hold are the bytes that were sealed. A mismatch means you are not holding that file.</div>
+                <div class="note warn">What it is not: a verdict. This page has no ledger to query, so it cannot tell you a receipt is valid — only you can make the comparison, and the result concerns bytes, never truth.</div>
+              </div>
+            </div>
+            <div id="hash-out" role="status" aria-live="polite" style="margin-top:14px"></div>
+          </div>
+        </section>
+
+        <!-- 6. THE RECEIPT VERIFIER -->
+        <section class="section" aria-labelledby="h-receipt" id="receipt">
+          <h2 id="h-receipt">Check a receipt's signature — in your browser, offline, right now</h2>
+          <p class="note" style="max-width:78ch">
+            The hash tool above checks <i>bytes</i>. This one checks the <i>seal</i>: it verifies the
+            Ed25519 signature over the receipt's manifest, using only the public key printed on the
+            receipt. It runs in this page, it opens no connection, and it needs no account. Paste a
+            receipt below — or one you exported from the studio — and it will tell you exactly what
+            holds and what does not.
+          </p>
+          <div class="card gold" style="margin-top:12px">
+            <div class="grid g-side">
+              <div class="stack" style="gap:12px">
+                <div>
+                  <label class="f" for="rv-json">Paste the receipt (the JSON the studio exported)</label>
+                  <textarea id="rv-json" rows="8" placeholder='{"format":"apex-psi/1","contentHash":"…","creatorPublicKey":"…","algorithm":"ed25519","signature":"…","manifest":{…},"sealedOn":"…"}'></textarea>
+                </div>
+                <div>
+                  <label class="f" for="rv-file">— optional: the finished file, to check it against the receipt's hash</label>
+                  <input id="rv-file" type="file">
+                </div>
+                <div class="row">
+                  <button class="btn solid" type="button" id="rv-btn">Check this receipt</button>
+                  <span class="note">Without a file, the hash row stays <span class="chip warn">cannot check</span> — that is an honest answer, not a pass.</span>
+                </div>
+              </div>
+              <div class="stack" style="gap:12px">
+                <div class="note">Three checks, three separate answers. <b>Signature</b>: does the named key's signature hold over this exact manifest? <b>File</b>: is the file you hold the one the manifest describes? <b>Anchor</b>: is an anchoring proof attached?</div>
+                <div class="note">A pass means the arithmetic held. It does not mean the work is good, true, original, or authorised — a seal is an audit trail, and the page below says what no seal can ever say.</div>
+                <div class="note warn">If your browser cannot verify Ed25519, this panel says <span class="chip warn">cannot check</span>. It will never print a pass it did not compute.</div>
+              </div>
+            </div>
+            <div id="rv-out" role="status" aria-live="polite" style="margin-top:14px"></div>
+          </div>
+        </section>
+
+        <!-- 7. THE FREE DOOR, STATED -->
+        <section class="section" aria-labelledby="h-free">
+          <h2 id="h-free">The free door, stated</h2>
+          <div class="grid g3">
+            <article class="card">
+              <h3>Checking a receipt: zero</h3>
+              <p class="hint">Free forever, for anyone, with no account and no payment. Not a trial, not a tier — verification is priced at zero as a rule of the platform, because a seal that only its maker can check is worthless.</p>
+            </article>
+            <article class="card">
+              <h3>The one revenue channel</h3>
+              <p class="hint">The platform charges for one thing: an <b>anchor</b> of finished work, published to third-party roots on request. Anchoring is an opt-in service; the receipt and its check are not.</p>
+            </article>
+            <article class="card">
+              <h3>Never charged, never gated</h3>
+              <p class="hint">Reading a receipt, recomputing a hash, comparing the two — these stay outside the paywall permanently. If a check ever sits behind a price, that door on this page is the one to point at.</p>
+            </article>
+          </div>
+        </section>
+
+        <!-- 7. WHERE THE CHECKS ACTUALLY RUN -->
+        <section class="section" aria-labelledby="h-state">
+          <h2 id="h-state">Where the checks actually run — the honest state</h2>
+          <p class="note" style="max-width:78ch">
+            This page is a published static rail. It makes no server call, so it will not pretend to.
+            What is live, what is elsewhere, and what is simply not yet true — stated row by row:
+          </p>
+          <div class="card" style="margin-top:12px;padding-top:8px;overflow-x:auto">
+            <table class="t">
+              <thead>
+                <tr>
+                  <th scope="col">Check</th>
+                  <th scope="col">State</th>
+                  <th scope="col">Where it runs</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>SHA-256 of bytes you hold</td>
+                  <td><span class="chip ok">live on this page</span></td>
+                  <td>Your browser, offline, via <span class="mono">crypto.subtle</span>. The panel above is the real tool, not a mock of one.</td>
+                </tr>
+                <tr>
+                  <td>Comparing a digest to a receipt's commit hash</td>
+                  <td><span class="chip ok">live — done by you</span></td>
+                  <td>Eyes on two strings. This page deliberately shows no verdict of its own; there is no fake <b>APPROVED</b> output anywhere on this rail.</td>
+                </tr>
+                <tr>
+                  <td>Checking a receipt's Ed25519 signature</td>
+                  <td><span class="chip ok">live on this page</span></td>
+                  <td>Your browser, offline, via <span class="mono">crypto.subtle</span>. The panel above verifies the signature over the manifest with the public key printed on the receipt. A browser without Ed25519 support is told <b>cannot check</b>, never a pass.</td>
+                </tr>
+                <tr>
+                  <td>Querying the seal ledger for an entry</td>
+                  <td><span class="chip warn">not here</span></td>
+                  <td>The studio app holds the ledger queries. This static page cannot reach it and says so instead of simulating it.</td>
+                </tr>
+                <tr>
+                  <td>Human licence reads behind a receipt's tool list</td>
+                  <td><span class="chip bad" id="licence-cell">—</span></td>
+                  <td>Counted live from the registry snapshot: the figure beside this row is read from the data, not typed in. A receipt does not, yet, imply a cleared licence.</td>
+                </tr>
+                <tr>
+                  <td>Driver coverage behind every stage a receipt lists</td>
+                  <td><span class="chip bad" id="dialogue-cell">—</span></td>
+                  <td>Printed from the snapshot's coverage: a named stage has no driver wired, and a receipt that cites that stage's output is citing hand work or a rented service.</td>
+                </tr>
+                <tr>
+                  <td>A receipt for a finished film</td>
+                  <td><span class="chip bad">does not exist yet</span></td>
+                  <td>No film has been finished by this platform yet, so no receipt of ours is published here to check end to end. The machinery now exists and is proved against itself: the studio can issue a receipt, and the panel above checks one. What is still ahead is the finished film that the receipt would describe.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="grid g3" style="margin-top:12px" id="state-band"></div>
+        </section>
+
+        <!-- 8. FOOTER -->
+        <footer class="foot">
+          <span class="mono" id="gen"></span>
+          <span>Static page · the hash panel opens no connection · no tracker, no account.</span>
+        </footer>
+
+        <div id="foot-fence"></div>
+
+      </div>
+    </main>
+  </div>
+</div>
+
+<script src="data.generated.min.js"></script>
+<script src="shell.min.js"></script>
+<script src="psi-verify.min.js"></script>
+<script>
+(function () {
+  "use strict";
+
+  function esc(v) {
+    return String(v === null || v === undefined ? "" : v)
+      .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;").replace(/'/g, "&#39;");
+  }
+
+  function mount(id, html) {
+    const node = document.getElementById(id);
+    if (node) node.innerHTML = html || '<div class="empty">No registry data loaded — the snapshot is not on disk here, so nothing is shown rather than something guessed.</div>';
+  }
+
+  const HAS_V = !!(window.V && V.data && V.data.stats);
+  const S = HAS_V ? V.stats : {};
+  const COV = HAS_V ? (V.data.coverage || {}) : {};
+  function num(n) { return HAS_V ? V.num(n) : (n === undefined || n === null ? "—" : String(n)); }
+  function fenceOf(text) { return HAS_V ? V.fence(text) : '<div class="fence">' + esc(text) + "</div>"; }
+
+  /* ---------- 2. the four-statement fence ---------- */
+  mount("says-fence", fenceOf(
+    "Those four statements are the whole permitted claim of a receipt. " +
+    "A seal is an audit trail, never digital truth: it proves that a statement was made, at a time, about exact bytes — " +
+    "it cannot prove the statement is true, the material authentic, the use authorised, or anything about quality."
+  ));
+
+  /* ---------- 7. licence + coverage cells, read from the snapshot ---------- */
+  const cleared = HAS_V ? (S.rows || 0) - (S.awaitingLicenceRead || 0) : null;
+  if (HAS_V) {
+    document.getElementById("licence-cell").textContent =
+      num(cleared) + " of " + num(S.rows) + " read";
+    const empties = (COV.empty || []);
+    document.getElementById("dialogue-cell").textContent =
+      empties.length ? "no driver: " + empties.join(", ") : "every stage wired";
+
+    mount("state-band",
+      V.stat(num(cleared) + " / " + num(S.rows), "registry rows with a human licence read", "bad") +
+      V.stat(num(COV.wired) + " / " + num(COV.total), "stages with a driver wired", "plain") +
+      V.stat(num(S.reviewQueue), "rows still sitting in the review queue", "plain")
+    );
+
+    /* ---------- 8. footer: snapshot provenance + honesty line ---------- */
+    document.getElementById("gen").textContent = V.generated();
+    mount("foot-fence", fenceOf(
+      "No film has been finished by this platform yet, so nothing here has ever verified a real film; " +
+      "the panels above are the real tools — they check bytes and signatures, not claims."
+    ));
+  } else {
+    document.getElementById("licence-cell").textContent = "data not loaded";
+    document.getElementById("dialogue-cell").textContent = "data not loaded";
+    mount("state-band", "");
+    document.getElementById("gen").textContent = "";
+    mount("foot-fence", "");
+  }
+
+  /* ---------- 5. the local SHA-256 tool ---------- */
+  const $file = document.getElementById("hf");
+  const $text = document.getElementById("ht");
+  const $btn = document.getElementById("hbtn");
+  const $out = document.getElementById("hash-out");
+
+  const subtle = window.crypto && window.crypto.subtle;
+
+  function out(html) { $out.innerHTML = html; }
+
+  if (!subtle || typeof subtle.digest !== "function") {
+    $btn.disabled = true;
+    $file.disabled = true; $text.disabled = true;
+    out('<div class="note bad"><b>No SubtleCrypto in this browser.</b> This page will not fake a digest. ' +
+        'SHA-256 needs a current browser with <span class="mono">window.crypto.subtle</span>; ' +
+        'open it in one, or hash the file with a local tool you trust and compare the strings yourself.</div>');
+  } else {
+    $btn.addEventListener("click", function () {
+      const file = $file.files && $file.files[0];
+      const text = $text.value;
+
+      if (!file && text === "") {
+        out('<div class="note warn"><b>Nothing to hash.</b> Choose a file or paste text first. ' +
+            'An empty input has no answer, and this page does not print the empty-string digest as if you had fed it something.</div>');
+        return;
+      }
+
+      $btn.disabled = true;
+      const finish = function (hex, label, byteCount) {
+        $btn.disabled = false;
+        out(
+          '<div class="card" style="background:var(--ink-2)">' +
+            '<h3>SHA-256 of ' + esc(label) + ' · ' + num(byteCount) + ' bytes</h3>' +
+            '<p class="mono" style="word-break:break-all;margin:6px 0 10px">' + hex + '</p>' +
+            '<p class="note">This digest is the commit hash of <b>exactly these bytes</b>, computed on this machine, offline. ' +
+            'If it equals the commit hash on a receipt, you hold the bytes that receipt describes. ' +
+            'It is not proof the content is true, authentic, authorised, or finished by anyone.</p>' +
+          '</div>'
+        );
+      };
+      const fail = function () {
+        $btn.disabled = false;
+        out('<div class="note bad"><b>The hash could not be computed.</b> The browser refused to read the input or run the digest. No result is shown, because no result exists.</div>');
+      };
+
+      if (file) {
+        file.arrayBuffer()
+          .then(function (buf) { return subtle.digest("SHA-256", buf); })
+          .then(function (h) {
+            const bytes = file.size || 0;
+            finish(Array.from(new Uint8Array(h)).map(function (b) { return b.toString(16).padStart(2, "0"); }).join(""),
+                   "file “" + file.name + "”", bytes);
+          })
+          .catch(fail);
+      } else {
+        const enc = new TextEncoder().encode(text);
+        subtle.digest("SHA-256", enc)
+          .then(function (h) {
+            finish(Array.from(new Uint8Array(h)).map(function (b) { return b.toString(16).padStart(2, "0"); }).join(""),
+                   "the pasted text", enc.length);
+          })
+          .catch(fail);
+      }
+    });
+  }
+
+  /* ---------- 6. the receipt verifier ---------- */
+  var PSI = window.APEX_PSI;
+  var $rText = document.getElementById("rv-json");
+  var $rFile = document.getElementById("rv-file");
+  var $rBtn = document.getElementById("rv-btn");
+  var $rOut = document.getElementById("rv-out");
+
+  function chipFor(outcome) {
+    if (outcome === "pass") return '<span class="chip ok">holds</span>';
+    if (outcome === "fail") return '<span class="chip bad">does not hold</span>';
+    return '<span class="chip warn">cannot check</span>';
+  }
+
+  function outcomeWord(outcome) {
+    if (outcome === "pass") return "holds";
+    if (outcome === "fail") return "does not hold";
+    return "cannot be checked here";
+  }
+
+  if (!PSI) {
+    $rBtn.disabled = true;
+    $rOut.innerHTML = '<div class="note bad"><b>The verifier did not load.</b> This page will not simulate a ' +
+      'signature check it cannot run. Reload with scripts enabled, or check the receipt with a local tool you trust.</div>';
+  } else {
+    $rBtn.addEventListener("click", function () {
+      var raw = $rText.value.trim();
+      if (!raw) {
+        $rOut.innerHTML = '<div class="note warn"><b>No receipt pasted.</b> There is nothing to check yet, ' +
+          'and this page does not invent a verdict for an empty answer.</div>';
+        return;
+      }
+      var receipt;
+      try {
+        receipt = JSON.parse(raw);
+      } catch (e) {
+        $rOut.innerHTML = '<div class="note bad"><b>That is not valid JSON.</b> The receipt was not parsed, ' +
+          'so nothing was checked. Copy the whole object, including the braces.</div>';
+        return;
+      }
+
+      var file = $rFile.files && $rFile.files[0];
+      $rBtn.disabled = true;
+      $rOut.innerHTML = '<div class="note">Checking…</div>';
+
+      var bytes = file ? file.arrayBuffer() : Promise.resolve(null);
+      bytes.then(function (buf) {
+        return PSI.verifyReceipt(receipt, buf === null ? undefined : new Uint8Array(buf));
+      }).then(function (v) {
+        $rBtn.disabled = false;
+        var rows =
+          '<div class="card" style="background:var(--ink-2)">' +
+            '<h3>Verdict</h3>' +
+            '<table class="t" style="margin-top:8px"><tbody>' +
+              '<tr><th scope="row">Signature</th><td>' + chipFor(v.signature) + ' <span class="note">' + esc(outcomeWord(v.signature)) + '</span></td></tr>' +
+              '<tr><th scope="row">File matches manifest</th><td>' + chipFor(v.fileMatches) + ' <span class="note">' + esc(outcomeWord(v.fileMatches)) + '</span></td></tr>' +
+              '<tr><th scope="row">Anchor proof</th><td>' + chipFor(v.anchor) + ' <span class="note">' + esc(outcomeWord(v.anchor)) + '</span></td></tr>' +
+            '</tbody></table>' +
+            '<div class="note" style="margin-top:12px"><b>What this shows:</b></div>' +
+            '<ul class="note" style="margin:6px 0 0;padding-left:18px">' +
+              v.claims.map(function (c) { return "<li>" + esc(c) + "</li>"; }).join("") +
+            '</ul>' +
+            '<div class="note warn" style="margin-top:12px"><b>What this does not show:</b></div>' +
+            '<ul class="note" style="margin:6px 0 0;padding-left:18px">' +
+              v.notClaims.map(function (c) { return "<li>" + esc(c) + "</li>"; }).join("") +
+            '</ul>' +
+            (v.receiptId ? '<p class="mono" style="margin-top:12px;word-break:break-all">receipt id · ' + esc(v.receiptId) + '</p>' : '') +
+            (v.reason ? '<p class="note" style="margin-top:6px">' + esc(v.reason) + '</p>' : '') +
+          '</div>';
+        $rOut.innerHTML = rows;
+      }).catch(function (e) {
+        $rBtn.disabled = false;
+        $rOut.innerHTML = '<div class="note bad"><b>The check could not run.</b> The browser refused to read the ' +
+          'receipt or the file. No verdict is shown, because no verdict was computed.</div>';
+      });
+    });
+  }
+})();
+</script>
+</body>
+</html>

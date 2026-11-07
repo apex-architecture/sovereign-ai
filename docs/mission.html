@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Start a Mission — one idea walked from story to master | Sovereign AI Film Verse</title>
+<meta name="description" content="Type one sentence. The platform walks it down the spine — story, script you accept, storyboard, film type, shot list, motion, voices, mix, captions, master — and at every stage ranks the open-source or paid tool that can take the job, on your laptop or on a rented GPU or through your own API key.">
+<meta name="color-scheme" content="dark">
+<link rel="stylesheet" href="styles.css">
+
+
+
+<!-- apex-meta:start -->
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+<link rel="canonical" href="https://filmverse-1mil8xwzv4y.qoder.website/mission.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Sovereign AI Film Verse">
+<meta property="og:title" content="Start a Mission">
+<meta property="og:description" content="Type one sentence. The platform walks it down the spine — story, script you accept, storyboard, film type, shot list, motion, voices, mix, captions, master — and at every stage ranks the open-source or paid tool that can take the job, on your laptop or on a rented GPU or through your own API key.">
+<meta property="og:url" content="https://filmverse-1mil8xwzv4y.qoder.website/mission.html">
+<meta property="og:image" content="https://filmverse-1mil8xwzv4y.qoder.website/assets/dailies/frame-at-2s.jpg">
+<meta property="og:image:width" content="1280">
+<meta property="og:image:height" content="720">
+<meta property="og:image:alt" content="One frame from the pipeline's own master, extracted at two seconds.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Start a Mission">
+<meta name="twitter:description" content="Type one sentence. The platform walks it down the spine — story, script you accept, storyboard, film type, shot list, motion, voices, mix, captions, master — and at every stage ranks the open-source or paid tool that can take the job, on your laptop or on a rented GPU or through your own API key.">
+<meta name="twitter:image" content="https://filmverse-1mil8xwzv4y.qoder.website/assets/dailies/frame-at-2s.jpg">
+<!-- apex-meta:end -->
+</head>
+<body data-page="mission" data-crumb="Start a Mission">
+<div class="shell">
+  <div class="main">
+    <main class="page">
+
+      <header class="section" style="margin-top:0">
+        <h1>Start a Mission</h1>
+        <p class="note" style="max-width:78ch;margin-top:10px">
+          A mission is one idea walked all the way to a master. You write a sentence; the road turns it
+          into a story, then a script you either accept or send back for a rewrite, then a storyboard,
+          then a shot list, then moving pictures, voices, a mix, captions and a graded file. At each
+          step it ranks the tool that can actually take that step — open weights first, paid engines
+          when they are worth it — and it never asks you to own the hardware.
+        </p>
+        <p class="note" style="max-width:78ch">
+          Three bodies, always: <b>your machine</b>, <b>a GPU rented under your own cloud account</b>, or
+          <b>a vendor API billed to your own key</b>. The platform ships the graph and the paperwork; the
+          vendor bills you, not us. This page runs the platform's own
+          <span class="mono">src/lib/apex/spine.ts</span> and <span class="mono">engines.ts</span> in your
+          browser — the same two files a real run used to choose its engine.
+        </p>
+      </header>
+
+      <section class="section">
+        <h2>1 · The idea, and the shape of the film</h2>
+        <div>
+          <label class="f" for="m-idea">What happens?</label>
+          <textarea id="m-idea" rows="3" style="width:100%;max-width:78ch;background:var(--panel);color:inherit;border:1px solid var(--line);padding:10px;font:inherit"
+            placeholder="A detective chases a figure across neon rooftops in the rain and finds a door that was not there yesterday.">A detective chases a figure across neon rooftops in the rain and finds a door that was not there yesterday.</textarea>
+        </div>
+        <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(180px,1fr));margin-top:14px">
+          <div>
+            <label class="f" for="m-type">Type of film</label>
+            <select id="m-type">
+              <option value="">not chosen yet</option>
+              <option value="cartoon">cartoon — flat, drawn, animated lines</option>
+              <option value="animated">animated — 3D, rendered, stylised</option>
+              <option value="human">human — photographic live action</option>
+              <option value="hybrid">hybrid — real people in built worlds</option>
+            </select>
+          </div>
+          <div>
+            <label class="f" for="m-runtime">Finished runtime (seconds)</label>
+            <input id="m-runtime" type="number" min="5" max="600" value="60">
+          </div>
+          <div>
+            <label class="f" for="m-shots">Shots in the list</label>
+            <input id="m-shots" type="number" min="1" max="200" value="8">
+          </div>
+          <div>
+            <label class="f" for="m-edge">Long edge asked</label>
+            <select id="m-edge">
+              <option value="832">832 px — engine-native</option>
+              <option value="1280">1280 px — 720p</option>
+              <option value="1920" selected>1920 px — 1080p</option>
+              <option value="3840">3840 px — 4K master</option>
+            </select>
+          </div>
+          <div>
+            <label class="f" for="m-territory">Your territory (licence purposes)</label>
+            <select id="m-territory">
+              <option>Australia</option><option>New Zealand</option><option>United States</option>
+              <option>United Kingdom</option><option>Germany</option><option>Japan</option><option>Singapore</option>
+            </select>
+          </div>
+        </div>
+        <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(260px,1fr));margin-top:14px">
+          <div>
+            <label class="f" for="m-intent">What the film is for</label>
+            <select id="m-intent">
+              <option value="personal">personal — nobody pays, nobody sues</option>
+              <option value="client">client work — money changes hands</option>
+              <option value="redistribute">release or distribute it</option>
+            </select>
+          </div>
+          <div>
+            <label class="f" for="m-budget">Budget for one stage (USD)</label>
+            <input id="m-budget" type="number" min="0" step="1" value="0">
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <h2>2 · The body you have</h2>
+        <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(180px,1fr))">
+          <div>
+            <label class="f" for="m-gpu">GPU you can reach</label>
+            <select id="m-gpu">
+              <option value="">none — everything must be rented or billed</option>
+              <option value="4">4 GB</option>
+              <option value="6" selected>6 GB (this laptop)</option>
+              <option value="8">8 GB</option>
+              <option value="12">12 GB</option>
+              <option value="24">24 GB</option>
+              <option value="80">80 GB (rented pod)</option>
+            </select>
+          </div>
+          <div style="grid-column:1/-1">
+            <span class="note">Bodies you hold credentials or software for:</span><br>
+            <label class="f"><input type="checkbox" id="b-local-comfy" checked> ComfyUI reachable</label>
+            <label class="f"><input type="checkbox" id="b-local-cli" checked> command line installed</label>
+            <label class="f"><input type="checkbox" id="b-rented-gpu"> a cloud account I can rent a card from</label>
+            <label class="f"><input type="checkbox" id="b-vendor-api"> vendor API keys of my own</label>
+          </div>
+        </div>
+        <p class="note" style="margin-top:12px">
+          Try it as three different creators —
+          <button type="button" class="chip drive" data-preset="laptop">laptop only</button>
+          <button type="button" class="chip drive" data-preset="nogpu">no GPU at all, one $40 key</button>
+          <button type="button" class="chip drive" data-preset="studio">studio machine, client work</button>
+        </p>
+      </section>
+
+      <section class="section">
+        <h2>3 · The spine, walked</h2>
+        <p class="note" style="max-width:78ch" id="m-count"></p>
+        <div id="m-next" style="margin:12px 0"></div>
+        <div id="m-spine" style="overflow-x:auto"></div>
+        <p class="note" style="margin-top:10px">
+          Pick any row to see the whole ranking behind it. A stage that is <span class="chip warn">waiting</span>
+          is not broken: the road will not spend compute on a script you have not read.
+        </p>
+      </section>
+
+      <section class="section">
+        <h2>4 · <span id="m-stage-name">the next stage</span>, engine by engine</h2>
+        <div id="m-offer" style="overflow-x:auto"></div>
+        <h3 id="h-refused" style="margin-top:18px">Refused, and why</h3>
+        <div id="m-refused" style="overflow-x:auto"></div>
+        <h3 id="h-escape" style="margin-top:18px">If nothing here can do it, here is the body that can</h3>
+        <div id="m-escape" style="overflow-x:auto"></div>
+        <h3 id="h-handoff" style="margin-top:18px">The handoff that leaves this page</h3>
+        <div id="m-handoff"></div>
+      </section>
+
+      <section class="section">
+        <h2>5 · How wide the road is</h2>
+        <p class="note" style="max-width:78ch" id="m-depth"></p>
+        <div id="m-bars" style="overflow-x:auto"></div>
+      </section>
+
+      <section class="section">
+        <h2>6 · What this is not yet</h2>
+        <p class="note" style="max-width:78ch" id="m-honest"></p>
+        <div id="m-fence"></div>
+      </section>
+
+      <footer class="foot">
+        <span id="gen"></span>
+        <a href="engines.html">The Engine Road</a>
+        <a href="workflow.html">Production</a>
+        <a href="dailies.html">Dailies</a>
+        <a href="rights.html">Rights &amp; Licensing</a>
+      </footer>
+
+    </main>
+  </div>
+</div>
+
+<script src="data.shell.min.js"></script>
+<script src="engines.min.js"></script>
+<script src="shell.min.js"></script>
+<script>
+(function () {
+  const EN = window.APEX_ENGINES;
+  const SP = window.APEX_SPINE;
+  if (!EN || !SP) {
+    document.getElementById("m-spine").innerHTML =
+      '<p class="note bad">The engine index did not load, so the spine cannot be walked. Run <span class="mono">node scripts/build-site.mjs</span> and reload.</p>';
+    return;
+  }
+  const { ENGINES, rankEngines, escapeRoutes } = EN;
+  const { SPINE, planMission, nextAction, handoffFor, dictionaryShape, missionFromIdea } = SP;
+  const esc = (s) => String(s ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+  const id = (x) => document.getElementById(x);
+  const v = (x) => id(x).value;
+  const chip = (cls, text) => `<span class="chip ${cls}">${esc(text)}</span>`;
+  const money = (q) => (q === null || q === undefined ? "price unmeasured" : q === 0 ? "$0 — your hardware" : `$${q.toFixed(2)}`);
+  const STATE_CHIP = { next: "drive", ready: "", waiting: "warn", skipped: "", done: "ok" };
+
+  let selected = null;
+
+  function mission() {
+    return missionFromIdea(v("m-idea") || "(no idea typed yet)", {
+      filmType: v("m-type") || null,
+      runtimeSeconds: Number(v("m-runtime")) || 60,
+      shotCount: Number(v("m-shots")) || 1,
+      qualityEdge: Number(v("m-edge")),
+      territory: v("m-territory"),
+      intent: v("m-intent"),
+      budgetUsd: Number(v("m-budget")) || 0,
+      vramGb: v("m-gpu") === "" ? null : Number(v("m-gpu")),
+      executors: ["local-comfy", "local-cli", "rented-gpu", "vendor-api"].filter((k) => id("b-" + k).checked),
+      // Everything the road can already answer for: the writing is only unaccepted if you have not ticked it.
+      accepted: accepted(),
+      delivered: delivered(),
+    });
+  }
+
+  const acceptedStages = new Set();
+  const accepted = () => [...acceptedStages];
+  // An artefact counts as delivered when its stage has run or been accepted; the plan decides the rest.
+  const delivered = () => [...acceptedStages].map((s) => (SPINE.find((x) => x.stage === s) || {}).produces).filter(Boolean);
+
+  function toggleAccept(stage) {
+    if (acceptedStages.has(stage)) acceptedStages.delete(stage);
+    else acceptedStages.add(stage);
+    draw();
+  }
+
+  const PRESETS = {
+    laptop: { gpu: "6", budget: "0", bodies: ["local-comfy", "local-cli"], type: "human" },
+    nogpu: { gpu: "", budget: "40", bodies: ["vendor-api", "rented-gpu"], type: "hybrid" },
+    studio: { gpu: "24", budget: "200", bodies: ["local-comfy", "local-cli", "rented-gpu", "vendor-api"], type: "human", intent: "client" },
+  };
+  function applyPreset(name) {
+    const p = PRESETS[name];
+    if (!p) return;
+    id("m-gpu").value = p.gpu;
+    id("m-budget").value = p.budget;
+    id("m-type").value = p.type;
+    if (p.intent) id("m-intent").value = p.intent;
+    for (const k of ["local-comfy", "local-cli", "rented-gpu", "vendor-api"]) id("b-" + k).checked = p.bodies.includes(k);
+    // Each preset stands in for a creator who has already read and accepted the writing and the boards,
+    // so the first thing they see is the stage where the money and the hardware actually bite.
+    acceptedStages.clear();
+    for (const s of ["idea", "story", "script", "shotlist", "storyboard", "character_lock"]) acceptedStages.add(s);
+    draw();
+  }
+
+  function draw() {
+    const m = mission();
+    const plan = planMission(m);
+    const action = nextAction(plan);
+    const runnable = plan.filter((s) => s.state === "next" || s.state === "ready" || s.state === "done").length;
+    const waiting = plan.filter((s) => s.state === "waiting").length;
+    id("m-count").innerHTML =
+      `Fourteen stages in the spine · ${runnable} reachable on the body you declared · ${waiting} held by something you have not accepted yet · ` +
+      `${ENGINES.length} engines in the dictionary, ${dictionaryShape(ENGINES).reduce((n, r) => n + r.openSource, 0)} of them open source. ` +
+      `Tick the writing stages below to let the road spend compute on them.`;
+
+    id("m-next").innerHTML =
+      `<div class="fence"><b>NEXT:</b> ${esc(action.label)} — ${esc(action.how)}</div>`;
+
+    id("m-spine").innerHTML =
+      `<table class="t"><thead><tr><th scope="col">Stage</th><th scope="col">Where it is</th><th scope="col">Engine it would be offered</th>` +
+      `<th scope="col">This step costs</th><th scope="col">What it means for you</th><th scope="col">Yours?</th></tr></thead><tbody>` +
+      plan
+        .map((step) => {
+          const top = step.ranking && step.ranking.offers[0];
+          const engine =
+            step.spec.stage === "idea"
+              ? '<span class="note">yours — the premise is your line, not an engine job</span>'
+              : step.state === "waiting" || step.state === "skipped"
+              ? '<span class="note">not ranked yet — the stage above is not yours to spend</span>'
+              : top
+                ? `${esc(top.engine.name)} ${chip(top.engine.body.weightsPublic ? "ok" : "", top.engine.licence.spdx)}`
+                : step.ranking
+                  ? `${chip("bad", "no engine passes the gates")} <span class="note">${step.ranking.refused.length} refused</span>`
+                  : chip("warn", "no engine in the dictionary yet");
+          const caveat = top && top.caveats.length ? `<br><span class="note bad">caveat: ${esc(top.caveats.join("; "))}</span>` : "";
+          const note = step.blocker ? esc(step.blocker) : step.state === "done" ? "accepted by you" : esc(step.spec.ask);
+          const tick = step.spec.approval === "creator"
+            ? `<button type="button" class="chip ${acceptedStages.has(step.spec.stage) ? "ok" : "drive"}" data-accept="${step.spec.stage}">${acceptedStages.has(step.spec.stage) ? "accepted" : "accept this"}</button>`
+            : step.spec.approval === "licence" ? chip("warn", "needs a human licence read") : chip("", "the machine decides");
+          const row = `<tr data-stage="${step.spec.stage}"${step.spec.stage === (selected || (plan.find((p) => p.state === "next") || {}).spec?.stage) ? ' class="sel"' : ""}>
+            <td><b>${esc(step.spec.label)}</b><br><span class="mono note">${esc(step.spec.stage)}</span></td>
+            <td>${chip(STATE_CHIP[step.state], step.state)}</td>
+            <td>${engine}${caveat}</td>
+            <td>${top ? `<b>${money(top.quoteUsd)}</b>` : "—"}</td>
+            <td style="max-width:44ch">${note}</td>
+            <td>${tick}</td>
+          </tr>`;
+          return row;
+        })
+        .join("") +
+      `</tbody></table>`;
+
+    const target = plan.find((p) => p.spec.stage === selected) || plan.find((p) => p.state === "next") || plan[0];
+    drawStage(target, m);
+    drawDepth();
+
+    for (const b of document.querySelectorAll("[data-accept]")) b.addEventListener("click", (ev) => { ev.stopPropagation(); toggleAccept(b.dataset.accept); });
+    for (const row of document.querySelectorAll("#m-spine tbody tr")) row.addEventListener("click", () => { selected = row.dataset.stage; draw(); });
+  }
+
+  function drawStage(step, m) {
+    id("m-stage-name").textContent = step.spec.label.toLowerCase();
+    if (step.spec.stage === "idea") {
+      id("m-offer").innerHTML = `<div class="fence"><b>This step has no engine because it has no job for one.</b> The premise is the creator's own line — you write it in the box above, and the platform's writing brain takes it from the next step: story, then script, then shot list. Every stage after this one is ranked against the engines that can actually run it.</div>`;
+      id("m-refused").innerHTML = "";
+      id("m-escape").innerHTML = "";
+      id("m-handoff").innerHTML = "";
+      for (const h of ["h-refused", "h-escape", "h-handoff"]) id(h).style.display = "none";
+      return;
+    }
+    if (!step.context) {
+      id("m-offer").innerHTML = `<p class="note">${esc(step.blocker ?? "this stage is not being ranked right now")}</p>`;
+      id("m-refused").innerHTML = "";
+      id("m-escape").innerHTML = "";
+      id("m-handoff").innerHTML = "";
+      for (const h of ["h-refused", "h-escape", "h-handoff"]) id(h).style.display = "none";
+      return;
+    }
+    const r = rankEngines(step.context, ENGINES);
+    const escapes = escapeRoutes(step.context, ENGINES);
+
+    id("m-offer").innerHTML = r.offers.length
+      ? `<table class="t"><caption class="note" style="text-align:left;padding-bottom:8px">The ask this stage sends: ${step.context.seconds}s · ${step.context.qualityEdge ?? "any"} px · budget $${step.context.budgetUsd} · ${esc(step.context.territory)} · ${esc(step.context.intent)}</caption>` +
+        `<thead><tr><th scope="col">#</th><th scope="col">Engine</th><th scope="col">Licence</th><th scope="col">Blind vote</th><th scope="col">Ceiling</th><th scope="col">Cost of this step</th><th scope="col">Why it is here</th></tr></thead><tbody>` +
+        r.offers.map((o, i) => {
+          const e = o.engine;
+          return `<tr><td class="mono">${i + 1}</td>
+            <td><b>${esc(e.name)}</b><br><span class="note">${esc(e.kind)} · ${e.body.weightsPublic ? "open weights" : "closed"} · runs on ${esc(e.body.executors.join(", ") || "nothing")}</span>${o.caveats.length ? `<br><span class="note bad">${esc(o.caveats.join("; "))}</span>` : ""}</td>
+            <td>${chip(e.licence.attested ? "ok" : "warn", e.licence.spdx)}${e.licence.excludedTerritories.length ? `<br>${chip("bad", "bans " + e.licence.excludedTerritories.join(", "))}` : ""}</td>
+            <td>${e.board ? `<span class="mono">${e.board.elo}</span> ${chip("drive", "#" + e.board.rank)}<br><span class="note">${esc(e.board.name)}, ${esc(e.board.asOf)}</span>` : chip("", "no independent number")}</td>
+            <td class="mono">${e.ceiling.maxEdge ?? "—"}px / ${e.ceiling.maxSeconds ?? "—"}s / ${e.ceiling.nativeAudio ? "sound" : "silent"}</td>
+            <td><b>${money(o.quoteUsd)}</b><br><span class="note">${esc(o.quoteBasis)}</span></td>
+            <td style="max-width:34ch">${esc(e.fits)}</td></tr>`;
+        }).join("") + `</tbody></table>`
+      : `<div class="fence"><b>Nothing in the dictionary passes every gate for this step.</b> Either the stage has no engine yet — the honest answer, printed rather than faked — or the body you declared cannot serve the ask. The escapes below name the body that could.</div>`;
+
+    id("m-refused").innerHTML = r.refused.length
+      ? `<table class="t"><thead><tr><th scope="col">Engine</th><th scope="col">Gate</th><th scope="col">The reason, in the index's own words</th></tr></thead><tbody>` +
+        r.refused.map((x) => `<tr><td><b>${esc(x.engine.name)}</b><br><span class="note">${esc(x.engine.licence.spdx)}</span></td><td>${chip("bad", x.gate)}</td><td>${esc(x.why)}</td></tr>`).join("") +
+        `</tbody></table>`
+      : `<p class="note ok">Nothing refused for this ask — every engine the dictionary holds for this stage passed all six gates.</p>`;
+
+    id("m-escape").innerHTML = escapes.length
+      ? `<table class="t"><thead><tr><th scope="col">Engine</th><th scope="col">Cost of this step</th><th scope="col">What you would have to bring</th></tr></thead><tbody>` +
+        escapes.map((x) => `<tr><td><b>${esc(x.engine.name)}</b><br><span class="note">${esc(x.engine.fits.split(".")[0])}.</span></td><td><b>${money(x.quoteUsd)}</b><br><span class="note">${esc(x.quoteBasis)}</span></td><td>${esc(x.precondition)}</td></tr>`).join("") +
+        `</tbody></table>`
+      : `<p class="note">No escape needed: the answer is already on a body you declared.</p>`;
+
+    const hand = handoffFor(step, m);
+    id("m-handoff").innerHTML = hand
+      ? `<pre class="mono note" style="white-space:pre-wrap;max-width:78ch">${esc(JSON.stringify({ mission: hand.mission, stage: hand.stage, engine: hand.engineId, body: hand.body, quoteUsd: hand.quoteUsd, quoteBasis: hand.quoteBasis, ask: hand.ask }, null, 2))}</pre>` +
+        `<p class="note" style="max-width:78ch">That object is the whole job. It names no path, no port and no machine of ours — it can be posted to a rented card or a vendor endpoint, and the bill lands on whoever's key ran it.</p>`
+      : `<p class="note">No handoff yet: this stage has no engine that passed the gates, so there is nothing to address to a body.</p>`;
+
+    for (const h of ["h-refused", "h-escape", "h-handoff"]) id(h).style.display = "";
+  }
+
+  function drawDepth() {
+    const shape = dictionaryShape(ENGINES);
+    const max = Math.max(1, ...shape.map((r) => r.engines));
+    id("m-depth").textContent =
+      `The dictionary is ${ENGINES.length} engines deep across ${shape.length} stages. Width per stage decides whether a ranking is a real choice or a single option dressed up as one.`;
+    id("m-bars").innerHTML =
+      `<table class="t"><thead><tr><th scope="col">Stage</th><th scope="col">Engines</th><th scope="col">Open source</th><th scope="col">Priced</th><th scope="col">Drivable today</th><th scope="col">Width</th></tr></thead><tbody>` +
+      shape.map((r) => `<tr><td>${esc(r.label)}</td><td class="mono">${r.engines}</td><td class="mono">${r.openSource}</td><td class="mono">${r.priced}</td><td class="mono">${r.drivable}</td>` +
+        `<td><span style="display:inline-block;height:9px;width:${Math.round((r.engines / max) * 160)}px;background:var(--gold,#c9a227)"></span>${r.stage === "idea" ? ` ${chip("ok", "yours")}` : r.engines === 0 ? ` ${chip("bad", "gap")}` : ""}</td></tr>`).join("") +
+      `</tbody></table>`;
+    const gaps = shape.filter((r) => r.engines === 0 && r.stage !== "idea").map((r) => r.stage);
+    id("m-honest").innerHTML =
+      `Stages with no engine indexed yet: <b>${gaps.length ? gaps.map(esc).join(", ") : "none"}</b>. ` +
+      `The idea stage is not in that list because it is yours by design — it is the premise you write, and the writing brain starts at the next step. ` +
+      `Every figure in this index came from the dated research passes in <span class="mono">docs/</span>, where each number carries its own citation — ` +
+      `nothing here was written from memory, and a blank is printed as a blank rather than as a zero.`;
+    id("m-fence").innerHTML = V.fence(
+      "The platform may not offer a tool it cannot reach, price an API it has not costed, clear a licence nobody has read, or spend money that is not its own. Where this table is empty, the answer is unmeasured — not zero, not free, not safe.",
+    );
+  }
+
+  for (const node of document.querySelectorAll("[data-preset]")) node.addEventListener("click", () => applyPreset(node.dataset.preset));
+  for (const sel of ["m-type", "m-edge", "m-territory", "m-gpu", "m-intent"]) id(sel).addEventListener("change", draw);
+  for (const inp of ["m-idea", "m-runtime", "m-shots", "m-budget"]) id(inp).addEventListener("input", draw);
+  for (const box of ["b-local-comfy", "b-local-cli", "b-rented-gpu", "b-vendor-api"]) id(box).addEventListener("change", draw);
+
+  draw();
+
+  // A stage can be addressed directly: the studio's workflow tiles land on the row that matters.
+  function focusStage(stage) {
+    if (!stage || !SPINE.some((s) => s.stage === stage)) return;
+    selected = stage;
+    draw();
+    const row = document.querySelector(`#m-spine tbody tr[data-stage="${stage}"]`);
+    if (row) row.scrollIntoView({ block: "center" });
+  }
+  focusStage(location.hash.slice(1));
+  window.addEventListener("hashchange", () => focusStage(location.hash.slice(1)));
+
+  id("gen").textContent = V.generated();
+})();
+</script>
+</body>
+</html>

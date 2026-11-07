@@ -1,0 +1,354 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dailies — One Real Run of the Pipeline, With Its Measured Frames | Sovereign AI Film Verse</title>
+<meta name="color-scheme" content="dark">
+<meta name="description" content="Dailies: the printed output of one real run of the Sovereign AI Film Verse pipeline. Every stage, the frame it produced, the measured luma and saturation of that file, what was refused and why — drawn from run.json, not typed in.">
+<link rel="stylesheet" href="styles.css">
+
+
+
+
+
+<!-- apex-meta:start -->
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+<link rel="canonical" href="https://filmverse-1mil8xwzv4y.qoder.website/dailies.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Sovereign AI Film Verse">
+<meta property="og:title" content="Dailies">
+<meta property="og:description" content="Dailies: the printed output of one real run of the Sovereign AI Film Verse pipeline. Every stage, the frame it produced, the measured luma and saturation of that file, what was refused and why — drawn from run.json, not typed in.">
+<meta property="og:url" content="https://filmverse-1mil8xwzv4y.qoder.website/dailies.html">
+<meta property="og:image" content="https://filmverse-1mil8xwzv4y.qoder.website/assets/dailies/frame-at-2s.jpg">
+<meta property="og:image:width" content="1280">
+<meta property="og:image:height" content="720">
+<meta property="og:image:alt" content="One frame from the pipeline's own master, extracted at two seconds.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Dailies">
+<meta name="twitter:description" content="Dailies: the printed output of one real run of the Sovereign AI Film Verse pipeline. Every stage, the frame it produced, the measured luma and saturation of that file, what was refused and why — drawn from run.json, not typed in.">
+<meta name="twitter:image" content="https://filmverse-1mil8xwzv4y.qoder.website/assets/dailies/frame-at-2s.jpg">
+<!-- apex-meta:end -->
+</head>
+<body data-page="media" data-crumb="Media Library">
+<div class="shell">
+  <div class="main">
+    <main class="page">
+
+      <section class="stack" aria-labelledby="dl-title">
+        <div class="card gold">
+          <div class="row" id="dl-chips">
+            <span class="chip warn">waiting for the run sheet</span>
+          </div>
+          <h1 id="dl-title">Dailies</h1>
+          <p class="hint" id="dl-lede">This page is not a pitch about what the platform will do. It is one run that already
+            happened on a real machine, printed from <span class="mono">runs/&lt;stamp&gt;/run.json</span> by
+            <span class="mono">scripts/dailies-site.mjs</span>. Every figure below — bytes, frames, seconds, mean luma —
+            is read off that file or off a decoded frame, and none of them is typed in by a person.</p>
+          <div class="grid g2" style="margin-top:14px" id="dl-stats"></div>
+          <div class="note warn" style="margin-top:12px" id="dl-licence">The plates in this run were drawn for the demo. No
+            client footage and no third-party asset ships on this rail. The run was admitted under
+            <span class="mono">personal</span> use only — a machine-fetched licence text that names personal use permits
+            that and nothing else. Client work and redistribution still require a human signature on the licence read.</div>
+        </div>
+      </section>
+
+      <section class="section" aria-labelledby="film-h">
+        <h2 id="film-h">The file it made</h2>
+        <div id="dl-film">
+          <p class="note">No web cut on this page — the run produced no master, or the assets were not generated.</p>
+        </div>
+      </section>
+
+      <section class="section" aria-labelledby="road-h">
+        <h2 id="road-h">How the road chose the engine</h2>
+        <p class="note">Before a single byte was rendered, the platform ranked every engine it knows for this stage against
+          the machine actually under the run — its GPU, its keys, its territory, its budget. The refusals are printed
+          because a shortlist without them is advertising. <a href="engines.html">Rank your own shot on the Engine Road</a>.</p>
+        <div id="dl-road"></div>
+      </section>
+
+      <section class="section" aria-labelledby="qc-h">
+        <h2 id="qc-h">The gate table the picture was judged against</h2>
+        <p class="note">These are not our opinions about the shot. Each row is a limit taken from what a dailies review
+          physically checks, measured on the master by <span class="mono">ffmpeg</span> inside the same run that made it,
+          and printed with the number beside the limit. A red gate stays red on this page — the platform is allowed to
+          fail in public, which is the only way a green one means anything.</p>
+        <div id="dl-qc"></div>
+      </section>
+
+      <section class="section" aria-labelledby="frames-h">
+        <h2 id="frames-h">Every stage, and the frame it produced</h2>
+        <p class="note">One frame out of each artefact, at the same second where the clip runs long enough to have one.
+          The number under each picture is <span class="mono">signalstats</span> averaged over every frame of that file:
+          <span class="mono">YAVG</span> is mean luma out of 255, <span class="mono">SATAVG</span> is mean chroma
+          distance from grey. A stage that produced nothing has no picture — it is listed, not hidden.</p>
+        <div class="frames" id="dl-frames"></div>
+      </section>
+
+      <section class="section" aria-labelledby="sheet-h">
+        <h2 id="sheet-h">The run sheet, stage by stage</h2>
+        <p class="note">The <em>tried</em> column is the fall-through chain <span class="mono">runStage()</span> actually
+          walked, in order: licence gate → declared depth → reachability probe → the tool → next candidate. A stage that
+          says refused is not a bug being hidden — it is the licence gate or a missing driver doing what it was built to
+          do. The reason is the tool's own last line, copied unedited. The <em>wall clock</em> column is calendar time and
+          nothing else: a run left going overnight on a machine that sleeps reports eleven thousand seconds for a render
+          the GPU finished in three hundred and seventy-one. Where a tool measures itself, its own number is in the last
+          column, because that is the one that predicts tomorrow's cost.</p>
+        <div class="card" style="overflow-x:auto">
+          <table class="t" id="sheet-rows">
+            <thead><tr><th>Stage</th><th>Outcome</th><th>Tried</th><th>What came out</th><th>Wall clock</th><th>Reason, verbatim</th></tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="section" aria-labelledby="grade-h">
+        <h2 id="grade-h">Proof the finishing pass changed pixels</h2>
+        <p class="note" id="grade-method">Left is the cut before the finishing pass, right is the same second after it —
+          lateral chromatic aberration, halation blooming off the highlights, gate weave, grain, the print curve, split
+          tone and a measured corner falloff. The chain is <span class="mono">finish</span> in
+          <span class="mono">src/lib/apex/drivers/ffmpeg.ts</span>, and each element was tuned against the frame it is
+          meant to change.</p>
+        <div id="dl-compare"></div>
+      </section>
+
+      <section class="section" aria-labelledby="shots-h">
+        <h2 id="shots-h">Plate to shot</h2>
+        <p class="note">Left is the still plate as drawn. Right is what the <span class="mono">motion</span> stage handed
+          back for the same shot. This is a camera move computed over a still, not a generated performance — the card in
+          <em>What this run does not prove</em> says so plainly.</p>
+        <div class="grid g2" id="dl-shots"></div>
+      </section>
+
+      <section class="section" aria-labelledby="sub-h">
+        <h2 id="sub-h">Two caption tracks, and what each one is for</h2>
+        <p class="note" id="sub-note">The <span class="mono">subtitles</span> stage burned the lines into the frames, so the
+          words below are part of the video stream and cannot be turned off. A burned line cannot be read by a screen
+          reader, translated, or resized by a player, so the same lines also ship beside the file as WebVTT — the
+          <span class="mono">English</span> track in the player above. The burn stays, because a delivery master that
+          survives someone else re-encoding it is worth more than a clean frame.</p>
+        <div class="card" id="dl-band"></div>
+      </section>
+
+      <section class="section" aria-labelledby="gap-h">
+        <h2 id="gap-h">What this run does not prove</h2>
+        <div class="grid g2">
+          <div class="card"><h3>No generative shot</h3><p class="note">The generative candidates for
+            <span class="mono">motion</span> and <span class="mono">storyboard</span> stop at the licence gate on this
+            machine: the recorded licence has not been read by a human, and the evidence lane only admits
+            <span class="mono">personal</span> use. The moving image you watched is a camera move computed over a still.
+            That is honest dailies, not a text-to-video result.</p></div>
+          <div class="card"><h3>No voice, no score</h3><p class="note"><span class="mono">dialogue</span> has no driver at
+            all — the stage is named and nothing is wired to it. <span class="mono">music</span> refused on an unread
+            licence. The audio track is the normalised bed the mix stage laid down, not a performance.</p></div>
+          <div class="card"><h3>Nothing was published</h3><p class="note"><span class="mono">publish</span> refused. The
+            platform produced a file and stopped at its own edge; it did not post, email or spend on your behalf.</p></div>
+          <div class="card"><h3>One door, one run</h3><p class="note">This is a single run of a single two-shot scene. It
+            establishes that the pipeline can be walked end to end and can hand back a playable artefact with a printed
+            ledger. It does not establish throughput, quality, or that any client work is cleared to ship.</p></div>
+        </div>
+        <div class="card" style="margin-top:12px">
+          <h3>Reproduce it</h3>
+          <p class="note mono">node --experimental-strip-types scripts/film-run.mjs &lt;plate-1.jpg&gt; &lt;plate-2.jpg&gt;<br>
+             node scripts/dailies-site.mjs</p>
+          <p class="note">The first command writes <span class="mono">runs/&lt;stamp&gt;/</span> with every intermediate,
+            the master and <span class="mono">run.json</span>. The second turns that run into this page's frames,
+            measurements and web cut.</p>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="card" id="dl-foot"></div>
+      </section>
+
+    </main>
+  </div>
+</div>
+<script src="data.generated.min.js"></script>
+<script src="shell.min.js"></script>
+<script src="dailies.data.min.js"></script>
+<script>
+(function () {
+  const D = window.APEX_DAILIES;
+  const esc = (s) => String(s == null ? "" : s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+  const kb = (n) => n == null ? "—" : n > 1048576 ? (n / 1048576).toFixed(2) + " MB" : (n / 1024).toFixed(1) + " KB";
+  const stat = (v, k, cls) => `<div class="stat${cls ? " " + cls : ""}"><div class="v">${esc(v)}</div><div class="k">${esc(k)}</div></div>`;
+
+  if (!D) {
+    document.getElementById("dl-chips").innerHTML = '<span class="chip bad">no run sheet loaded</span>';
+    document.getElementById("dl-stats").innerHTML = stat("—", "this page prints a run it cannot see", "bad");
+    document.getElementById("dl-frames").innerHTML = '<p class="note bad"><span class="mono">dailies.data.js</span> is missing, so nothing below is drawn. Run <span class="mono">node scripts/dailies-site.mjs</span> to print the newest run into this page.</p>';
+    return;
+  }
+
+  const dur = D.master ? (D.master.probe.find((l) => l.startsWith("duration=")) || "").split("=")[1] : null;
+  document.getElementById("dl-chips").innerHTML = [
+    `<span class="chip drive">run ${esc(D.run)}</span>`,
+    `<span class="chip ok">$${esc(D.spentUsd)} spent</span>`,
+    `<span class="chip ${D.produced ? "ok" : "bad"}">${D.produced} of ${D.rows.length} stages produced a file</span>`,
+    `<span class="chip warn">${D.refused} refused or un-driven</span>`,
+    `<span class="chip gold">printed ${esc(D.generated)}</span>`,
+  ].join("");
+
+  document.getElementById("dl-stats").innerHTML = [
+    stat(D.stagesNamed, "stages the pipeline names"),
+    stat(D.routed, "stages with a driver wired"),
+    stat(D.produced, "stages that produced a file"),
+    stat(D.refused, "stages refused or un-driven", "bad"),
+    stat(dur ? dur + " s" : "—", "master duration, probed"),
+    stat(D.wallSeconds + " s", "wall clock, whole run"),
+  ].join("");
+
+  const film = document.getElementById("dl-film");
+  if (D.preview && D.master) {
+    const probe = D.master.probe.map(esc).join(" · ");
+    film.innerHTML = `
+      <video controls playsinline preload="metadata" width="${D.preview.posterW || 1280}" height="${D.preview.posterH || 720}"
+             poster="${esc(D.preview.poster)}"
+             style="width:100%;max-width:1280px;border:1px solid var(--line);background:#000">
+        <source src="${esc(D.preview.img)}" type="video/mp4">
+        ${D.captions ? `<track kind="subtitles" src="${esc(D.captions.img)}" srclang="en" label="English" default>` : ""}
+        <p class="note">This browser will not play the file. The master is <span class="mono">${esc(D.master.name)}</span>.</p>
+      </video>
+      <p class="note" style="margin-top:8px">Archival master on disk: <span class="mono">${esc(D.master.name)}</span>,
+        ${kb(D.master.bytes)} — probed ${probe}. What you are watching is the same encoded picture at 1280 wide,
+        ${kb(D.preview.bytes)}: ${Math.round((1 - D.preview.bytes / D.master.bytes) * 100)}% smaller, because a dailies
+        reel is for looking at and the master is for delivering.</p>`;
+  } else {
+    film.innerHTML = '<p class="note bad">This run produced no master, so there is nothing to play.</p>';
+  }
+
+  const road = document.getElementById("dl-road");
+  if (road) {
+    if (D.road && D.road.counted) {
+      const R = D.road;
+      const c = R.context;
+      const gap = D.mission && R.offers.length && D.mission.rankedFirst !== D.mission.actuallyUsed;
+      road.innerHTML = `
+        <p class="note" style="margin-bottom:10px">The ask, read off the shot list rather than typed by a person:
+          <span class="mono">${esc(c.stage)}</span> · ${esc(String(c.seconds))}s in one pass · long edge
+          ${esc(String(c.qualityEdge))}px · in ${esc(c.territory)} · ${esc(c.intent)} use · budget $${esc(String(c.budgetUsd))} ·
+          body on hand ${esc(R.bodyOnHand.vramGb ? R.bodyOnHand.vramGb + " GB GPU" : "no GPU")} ·
+          reachable ${esc(R.bodyOnHand.executors.join(", ") || "nothing")}.</p>
+        <table class="t">
+          <caption class="hint">${R.counted.engines} engines met for this stage · ${R.counted.measuredQuality} carry an independent blind-vote number · ${R.offers.length} survived every gate.</caption>
+          <thead><tr><th scope="col">Rank</th><th scope="col">Engine</th><th scope="col">Licence</th><th scope="col">This job</th><th scope="col">Why</th></tr></thead>
+          <tbody>${R.offers.map((o) => `
+            <tr><td class="mono">${esc(String(R.offers.indexOf(o) + 1))}</td>
+                <td><b>${esc(o.name)}</b><br><span class="note">${esc(o.quality)}</span></td>
+                <td class="mono">${esc(o.spdx)}</td>
+                <td class="mono">${o.quoteUsd === null ? "price unmeasured" : o.quoteUsd === 0 ? "$0 (this machine)" : "$" + o.quoteUsd.toFixed(2)}</td>
+                <td class="note">${esc(o.quoteBasis)}</td></tr>`).join("") ||
+            `<tr><td colspan="5" class="note bad">Nothing on this body can take the job — the escape routes below are the answer.</td></tr>`}
+          </tbody>
+        </table>
+        ${R.refused.length ? `<p class="note" style="margin-top:10px"><b>Refused, with the gate that stopped it:</b><br>` +
+          R.refused.map((x) => `<span class="chip bad">${esc(x.name)} — ${esc(x.gate)}</span>`).join(" ") + `</p>` : ""}
+        ${R.escapes && R.escapes.length ? `<table class="t" style="margin-top:12px">
+          <caption class="hint">The escape route: what the platform would connect to if the ask outgrows the machine.</caption>
+          <thead><tr><th scope="col">Engine</th><th scope="col">Cost of this job</th><th scope="col">What you bring</th></tr></thead>
+          <tbody>${R.escapes.map((x) => `<tr><td><b>${esc(x.name)}</b></td>
+            <td class="mono">${x.quoteUsd === null ? esc(x.quoteBasis) : x.quoteUsd === 0 ? "$0" : "$" + x.quoteUsd.toFixed(2)}</td>
+            <td class="note">${esc(x.precondition)}</td></tr>`).join("")}</tbody></table>` : ""}
+        ${D.mission ? `<p class="note ${gap ? "warn" : "ok"}" style="margin-top:10px">
+          <b>The mission gap:</b> the road ranked <b>${esc(D.mission.rankedFirst)}</b> first for ${esc(D.mission.asked)},
+          and the run actually rendered on <b>${esc(D.mission.actuallyUsed || "nothing")}</b> for $${esc(String(D.mission.spentUsd))}.
+          ${gap ? "Those differ, and the difference is the product: the platform's job is to close it, not hide it." : "They agree, so the tool that won the ranking is the tool that made the file."}</p>` : ""}`;
+    } else {
+      road.innerHTML = '<p class="note">This run predates the engine ranking, so there is no offer record to print. Any run from <span class="mono">scripts/film-run.mjs</span> after 3 November 2026 carries one.</p>';
+    }
+  }
+
+  const qc = document.getElementById("dl-qc");
+  if (D.qc && D.qc.gates) {
+    const Q = D.qc;
+    const red = Q.gates.filter((g) => !g.pass);
+    qc.innerHTML = `
+      <p class="note ${red.length ? "bad" : "ok"}" style="margin-bottom:10px">
+        <b>${esc(Q.verdict.toUpperCase())}</b> — ${Q.summary.passed} of ${Q.summary.gates} gates passed,
+        measured at ${esc(Q.measured_at)} against
+        ${esc(Q.tags.pix_fmt)}, ${esc(Q.tags.range)} range, matrix ${esc(Q.tags.matrix)}.</p>
+      <table class="t">
+        <caption class="hint">Thirteen gates, measured by ffmpeg on <span class="mono">${esc(Q.file || "")}</span>.</caption>
+        <thead><tr><th scope="col">Gate</th><th scope="col">What it demands</th><th scope="col">Measured</th><th scope="col">Limit</th><th scope="col">Result</th></tr></thead>
+        <tbody>${Q.gates.map((g) => `
+          <tr><td class="mono">${esc(g.id)}</td><td>${esc(g.label)}</td><td class="mono">${esc(g.measured)}</td>
+              <td class="mono">${esc(g.limit)}</td>
+              <td><span class="chip ${g.pass ? "ok" : "bad"}">${g.pass ? "PASS" : "FAIL"}</span></td></tr>`).join("")}
+        </tbody>
+      </table>
+      ${red.length ? `<p class="note warn" style="margin-top:10px">Red, in the tool's own words: ${red.map((g) => `<b>${esc(g.id)}</b> — ${esc(g.evidence)}`).join(" · ")}</p>` : ""}`;
+  } else {
+    qc.innerHTML = '<p class="note">This run predates the gate table, so the master was never measured by the platform that made it. Re-run <span class="mono">node scripts/qc-gate.mjs</span> and print the page again.</p>';
+  }
+
+  const frames = document.getElementById("dl-frames");
+  const withImg = D.rows.filter((r) => r.img);
+  const without = D.rows.filter((r) => !r.img);
+  frames.innerHTML = withImg.map((r) => `
+    <figure class="fr">
+      <img src="${esc(r.img)}" width="${r.frame ? r.frame.w : 1280}" height="${r.frame ? r.frame.h : 720}" loading="lazy" decoding="async"
+           alt="${esc(r.stage)} stage output, frame at ${r.frame ? r.frame.at : "?"} seconds">
+      <figcaption><b>${esc(r.stage)}</b>${r.scene ? " · " + esc(r.scene) : ""}
+        <span class="t">${r.stats ? `YAVG ${r.stats.yavg} · SAT ${r.stats.satavg} · ${r.stats.frames} frames` : "not a measured clip"}
+        · ${kb(r.artifact ? r.artifact.bytes : null)}${r.frame ? " · frame at " + r.frame.at + "s" : ""}</span></figcaption>
+    </figure>`).join("") +
+    (without.length ? `<p class="note">${without.map((r) => `<span class="chip bad">${esc(r.stage)} — no file</span>`).join(" ")}</p>` : "");
+
+  const chipFor = { succeeded: '<span class="chip ok">produced a file</span>', "needs-human": '<span class="chip warn">needs a human</span>' };
+  document.querySelector("#sheet-rows tbody").innerHTML = D.rows.map((r) => `
+    <tr>
+      <td class="mono">${esc(r.stage)}${r.scene ? " · " + esc(r.scene) : ""}</td>
+      <td>${chipFor[r.state] ?? '<span class="chip bad">' + esc(r.state) + "</span>"}</td>
+      <td class="mono">${r.tried && r.tried.length ? esc(r.tried.join(" → ")) : "—"}</td>
+      <td class="mono">${r.artifact ? esc(r.artifact.name) + " · " + kb(r.artifact.bytes) : "—"}</td>
+      <td class="mono">${r.seconds == null ? "—" : r.seconds + "s"}</td>
+      <td class="note">${esc(r.note || "")}</td>
+    </tr>`).join("");
+
+  const c = D.compare;
+  const cmp = document.getElementById("dl-compare");
+  if (c && c.img) {
+    cmp.innerHTML = `
+      <div class="card"><img src="${esc(c.img)}" width="${c.w || 1280}" height="${c.h || 360}" loading="lazy" decoding="async"
+        alt="Same frame before the finishing pass on the left, after it on the right" style="width:100%">
+        <p class="note" style="margin-top:8px">Whole-file averages, every frame measured: mean luma
+          <b>${c.before ? c.before.yavg : "—"}</b> → <b>${c.after ? c.after.yavg : "—"}</b>
+          (${c.dLuma >= 0 ? "+" : ""}${c.dLuma}%) · mean chroma <b>${c.before ? c.before.satavg : "—"}</b> →
+          <b>${c.after ? c.after.satavg : "—"}</b> (${c.dSat >= 0 ? "+" : ""}${c.dSat}%). The mean is not the point of a
+          vignette: measured on the centre box the finishing pass costs 0.04 EV and on the corner box 0.52 EV, which is
+          what a lens does. Those two numbers are in the driver comment beside the filter.</p></div>`;
+  } else {
+    cmp.innerHTML = '<p class="note warn">No finishing-pass artefact in this run, so there is no before/after to show.</p>';
+  }
+
+  document.getElementById("dl-shots").innerHTML = (D.shots ?? []).map((s) => `
+    <div class="card"><h3>${esc(s.scene)}</h3>
+      <img src="${esc(s.img)}" width="${s.w || 1280}" height="${s.h || 360}" loading="lazy" decoding="async"
+           alt="${esc(s.scene)}: drawn plate on the left, motion stage output on the right" style="width:100%">
+      <p class="note" style="margin-top:8px">${s.stats ? `mean luma <b>${s.stats.yavg}</b> · mean chroma
+        <b>${s.stats.satavg}</b>` : "not measured"} · ${kb(s.artifact ? s.artifact.bytes : null)} · frame at
+        ${s.at}s. The plate went in as a still.</p>
+    </div>`).join("") || '<p class="note warn">No plate-to-shot comparison in this run.</p>';
+
+  const band = document.getElementById("dl-band");
+  band.innerHTML = D.band
+    ? `<img src="${esc(D.band.img)}" width="${D.band.w || 1280}" height="${D.band.h || 160}" loading="lazy" decoding="async"
+             alt="Crop of the burned subtitle line from the delivered master" style="width:100%">
+        <p class="note" style="margin-top:8px">Cropped out of ${D.band.at}s of the subtitles-stage file.
+        ${D.captions ? `The same lines as WebVTT: <span class="mono">${esc(D.captions.img)}</span>, ${D.captions.lines} cues.` : "No sidecar written."}</p>`
+    : '<p class="note warn">No burned-subtitle crop in this run.</p>';
+
+  const foot = document.getElementById("dl-foot");
+  foot.innerHTML = `<h3>Where these numbers come from</h3><p class="note">${window.V ? window.V.generated() + "<br>" : ""}
+    The run sheet is not in that snapshot — it is written by the run into
+    <span class="mono">runs/${esc(D.run)}/run.json</span> and printed here by
+    <span class="mono">scripts/dailies-site.mjs</span>, which also extracts every frame on this page and measures each
+    artefact with <span class="mono">signalstats</span>. Nothing on this page is a projection, and nothing on it was
+    typed in by a person.</p>
+    ${D.memory && D.memory.length ? `<p class="note" style="margin-top:10px"><b>What the run remembered being blocked by:</b><br>${D.memory.map((m) => "· " + esc(m)).join("<br>")}</p>` : ""}`;
+})();
+</script>
+</body>
+</html>

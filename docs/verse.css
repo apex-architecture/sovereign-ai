@@ -1,0 +1,220 @@
+/* Cinematic layer. Obsidian + gold, built for the 3D rail. */
+
+:root {
+  --ink: #06050a;
+  --ink-2: #0c0a13;
+  --gold: #d8b25c;
+  --gold-hi: #f4d998;
+  --gold-dim: #8a6f34;
+  --line: rgba(216, 178, 92, .17);
+  --text: #efe9dd;
+  --muted: #9a93a6;
+  --bad: #e0596b;
+  --ok: #64cf9a;
+  --warn: #e0a95c;
+  --mono: ui-monospace, "JetBrains Mono", "Fira Code", Consolas, monospace;
+  --display: "Bebas Neue", "Anton", Impact, "Haettenschweiler", sans-serif;
+  --serif: "Cormorant Garamond", Georgia, "Times New Roman", serif;
+  /* Small gold labels at 10-11px measured 4.26:1 against obsidian — under the 4.5:1 floor.
+     This token is for text only; --gold-dim stays for hairlines, where contrast is not the job. */
+  --gold-lbl: #ab8c3e;
+}
+
+html { scroll-behavior: smooth; }
+body.cine { margin: 0; background: var(--ink); color: var(--text); font: 400 16px/1.6 var(--serif); letter-spacing: .01em; overflow-x: hidden; }
+body.cine ::selection { background: var(--gold); color: #120e06; }
+
+/* Chromium + Safari 18.2+: a hop between pages is a dissolve, not a cut to black. */
+@view-transition { navigation: auto; }
+::view-transition-old(root), ::view-transition-new(root) { animation-duration: .38s; }
+
+/* ---- the finishing pass, in CSS: grain, vignette, gate weave ----
+   Order matters the same way it does in a compositor: grain and vignette sit on top of
+   everything, because they are the print, not the image underneath. */
+.grade {
+  position: fixed; inset: 0; z-index: 4; pointer-events: none;
+  background:
+    radial-gradient(122% 88% at 50% 42%, transparent 46%, rgba(4,3,7,.42) 78%, rgba(3,2,5,.72) 100%),
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='g'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/><feColorMatrix type='saturate' values='0'/></filter><rect width='160' height='160' filter='url(%23g)' opacity='0.5'/></svg>");
+  background-size: auto, 160px 160px;
+  opacity: .5;
+}
+.grade::after {
+  content: ""; position: absolute; inset: -2px; opacity: .4;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='h'><feTurbulence type='fractalNoise' baseFrequency='0.72' numOctaves='2' stitchTiles='stitch'/><feColorMatrix type='saturate' values='0'/></filter><rect width='160' height='160' filter='url(%23h)' opacity='0.45'/></svg>");
+  animation: grain-shift .58s steps(6, end) infinite;
+}
+@keyframes grain-shift {
+  0%   { transform: translate3d(0, 0, 0); }
+  17%  { transform: translate3d(-7px, 4px, 0); }
+  33%  { transform: translate3d(5px, -8px, 0); }
+  50%  { transform: translate3d(-9px, -3px, 0); }
+  67%  { transform: translate3d(8px, 6px, 0); }
+  83%  { transform: translate3d(-4px, 9px, 0); }
+  100% { transform: translate3d(6px, -5px, 0); }
+}
+/* Gate weave: the frame is never quite still. Sub-pixel, animated, invisible in a still. */
+.reel { animation: weave 2.7s steps(3, end) infinite; }
+@keyframes weave {
+  0%   { transform: translate3d(0, 0, 0); }
+  33%  { transform: translate3d(.4px, -.5px, 0); }
+  67%  { transform: translate3d(-.5px, .3px, 0); }
+  100% { transform: translate3d(.2px, .5px, 0); }
+}
+
+/* One control, always reachable: the visitor decides how much of this moves. */
+.motion-ctl {
+  position: fixed; right: 16px; bottom: 16px; z-index: 30; cursor: pointer;
+  font: 400 10px/1 var(--mono); letter-spacing: .2em; text-transform: uppercase;
+  color: var(--gold-lbl); background: rgba(8,6,12,.72); border: 1px solid var(--line);
+  padding: 9px 12px; backdrop-filter: blur(6px);
+}
+.motion-ctl:hover { color: var(--gold-hi); border-color: var(--gold); }
+.motion-ctl:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+.motion-ctl span { color: var(--gold-hi); }
+[data-motion="off"] .grade::after,
+[data-motion="off"] .reel { animation: none; }
+[data-motion="off"] .grade { opacity: .38; }
+[data-motion="off"] .rise { opacity: 1; transform: none; filter: none; animation: none; transition: none; }
+[data-motion="off"] #curtain { transition: none; }
+
+#stage { position: fixed; inset: 0; width: 100%; height: 100%; z-index: 0; display: block; }
+
+/* Curtain */
+#curtain {
+  position: fixed; inset: 0; z-index: 90; background: #06050a;
+  display: grid; place-content: center; gap: 18px; justify-items: center;
+  transition: opacity .9s ease, visibility .9s;
+}
+#curtain.done { opacity: 0; visibility: hidden; }
+#curtain .ttl { font: 400 13px/1 var(--mono); letter-spacing: .42em; color: var(--gold); text-transform: uppercase; }
+#curtain .bar { width: min(340px, 62vw); height: 1px; background: rgba(216,178,92,.2); overflow: hidden; }
+#curtain .bar i { display: block; height: 100%; width: 0%; background: linear-gradient(90deg, var(--gold-dim), var(--gold-hi)); transition: width .35s ease; }
+#curtain .sub { font: 400 11px/1.5 var(--mono); letter-spacing: .2em; color: var(--muted); text-transform: uppercase; }
+
+/* Scroll content sits above the canvas */
+.reel { position: relative; z-index: 2; }
+.act {
+  min-height: 100svh; display: grid; align-content: center;
+  /* Padding also answers to viewport height: a wide, short window was pushing the opening act's
+     buttons and scroll hint below the fold, which makes the first screen look like the page ends. */
+  padding: clamp(28px, min(7vw, 5.5svh), 110px); gap: clamp(14px, min(2.4vw, 2.2svh), 30px);
+  position: relative;
+}
+.act.inner { min-height: auto; padding-block: clamp(70px, 12vh, 150px); }
+/* A grid child refuses to shrink below its content by default; one long line then widens the column
+   past the phone screen and the whole act scrolls sideways. */
+.act > * { min-width: 0; }
+
+/* Type */
+.kicker { font: 400 11px/1 var(--mono); letter-spacing: .4em; text-transform: uppercase; color: var(--gold-lbl); }
+h1.mast {
+  margin: 0; font-family: var(--display); font-weight: 400;
+  /* The line height is deliberately tighter than the glyphs: the headline is meant to lock up as a
+     block. That means the box ends above the letters, so the block owns a little padding below or
+     the paragraph underneath is painted across the bottom of the last line on short screens. */
+  font-size: clamp(52px, min(13vw, 16svh), 205px); line-height: .84; letter-spacing: -.012em;
+  padding-bottom: .14em;
+  text-transform: uppercase; color: #fff; text-wrap: balance;
+  text-shadow: 0 0 62px rgba(216, 178, 92, .28), 0 0 140px rgba(216, 178, 92, .12);
+}
+h1.mast .g { color: var(--gold); }
+h2.act-title {
+  margin: 0; font-family: var(--display); font-weight: 400; text-transform: uppercase;
+  font-size: clamp(34px, 6.6vw, 86px); line-height: .92; letter-spacing: -.005em; color: #fff; text-wrap: balance;
+}
+p.lede { margin: 0; max-width: min(62ch, 100%); font-size: clamp(19px, 2.35vw, 31px); line-height: 1.42; color: #e6ddc9; text-wrap: balance; }
+p.line { margin: 0; max-width: min(68ch, 100%); font-size: clamp(16px, 1.35vw, 19px); color: #c9c1b6; text-wrap: pretty; }
+p.line em { color: var(--gold-hi); font-style: italic; }
+.faded { color: var(--muted); }
+
+/* Reveal. Default = JS adds .on; where the browser owns the scroll timeline, CSS does it alone. */
+.rise { opacity: 0; transform: translateY(34px); filter: blur(6px); }
+.rise.on { opacity: 1; transform: none; filter: blur(0); transition: opacity .95s ease, transform 1.05s cubic-bezier(.16,1,.3,1), filter .95s ease; }
+@keyframes rise { from { opacity: 0; transform: translateY(34px); filter: blur(6px); } to { opacity: 1; transform: none; filter: blur(0); } }
+@supports (animation-timeline: view()) {
+  .rise {
+    animation: rise linear both; animation-timeline: view();
+    animation-range: entry 8% cover 30%; transition: none;
+  }
+  /* The observer still runs. When it marks an element, that element stops being a timeline
+     hostage and is pinned visible — content is never allowed to depend on a feature winning. */
+  .rise.on { animation: none; opacity: 1; transform: none; filter: blur(0); }
+}
+
+/* Cards */
+.cards { display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(268px, 1fr)); }
+.cel {
+  position: relative; padding: 22px 22px 24px; border: 1px solid var(--line);
+  background: linear-gradient(168deg, rgba(14,11,20,.82), rgba(8,6,12,.62));
+  backdrop-filter: blur(9px); overflow: hidden;
+}
+.cel::after {
+  content: ""; position: absolute; inset: -1px; pointer-events: none; opacity: 0;
+  background: radial-gradient(420px circle at var(--gx, 50%) var(--gy, 0%), rgba(216,178,92,.15), transparent 62%);
+  transition: opacity .45s ease;
+}
+.cel:hover::after, .cel:focus-within::after { opacity: 1; }
+.cel h3 { margin: 0 0 8px; font: 400 24px/1.05 var(--display); letter-spacing: .02em; text-transform: uppercase; color: #fff; }
+.cel .n { font: 400 10px/1 var(--mono); letter-spacing: .3em; color: var(--gold-lbl); display: block; margin-bottom: 12px; }
+.cel p { margin: 0; font-size: 15.5px; color: #bdb5ab; }
+.cel.big .v { font: 400 clamp(40px, 5.6vw, 72px)/1 var(--display); color: var(--gold-hi); letter-spacing: .01em; }
+.cel.big .k { font: 400 10.5px/1.5 var(--mono); letter-spacing: .22em; text-transform: uppercase; color: var(--muted); }
+
+/* Tool grid with real links */
+.tools { display: grid; gap: 10px; grid-template-columns: repeat(auto-fill, minmax(232px, 1fr)); }
+a.tool, span.tool {
+  display: flex; align-items: baseline; gap: 10px; padding: 13px 15px;
+  border: 1px solid rgba(216,178,92,.13); background: rgba(10,8,15,.55);
+  color: var(--text); text-decoration: none; font-size: 14.5px; transition: border-color .3s, background .3s, transform .3s;
+}
+a.tool:hover { border-color: var(--gold); background: rgba(216,178,92,.08); transform: translateY(-2px); }
+a.tool .u { margin-left: auto; font: 400 9.5px/1 var(--mono); letter-spacing: .16em; color: var(--gold-lbl); text-transform: uppercase; }
+span.tool { color: var(--muted); cursor: default; }
+span.tool .u { margin-left: auto; font: 400 9.5px/1 var(--mono); letter-spacing: .14em; color: #7d7688; text-transform: uppercase; }
+
+/* Chips */
+.chip { display: inline-flex; align-items: center; gap: 7px; padding: 5px 10px; border: 1px solid var(--line);
+  font: 400 10px/1 var(--mono); letter-spacing: .17em; text-transform: uppercase; color: var(--gold); background: rgba(216,178,92,.05); }
+.chip.ok { color: var(--ok); border-color: rgba(100,207,154,.3); background: rgba(100,207,154,.06); }
+.chip.bad { color: var(--bad); border-color: rgba(224,89,107,.34); background: rgba(224,89,107,.07); }
+.chip.warn { color: var(--warn); border-color: rgba(224,169,92,.3); background: rgba(224,169,92,.06); }
+
+/* Rail (the ten stages) */
+.rail { display: flex; gap: 12px; overflow-x: auto; padding-bottom: 12px; scroll-snap-type: x mandatory; }
+.rail::-webkit-scrollbar { height: 2px; }
+.rail::-webkit-scrollbar-thumb { background: var(--gold-dim); }
+.beat { scroll-snap-align: start; flex: 0 0 clamp(228px, 26vw, 300px); border-left: 1px solid var(--line); padding: 16px 0 16px 18px; }
+.beat .no { font: 400 10px/1 var(--mono); letter-spacing: .3em; color: var(--gold-lbl); }
+.beat h4 { margin: 10px 0 8px; font: 400 27px/1 var(--display); text-transform: uppercase; letter-spacing: .02em; color: #fff; }
+.beat p { margin: 0 0 12px; font-size: 14.5px; color: #b3aca3; }
+
+/* Honesty fence */
+.fence { border-left: 2px solid var(--bad); padding: 14px 0 14px 18px; color: #d8c9c9; font-size: 15.5px; max-width: 74ch; }
+.fence b { color: var(--bad); font-weight: 600; }
+
+/* Footer nav */
+.deck { display: flex; flex-wrap: wrap; gap: 10px 26px; align-items: center; padding: 26px 0 60px; border-top: 1px solid var(--line); }
+.deck a { color: var(--gold); text-decoration: none; font: 400 11px/1 var(--mono); letter-spacing: .2em; text-transform: uppercase; }
+.deck a:hover { color: var(--gold-hi); text-decoration: underline; }
+.stamp { margin-left: auto; font: 400 10px/1.6 var(--mono); letter-spacing: .1em; color: #8a8496; text-transform: uppercase; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .rise { opacity: 1; transform: none; filter: none; animation: none; }
+  .rise.on { transition: none; }
+  .reel, .grade::after { animation: none; }
+  .grade { opacity: .38; }
+  #curtain { transition: none; }
+  a.tool:hover { transform: none; }
+  @supports (animation-timeline: view()) { .rise { animation: none; } }
+}
+@media (prefers-contrast: more) {
+  .grade { display: none; }
+  p.line, .cel p, .beat p { color: #efe9dd; }
+}
+@media (max-width: 700px) {
+  body.cine { font-size: 15px; }
+  .act { padding: 26px 20px; }
+  .motion-ctl { right: 10px; bottom: 10px; }
+}

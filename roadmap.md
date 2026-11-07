@@ -1,0 +1,2 @@
+- [x] Remove PIN, add 'Enter the Dream World' welcome page
+- [ ] Multiverse Canvas background art (blocked by image filter — waiting on user's choice)

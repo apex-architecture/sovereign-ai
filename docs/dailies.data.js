@@ -1,0 +1,399 @@
+window.APEX_DAILIES = {
+ "run": "2026-11-02T10-10",
+ "generated": "2026-11-03T07:58:44Z",
+ "project": "film01",
+ "plates": [
+  "D:\\ApexEmpire\\films\\lllppp\\demo-plates\\rooftop.jpg",
+  "D:\\ApexEmpire\\films\\lllppp\\demo-plates\\hall.jpg"
+ ],
+ "stagesNamed": 10,
+ "routed": 9,
+ "spentUsd": 0,
+ "wallSeconds": 109.6,
+ "produced": 6,
+ "refused": 5,
+ "master": {
+  "name": "film01-finish-scene01.mp4",
+  "bytes": 61321896,
+  "probe": [
+   "codec_name=h264",
+   "width=1920",
+   "height=1080",
+   "codec_name=aac",
+   "duration=10.087000",
+   "size=61321896"
+  ]
+ },
+ "preview": {
+  "img": "assets/dailies/preview.mp4",
+  "bytes": 1436151,
+  "fromBytes": 61321896,
+  "poster": "assets/dailies/poster.jpg",
+  "posterW": 1280,
+  "posterH": 720,
+  "dur": 10.087
+ },
+ "captions": {
+  "img": "assets/dailies/dialogue.vtt",
+  "lines": 2
+ },
+ "rows": [
+  {
+   "stage": "motion",
+   "scene": "shot01",
+   "state": "succeeded",
+   "used": "ffmpeg",
+   "tried": [
+    "replicate",
+    "comfyui",
+    "blender",
+    "ffmpeg"
+   ],
+   "seconds": 2.2,
+   "note": "ffmpeg: frame=  119 fps= 60 q=-1.0 Lsize=    2340KiB time=00:00:04.87 bitrate=3928.0kbits/s speed=2.47x elapsed=0:00:01.97",
+   "artifact": {
+    "name": "./film01-motion-shot01.mp4",
+    "bytes": 2395993,
+    "probe": [
+     "codec_name=h264",
+     "width=1920",
+     "height=1080",
+     "codec_name=aac",
+     "duration=5.000000"
+    ]
+   },
+   "stats": {
+    "frames": 119,
+    "yavg": 58.592,
+    "satavg": 14.537
+   },
+   "frame": {
+    "at": 2.75,
+    "bytes": 157729,
+    "w": 1280,
+    "h": 720
+   },
+   "img": "assets/dailies/stage-00-motion-shot01.jpg"
+  },
+  {
+   "stage": "motion",
+   "scene": "shot02",
+   "state": "succeeded",
+   "used": "ffmpeg",
+   "tried": [
+    "replicate",
+    "comfyui",
+    "blender",
+    "ffmpeg"
+   ],
+   "seconds": 2,
+   "note": "ffmpeg: frame=  119 fps= 67 q=-1.0 Lsize=    1343KiB time=00:00:04.87 bitrate=2253.8kbits/s speed=2.74x elapsed=0:00:01.78",
+   "artifact": {
+    "name": "./film01-motion-shot02.mp4",
+    "bytes": 1374787,
+    "probe": [
+     "codec_name=h264",
+     "width=1920",
+     "height=1080",
+     "codec_name=aac",
+     "duration=5.000000"
+    ]
+   },
+   "stats": {
+    "frames": 119,
+    "yavg": 33.174,
+    "satavg": 3.165
+   },
+   "frame": {
+    "at": 2.75,
+    "bytes": 73543,
+    "w": 1280,
+    "h": 720
+   },
+   "img": "assets/dailies/stage-01-motion-shot02.jpg"
+  },
+  {
+   "stage": "storyboard",
+   "scene": "board01",
+   "state": "failed",
+   "used": null,
+   "tried": [
+    "comfyui",
+    "blender"
+   ],
+   "seconds": 0,
+   "note": "licence for Blender has not been read by a human and no fetched licence text attests it for personal use",
+   "artifact": null,
+   "img": null
+  },
+  {
+   "stage": "character_lock",
+   "scene": "cast01",
+   "state": "failed",
+   "used": null,
+   "tried": [
+    "comfyui"
+   ],
+   "seconds": 0,
+   "note": "licence for ComfyUI has not been read by a human and no fetched licence text attests it for personal use",
+   "artifact": null,
+   "img": null
+  },
+  {
+   "stage": "edit",
+   "scene": "scene01",
+   "state": "succeeded",
+   "used": "ffmpeg",
+   "tried": [
+    "ffmpeg"
+   ],
+   "seconds": 6.4,
+   "note": "ffmpeg: frame=  238 fps= 40 q=-1.0 Lsize=    2468KiB time=00:00:09.88 bitrate=2045.5kbits/s speed=1.64x elapsed=0:00:06.01",
+   "artifact": {
+    "name": "./film01-edit-scene01.mp4",
+    "bytes": 2527497,
+    "probe": [
+     "codec_name=h264",
+     "width=1920",
+     "height=1080",
+     "codec_name=aac",
+     "duration=10.034667"
+    ]
+   },
+   "stats": {
+    "frames": 238,
+    "yavg": 45.942,
+    "satavg": 8.826
+   },
+   "frame": {
+    "at": 8.2,
+    "bytes": 72536,
+    "w": 1280,
+    "h": 720
+   },
+   "img": "assets/dailies/stage-04-edit-scene01.jpg"
+  },
+  {
+   "stage": "sound",
+   "scene": "scene01",
+   "state": "succeeded",
+   "used": "ffmpeg",
+   "tried": [
+    "ffmpeg"
+   ],
+   "seconds": 6,
+   "note": "ffmpeg: frame=  238 fps= 42 q=-1.0 Lsize=    2313KiB time=00:00:09.88 bitrate=1917.2kbits/s speed=1.74x elapsed=0:00:05.68",
+   "artifact": {
+    "name": "./film01-sound-scene01.mp4",
+    "bytes": 2368890,
+    "probe": [
+     "codec_name=h264",
+     "width=1920",
+     "height=1080",
+     "codec_name=aac",
+     "duration=10.087000"
+    ]
+   },
+   "stats": {
+    "frames": 238,
+    "yavg": 45.98,
+    "satavg": 8.812
+   },
+   "frame": {
+    "at": 8.2,
+    "bytes": 71566,
+    "w": 1280,
+    "h": 720
+   },
+   "img": "assets/dailies/stage-05-sound-scene01.jpg"
+  },
+  {
+   "stage": "subtitles",
+   "scene": "scene01",
+   "state": "succeeded",
+   "used": "ffmpeg",
+   "tried": [
+    "whisper",
+    "ffmpeg"
+   ],
+   "seconds": 11.2,
+   "note": "ffmpeg: frame=  238 fps= 42 q=-1.0 Lsize=    2326KiB time=00:00:09.88 bitrate=1927.8kbits/s speed=1.77x elapsed=0:00:05.60",
+   "artifact": {
+    "name": "./film01-subtitles-scene01.mp4",
+    "bytes": 2381948,
+    "probe": [
+     "codec_name=h264",
+     "width=1920",
+     "height=1080",
+     "codec_name=aac",
+     "duration=10.087000"
+    ]
+   },
+   "stats": {
+    "frames": 238,
+    "yavg": 46.453,
+    "satavg": 8.743
+   },
+   "frame": {
+    "at": 8.2,
+    "bytes": 76147,
+    "w": 1280,
+    "h": 720
+   },
+   "img": "assets/dailies/stage-06-subtitles-scene01.jpg"
+  },
+  {
+   "stage": "finish",
+   "scene": "scene01",
+   "state": "succeeded",
+   "used": "ffmpeg",
+   "tried": [
+    "ffmpeg"
+   ],
+   "seconds": 81.8,
+   "note": "ffmpeg: frame=  238 fps=2.9 q=-1.0 Lsize=   59885KiB time=00:00:09.88 bitrate=49628.9kbits/s speed=0.121x elapsed=0:01:21.40",
+   "artifact": {
+    "name": "./film01-finish-scene01.mp4",
+    "bytes": 61321896,
+    "probe": [
+     "codec_name=h264",
+     "width=1920",
+     "height=1080",
+     "codec_name=aac",
+     "duration=10.087000"
+    ]
+   },
+   "stats": {
+    "frames": 238,
+    "yavg": 43.427,
+    "satavg": 7.9
+   },
+   "frame": {
+    "at": 8.2,
+    "bytes": 74239,
+    "w": 1280,
+    "h": 720
+   },
+   "img": "assets/dailies/stage-07-finish-scene01.jpg"
+  },
+  {
+   "stage": "music",
+   "scene": "scene01",
+   "state": "failed",
+   "used": null,
+   "tried": [
+    "ardour"
+   ],
+   "seconds": 0,
+   "note": "licence for Ardour has not been read by a human and no fetched licence text attests it for personal use",
+   "artifact": null,
+   "img": null
+  },
+  {
+   "stage": "dialogue",
+   "scene": "scene01",
+   "state": "no-driver",
+   "used": null,
+   "tried": [],
+   "seconds": 0,
+   "note": "",
+   "artifact": null,
+   "img": null
+  },
+  {
+   "stage": "publish",
+   "scene": "scene01",
+   "state": "failed",
+   "used": null,
+   "tried": [
+    "youtube"
+   ],
+   "seconds": 0,
+   "note": "licence for youtube has not been read by a human and no fetched licence text attests it for personal use",
+   "artifact": null,
+   "img": null
+  }
+ ],
+ "compare": {
+  "at": 8.2,
+  "img": "assets/dailies/finish-compare.jpg",
+  "w": 1280,
+  "h": 360,
+  "before": {
+   "frames": 238,
+   "yavg": 46.453,
+   "satavg": 8.743
+  },
+  "after": {
+   "frames": 238,
+   "yavg": 43.427,
+   "satavg": 7.9
+  },
+  "dLuma": -6.51,
+  "dSat": -9.64
+ },
+ "shots": [
+  {
+   "scene": "shot01",
+   "plate": "plate-01.jpg",
+   "at": 2.75,
+   "img": "assets/dailies/shot-shot01-compare.jpg",
+   "w": 1280,
+   "h": 362,
+   "stats": {
+    "frames": 119,
+    "yavg": 58.592,
+    "satavg": 14.537
+   },
+   "artifact": {
+    "name": "./film01-motion-shot01.mp4",
+    "bytes": 2395993,
+    "probe": [
+     "codec_name=h264",
+     "width=1920",
+     "height=1080",
+     "codec_name=aac",
+     "duration=5.000000"
+    ]
+   }
+  },
+  {
+   "scene": "shot02",
+   "plate": "plate-02.jpg",
+   "at": 2.75,
+   "img": "assets/dailies/shot-shot02-compare.jpg",
+   "w": 1280,
+   "h": 362,
+   "stats": {
+    "frames": 119,
+    "yavg": 33.174,
+    "satavg": 3.165
+   },
+   "artifact": {
+    "name": "./film01-motion-shot02.mp4",
+    "bytes": 1374787,
+    "probe": [
+     "codec_name=h264",
+     "width=1920",
+     "height=1080",
+     "codec_name=aac",
+     "duration=5.000000"
+    ]
+   }
+  }
+ ],
+ "band": {
+  "at": 8.2,
+  "img": "assets/dailies/subtitle-band.jpg",
+  "bytes": 28558,
+  "w": 1280,
+  "h": 160
+ },
+ "memory": [
+  "storyboard/: licence for ComfyUI has not been read by a human and no fetched licence text attests it for personal use | licence for Blender has not been read by a human and ",
+  "character_lock/: licence for ComfyUI has not been read by a human and no fetched licence text attests it for personal use",
+  "music/: licence for Ardour has not been read by a human and no fetched licence text attests it for personal use",
+  "dialogue/: ",
+  "publish/: licence for youtube has not been read by a human and no fetched licence text attests it for personal use"
+ ]
+};

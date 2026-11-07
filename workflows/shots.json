@@ -1,0 +1,33 @@
+{
+  "_note": "The shot list is data, not code. A prompt that lives in a source file can be read, argued with, and re-rendered; one baked into a driver cannot. frames must be 4n+1 — that is Wan's temporal VAE, which compresses four frames into one latent step and needs the odd frame to close the sequence.",
+  "model": {
+    "checkpoint": "wan2.1_t2v_1.3B_fp16.safetensors",
+    "text_encoder": "umt5_xxl_fp8_e4m3fn_scaled.safetensors",
+    "vae": "wan_2.1_vae.safetensors",
+    "licence": "Apache-2.0 (weights), GPL-3.0 (ComfyUI harness)",
+    "hardware_note": "6.1 GB VRAM, encoder pinned to CPU, weights streamed from disk"
+  },
+  "negative_default": "worst quality, inconsistent motion, blurry, jittery, distorted, static image, watermark, text, subtitles",
+  "shots": [
+    {
+      "scene": "shot01",
+      "prompt": "slow tracking shot following a lone figure walking across a rain-soaked rooftop at night, neon signs reflecting in the wet concrete, city haze, distant towers, cinematic anamorphic look, shallow depth of field",
+      "width": 832,
+      "height": 480,
+      "frames": 33,
+      "steps": 20,
+      "fps": 16,
+      "seed": 20261103
+    },
+    {
+      "scene": "shot02",
+      "prompt": "empty grand hall at blue hour, tall windows, dust in the shafts of light, slow dolly forward down the centre aisle, symmetrical composition, film still",
+      "width": 832,
+      "height": 480,
+      "frames": 33,
+      "steps": 20,
+      "fps": 16,
+      "seed": 20261104
+    }
+  ]
+}

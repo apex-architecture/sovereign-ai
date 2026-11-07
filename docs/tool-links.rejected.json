@@ -1,0 +1,42 @@
+[
+ [
+  "Wurstchen",
+  "https://github.com/dome272/Wuerstchen",
+  "opened, but the page does not name it"
+ ],
+ [
+  "Avidemux",
+  "https://avidemux.sourceforge.net",
+  "HTTP 403"
+ ],
+ [
+  "LiVES",
+  "https://lives-video.com",
+  "fetch failed"
+ ],
+ [
+  "Shutter Encoder",
+  "https://www.shutterencoder.com",
+  "HTTP 503"
+ ],
+ [
+  "ZynAddSubFX",
+  "https://zynaddsubfx.sourceforge.io",
+  "HTTP 403"
+ ],
+ [
+  "Pure Data",
+  "https://puredata.info",
+  "opened, but the page does not name it"
+ ],
+ [
+  "DID Core",
+  "https://www.w3.org/TR/did-core/",
+  "HTTP 403"
+ ],
+ [
+  "Verifiable Credentials",
+  "https://www.w3.org/TR/vc-data-model/",
+  "HTTP 403"
+ ]
+]

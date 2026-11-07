@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Studio Home — Sovereign AI Film Verse</title>
+<meta name="description" content="The studio front door: describe a shot, the house routes it to a tool that is really on this machine, and every engine in the dictionary is labelled with what it takes to run it.">
+<meta name="theme-color" content="#07060a">
+<meta name="color-scheme" content="dark">
+<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="fonts.css">
+<link rel="stylesheet" href="studio.css">
+
+
+<!-- apex-meta:start -->
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+<link rel="canonical" href="https://filmverse-1mil8xwzv4y.qoder.website/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Sovereign AI Film Verse">
+<meta property="og:title" content="Studio Home — Sovereign AI Film Verse">
+<meta property="og:description" content="The studio front door: describe a shot, the house routes it to a tool that is really on this machine, and every engine in the dictionary is labelled with what it takes to run it.">
+<meta property="og:url" content="https://filmverse-1mil8xwzv4y.qoder.website/">
+<meta property="og:image" content="https://filmverse-1mil8xwzv4y.qoder.website/assets/studio/film01-master.jpg">
+<meta property="og:image:width" content="1280">
+<meta property="og:image:height" content="720">
+<meta property="og:image:alt" content="A frame taken from the pipeline's own master, cut by this machine.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Studio Home — Sovereign AI Film Verse">
+<meta name="twitter:description" content="Describe a shot, the house routes it to a tool that is really on this machine.">
+<meta name="twitter:image" content="https://filmverse-1mil8xwzv4y.qoder.website/assets/studio/film01-master.jpg">
+<!-- apex-meta:end -->
+</head>
+<body data-page="home" data-crumb="Studio Home">
+<div class="shell">
+  <div class="main">
+    <div class="st-wrap">
+
+      <!-- 1. THE DESK --------------------------------------------------- -->
+      <section class="desk" aria-labelledby="desk-title">
+        <div class="desk-bg" aria-hidden="true"></div>
+        <div class="desk-copy">
+          <span class="kicker">Sovereign AI Film Verse</span>
+          <h1 id="desk-title">Describe the shot.<br><em>The house routes it.</em></h1>
+          <p class="sub" id="desk-lede">One sentence in, a real frame out — rendered by a tool that is genuinely on this machine.</p>
+        </div>
+
+        <form class="desk-form" id="desk-form">
+          <label class="sr-only" for="desk-prompt">Describe the shot</label>
+          <textarea id="desk-prompt" rows="2" spellcheck="false">a lone figure walking across a rain-soaked rooftop at night, neon reflecting in the wet concrete</textarea>
+          <div class="desk-bar">
+            <label class="desk-len">Length
+              <select id="desk-seconds">
+                <option value="1">1 second</option>
+                <option value="2" selected>2 seconds</option>
+                <option value="3">3 seconds</option>
+              </select>
+            </label>
+            <span class="desk-rig" id="desk-rig"></span>
+            <button class="btn solid" id="desk-run" type="submit">Render it</button>
+          </div>
+        </form>
+
+        <div class="desk-live" id="desk-live" hidden></div>
+        <div class="desk-clip" id="desk-clip" hidden></div>
+        <div class="desk-result" id="desk-result" hidden></div>
+      </section>
+
+      <!-- 2. THE SPINE -------------------------------------------------- -->
+      <section class="spine" id="spine" aria-labelledby="spine-title">
+        <div class="st-head">
+          <h2 id="spine-title">The spine</h2>
+          <span class="note" id="spine-note"></span>
+          <a class="more" href="mission.html">Open the mission builder →</a>
+        </div>
+        <ol class="spine-steps" id="spine-steps"></ol>
+      </section>
+
+      <!-- 2b. THE FOREMAN ----------------------------------------------- -->
+      <section class="foreman" id="foreman" aria-labelledby="foreman-title">
+        <div class="st-head">
+          <h2 id="foreman-title">The Foreman</h2>
+          <span class="note" id="foreman-note">the agent that builds this platform</span>
+          <button class="btn" id="foreman-tick" type="button">Run a build pass</button>
+        </div>
+        <p class="foreman-brief" id="foreman-brief">Reading the agent&rsquo;s journal&hellip;</p>
+        <div class="foreman-rows" id="foreman-rows"></div>
+        <div class="foreman-acted" id="foreman-acted"></div>
+      </section>
+
+      <!-- 3. THE LEDGER ------------------------------------------------- -->
+      <section class="ledger" id="ledger" aria-labelledby="ledger-title">
+        <div class="st-head">
+          <h2 id="ledger-title">What this machine can actually run</h2>
+          <span class="note" id="ledger-note"></span>
+          <a class="more" href="engines.html">All 182 engines →</a>
+        </div>
+        <div class="ledger-counts" id="ledger-counts"></div>
+        <div class="ledger-ready" id="ledger-ready"></div>
+      </section>
+
+      <!-- 4. THE FILMS -------------------------------------------------- -->
+      <section class="films" id="projects" aria-labelledby="films-title">
+        <div class="st-head">
+          <h2 id="films-title">Your films</h2>
+          <span class="note" id="films-note"></span>
+          <a class="more" href="dailies.html">Every run →</a>
+        </div>
+        <div class="films-grid" id="films-grid"></div>
+      </section>
+
+      <!-- 5. CONNECT ---------------------------------------------------- -->
+      <section class="connect" id="connect" aria-labelledby="connect-title">
+        <div class="st-head">
+          <h2 id="connect-title">Connect</h2>
+          <span class="note" id="connect-note">every tool the platform can reach from this machine, with the button that runs it</span>
+          <a class="more" href="engines.html">All 182 engines →</a>
+        </div>
+        <p class="connect-brief" id="connect-brief">Reading the engine room&hellip;</p>
+        <div class="connect-grid" id="connect-grid"></div>
+        <div class="connect-out" id="connect-out" hidden></div>
+      </section>
+
+      <footer class="st-foot">
+        <a href="rights.html">Rights &amp; licensing</a>
+        <a href="tools.html">The 1,109-tool registry</a>
+        <a href="passport.html">Creator passport</a>
+        <a href="console.html">Operator console</a>
+        <a href="verse.html">The Verse Map</a>
+        <a href="verify.html">Verify a receipt</a>
+        <span class="stamp" id="st-stamp"></span>
+      </footer>
+
+    </div>
+  </div>
+</div>
+
+<script src="data.shell.min.js" defer></script>
+<script src="data.generated.min.js" defer></script>
+<script src="availability.generated.min.js" defer></script>
+<script src="tool-links.min.js" defer></script>
+<script src="engines.min.js" defer></script>
+<script src="studio.data.min.js" defer></script>
+<script src="foreman.generated.js" defer></script>
+<script src="connect.generated.js" defer></script>
+<script src="shell.min.js" defer></script>
+<script src="studio.min.js" defer></script>
+</body>
+</html>

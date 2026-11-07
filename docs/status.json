@@ -1,0 +1,94 @@
+{
+ "built_at": "2026-11-06T22:39:46.824Z",
+ "build": "local",
+ "files": {
+  "index.html": {
+   "bytes": 7345,
+   "sha256": "650d885ad3920a3e"
+  },
+  "cinema.html": {
+   "bytes": 20826,
+   "sha256": "49abfe026d4ed009"
+  },
+  "dailies.html": {
+   "bytes": 24721,
+   "sha256": "e5c2cac421b69dcf"
+  },
+  "engines.html": {
+   "bytes": 22596,
+   "sha256": "67b375a02b2ee090"
+  },
+  "mission.html": {
+   "bytes": 26413,
+   "sha256": "6fb8352fadff3268"
+  },
+  "styles.css": {
+   "bytes": 15488,
+   "sha256": "deedd5e8e68bd792"
+  },
+  "verse.css": {
+   "bytes": 12555,
+   "sha256": "2dbd4b8800a7262d"
+  },
+  "studio.css": {
+   "bytes": 16788,
+   "sha256": "1a82332ff1a6deea"
+  },
+  "verify.html": {
+   "bytes": 29044,
+   "sha256": "9cd4e5e81443f657"
+  },
+  "data.generated.min.js": {
+   "bytes": 315611,
+   "sha256": "3ad5fef51f3b3e9a"
+  },
+  "data.shell.min.js": {
+   "bytes": 3307,
+   "sha256": "5c335ac8293b510a"
+  },
+  "engines.min.js": {
+   "bytes": 243112,
+   "sha256": "78968216100a389c"
+  },
+  "dailies.data.min.js": {
+   "bytes": 6234,
+   "sha256": "84aa7e717b8e6a4d"
+  },
+  "studio.data.min.js": {
+   "bytes": 10294,
+   "sha256": "67f5b2144e7da1f3"
+  },
+  "tool-links.min.js": {
+   "bytes": 8835,
+   "sha256": "4ee04f934c4b920a"
+  },
+  "psi-verify.min.js": {
+   "bytes": 3890,
+   "sha256": "aeee8f2598aef1cf"
+  },
+  "shell.min.js": {
+   "bytes": 4406,
+   "sha256": "a947e94c700aca66"
+  },
+  "studio.min.js": {
+   "bytes": 21598,
+   "sha256": "1c70c31b4569c53f"
+  },
+  "verse3d.min.js": {
+   "bytes": 506134,
+   "sha256": "7ede964b578e8eda"
+  },
+  "availability.generated.min.js": {
+   "bytes": 37508,
+   "sha256": "694cd31d93d80f34"
+  },
+  "foreman.generated.js": {
+   "bytes": 5450,
+   "sha256": "856e37469225cb45"
+  },
+  "connect.generated.js": {
+   "bytes": 5960,
+   "sha256": "5b3715914082e124"
+  }
+ }
+}

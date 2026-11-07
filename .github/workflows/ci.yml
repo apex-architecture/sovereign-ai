@@ -1,0 +1,22 @@
+name: passport and lint
+on:
+  push:
+    branches: [main]
+  pull_request:
+jobs:
+  passport:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: "22" }
+      - name: Cross-implementation proof (browser signer vs server verifier)
+        run: node --experimental-strip-types scripts/psi-selftest.mjs
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: "22" }
+      - run: npm ci
+      - run: npm run lint

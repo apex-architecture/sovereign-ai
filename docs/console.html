@@ -1,0 +1,625 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark">
+<meta name="description" content="Operator Console: a read-only status board of the APEX film platform exactly as it stands — what is wired and to what depth, the stage routes and their named gaps, the declared module map, the production plan and its pass-or-fail gates, the decisions only the owner may make, and the risks carried. A snapshot of a platform under construction, not a control panel.">
+<title>Operator Console — Status Board of a Platform Under Construction | Sovereign AI Film Verse</title>
+<link rel="stylesheet" href="styles.css">
+
+
+
+
+
+<!-- apex-meta:start -->
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+<link rel="canonical" href="https://filmverse-1mil8xwzv4y.qoder.website/console.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Sovereign AI Film Verse">
+<meta property="og:title" content="Operator Console">
+<meta property="og:description" content="Operator Console: a read-only status board of the APEX film platform exactly as it stands — what is wired and to what depth, the stage routes and their named gaps, the declared module map, the production plan and its pass-or-fail gates, the decisions only the owner may make, and the risks carried. A snapshot of a platform under construction, not a control panel.">
+<meta property="og:url" content="https://filmverse-1mil8xwzv4y.qoder.website/console.html">
+<meta property="og:image" content="https://filmverse-1mil8xwzv4y.qoder.website/assets/dailies/frame-at-2s.jpg">
+<meta property="og:image:width" content="1280">
+<meta property="og:image:height" content="720">
+<meta property="og:image:alt" content="One frame from the pipeline's own master, extracted at two seconds.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Operator Console">
+<meta name="twitter:description" content="Operator Console: a read-only status board of the APEX film platform exactly as it stands — what is wired and to what depth, the stage routes and their named gaps, the declared module map, the production plan and its pass-or-fail gates, the decisions only the owner may make, and the risks carried. A snapshot of a platform under construction, not a control panel.">
+<meta name="twitter:image" content="https://filmverse-1mil8xwzv4y.qoder.website/assets/dailies/frame-at-2s.jpg">
+<!-- apex-meta:end -->
+</head>
+<body data-page="console" data-crumb="Operator Console">
+<div class="shell">
+  <div class="main">
+    <main class="page">
+
+      <section class="stack" aria-labelledby="console-title">
+        <div class="card gold">
+          <div class="row" id="console-chips"></div>
+          <h1 id="console-title">Operator Console</h1>
+          <p class="hint" style="max-width:82ch;margin-top:12px">
+            This is a <b>read-only status board</b>, and it is the first thing worth saying about it: this page starts no
+            job, runs no driver, holds no live cost meter and opens no queue. It cannot, because it is a static file
+            served to a browser — a button here could only animate, and an animation of work in progress would be a lie
+            with a spinner. So there is none. Every figure below is counted from the registry snapshot this site loads,
+            in your browser, as it stands today.
+          </p>
+          <p class="hint" style="max-width:82ch;margin-top:10px">
+            <b>A snapshot, not a control panel.</b> The live operator tooling — the thing that actually presses buttons,
+            spends machine minutes and moves money — runs on the owner's own machine and its own deployment, not here.
+            Where this board uses the word "gate", it means a condition that is either met or not met, plus one physical
+            next action. There are no readiness scores on this page and no percentage of "done", because this platform is
+            either wired or it is not, and the honest answer about most of it is "not yet".
+          </p>
+          <div id="console-fence"></div>
+        </div>
+        <noscript><div class="note bad">Every figure on this page is read from the registry data file the site loads, so with JavaScript off there is nothing to print — no number is typed into this HTML. The production plan's own targets are the only figures written as words, and they are labelled as targets wherever they appear.</div></noscript>
+      </section>
+
+      <section class="section" aria-labelledby="state-h">
+        <h2 id="state-h">State, measured</h2>
+        <p class="note" style="max-width:84ch">
+          Counted from the snapshot: the size of the catalogue, the size of the paperwork debt, what is free, what is
+          local, how much of the plan has a route behind it, and how deep the wiring actually goes. Nothing in this band
+          is a goal or an opinion — each tile is a count.
+        </p>
+        <div class="grid g4" id="band" style="margin-top:12px"></div>
+        <div class="grid g4" id="band2" style="margin-top:12px"></div>
+        <div class="row" id="bandChips" style="margin-top:12px"></div>
+
+        <div class="card" style="margin-top:12px">
+          <div class="row" style="justify-content:space-between">
+            <h3>Depth split of what is wired</h3>
+            <p class="note" id="depthTotal" style="margin:0"></p>
+          </div>
+          <p class="note">Depth is the honest word for "how much of this run happens without a human". It is not a quality
+            grade: a file-exchange tool can be the right tool, and a drivable one can be blocked on unread paperwork.</p>
+          <div class="grid g4" id="depths" style="margin-top:10px"></div>
+          <p class="note warn" id="depthNote" style="margin-top:12px"></p>
+        </div>
+
+        <div class="card gold" style="margin-top:12px">
+          <h3>The gap this band cannot smooth over</h3>
+          <p class="note" id="gapNote" style="margin-top:8px"></p>
+        </div>
+      </section>
+
+      <section class="section" aria-labelledby="wired-h">
+        <h2 id="wired-h">What is wired, by depth</h2>
+        <p class="note" style="max-width:84ch">
+          This table is the honest core of the board. It lists every tool the platform is connected to, the depth that
+          connection reaches, whose hardware the work runs on, what the connection actually does, and what is still
+          missing before that tool counts as automated. The last column is the one people leave out; it is kept here
+          verbatim from the data.
+        </p>
+        <div class="card" style="margin-top:12px;overflow:auto;max-height:460px" tabindex="0" role="region"
+             aria-label="Wired tools and their depth — scrollable table">
+          <div class="empty" id="conn-empty" hidden>No connection rows in this snapshot.</div>
+          <table class="t" id="conn-table">
+            <caption class="note" style="text-align:left;padding:0 0 10px">
+              One row per wired tool. "Runs on" is the recorded place the work happens; a rented service is a rented
+              service and is shown as such.
+            </caption>
+            <thead>
+              <tr>
+                <th scope="col">Tool</th>
+                <th scope="col">Depth</th>
+                <th scope="col">Runs on</th>
+                <th scope="col">What the connection does</th>
+                <th scope="col">What it still needs</th>
+              </tr>
+            </thead>
+            <tbody id="conn-body"></tbody>
+          </table>
+        </div>
+        <p class="note" id="connSummary" style="margin-top:10px"></p>
+        <p class="note">The table above sits in its own scroll region: reach it with Tab and move through it with the arrow keys.</p>
+      </section>
+
+      <section class="section" aria-labelledby="routes-h">
+        <h2 id="routes-h">The stage routes</h2>
+        <p class="note" style="max-width:84ch">
+          The pipeline walks ten stages. Each stage carries a preference order — the first tool it tries, then the fall
+          through — and a best depth reached by anything in that order. A stage with nothing behind it is printed as a
+          gap, not removed from the line.
+        </p>
+        <div class="card" style="margin-top:12px;overflow:auto;max-height:460px" tabindex="0" role="region"
+             aria-label="Stage routes and best depth — scrollable table">
+          <div class="empty" id="stage-empty" hidden>No stage rows in this snapshot.</div>
+          <table class="t" id="stage-table">
+            <caption class="note" style="text-align:left;padding:0 0 10px">
+              Preference order is the order the stage's tool list is written in. Best depth is the deepest entry in that
+              list, taken from the same data as the table above.
+            </caption>
+            <thead>
+              <tr>
+                <th scope="col">Stage</th>
+                <th scope="col">Driver preference order</th>
+                <th scope="col">Best depth</th>
+                <th scope="col">Honest note</th>
+              </tr>
+            </thead>
+            <tbody id="stage-body"></tbody>
+          </table>
+        </div>
+        <p class="note" id="stageSummary" style="margin-top:10px"></p>
+      </section>
+
+      <section class="section" aria-labelledby="modules-h">
+        <h2 id="modules-h">The module map</h2>
+        <p class="note" style="max-width:84ch" id="modulesIntro"></p>
+        <div class="card" style="margin-top:12px;overflow:auto;max-height:520px" tabindex="0" role="region"
+             aria-label="Declared modules by layer, with status and screen presence — scrollable table">
+          <div class="empty" id="mod-empty" hidden>No module rows in this snapshot.</div>
+          <table class="t" id="mod-table">
+            <caption class="note" style="text-align:left;padding:0 0 10px">
+              Status is copied from the module record. No page, including this one, can promote a status: "declares a
+              screen" means the record names one, not that anything answers at it.
+            </caption>
+            <thead>
+              <tr>
+                <th scope="col">Module</th>
+                <th scope="col">Purpose</th>
+                <th scope="col">Status</th>
+                <th scope="col">Screen</th>
+                <th scope="col">Declared dependencies</th>
+              </tr>
+            </thead>
+            <tbody id="mod-body"></tbody>
+          </table>
+        </div>
+        <div class="grid g2" style="margin-top:12px">
+          <div class="card gold">
+            <h3>The plan's cut, stated as a target</h3>
+            <p class="note" id="keeperNote" style="margin-top:8px"></p>
+            <p class="note warn" style="margin-top:10px">
+              A frozen module keeps its destination rather than being deleted: its name, its place in the map and the
+              path its artifacts move to are recorded, so a later reader can see why it stopped and where its work went.
+              Deletion would only hide the decision.
+            </p>
+          </div>
+          <div class="card">
+            <h3>Status counts, from the record</h3>
+            <div class="row" id="modStatus" style="margin-top:8px"></div>
+            <p class="note" id="modScreen" style="margin-top:10px"></p>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" aria-labelledby="plan-h">
+        <h2 id="plan-h">Production plan and its gates</h2>
+        <p class="note" style="max-width:84ch">
+          Four waves, quoted from the project's own blueprint. Every gate on this page is <b>binary</b> — met or not met —
+          and every gate carries exactly one next physical action for the day it fails. Nothing here is a measurement
+          taken by this site: the numbers in this block are <b>plan targets written as words</b>, labelled as such.
+        </p>
+        <div class="card" style="margin-top:12px;overflow:auto;max-height:620px" tabindex="0" role="region"
+             aria-label="Production waves, what exists at the end of each, its gate and its next action — scrollable table">
+          <table class="t">
+            <caption class="note" style="text-align:left;padding:0 0 10px">
+              "What exists at its end" is the deliverable you can hold. "Gate" is the one question that decides whether
+              the wave is over. "If it fails" is the next thing a person physically does.
+            </caption>
+            <thead>
+              <tr>
+                <th scope="col">Wave</th>
+                <th scope="col">What exists at its end</th>
+                <th scope="col">The gate — pass or fail, nothing in between</th>
+                <th scope="col">If it fails: one next action</th>
+              </tr>
+            </thead>
+            <tbody id="wave-body"></tbody>
+          </table>
+        </div>
+
+        <div class="grid g2" style="margin-top:12px">
+          <div class="card">
+            <h3>Wave 1 ceiling, shown as the division it is</h3>
+            <p class="note">Plan target, not a measurement: no more than <b>90.0 machine-minutes per finished minute</b>
+              of delivered film. The arithmetic that must be shown on every run, numerator over denominator:</p>
+            <div class="fence mono" style="margin-top:10px">
+              measured wall-clock machine-minutes &divide; finished minutes on the delivered piece &le; 90.0
+            </div>
+            <p class="note" style="margin-top:10px">
+              Wall-clock means the clock on the wall while the machine worked — not an estimate of effort, not a per-task
+              figure anyone typed in. Machine time is <b>measured, never believed</b>: a run that cannot show the two
+              numbers it divided has no business quoting a third. This page shows neither number, because this page owns
+              no clock and runs nothing.
+            </p>
+          </div>
+          <div class="card">
+            <h3>Wave 3 cost floor, shown as the arithmetic it is</h3>
+            <p class="note">Plan target, not a measurement: the price floor under a paid anchor is quoted as
+              numerator times price divided by finished minutes —</p>
+            <div class="fence mono" style="margin-top:10px">
+              20 jobs &times; $0.65 = $13.00 &divide; 4 finished minutes = $3.25 per finished minute
+            </div>
+            <p class="note warn" style="margin-top:10px" id="floorNote"></p>
+          </div>
+        </div>
+
+        <div class="card gold" style="margin-top:12px">
+          <h3>Tightened targets carried into wave 3</h3>
+          <p class="note" style="margin-top:6px">All four are plan figures. None is a measurement taken here.</p>
+          <ul class="note" style="margin:10px 0 0 18px;padding:0;line-height:1.9" id="tight"></ul>
+        </div>
+
+        <div class="grid g2" style="margin-top:12px">
+          <div class="card">
+            <h3>The one revenue channel, and the thing that is never the lock</h3>
+            <p class="note" style="margin-top:8px">
+              Verification is priced at <b>zero</b>, forever, and says so on every page of this site: an open receipt
+              must be checkable by anyone holding the file, with no account and no payment, or the guarantee it is
+              checking is worth nothing. The single channel that earns money is a <b>paid anchor on finished work</b> —
+              the act of putting a completed piece onto the record. A creator who never pays can still be verified, and
+              a recipient who never pays can still check.
+            </p>
+            <p class="note ok" style="margin-top:10px">
+              Which means the free door can never be the lock on the paid one. If verification ever became the thing you
+              had to buy, the platform would have sold the guarantee rather than the service.
+            </p>
+          </div>
+          <div class="card">
+            <h3>What a seal is, and what it is not</h3>
+            <p class="note" style="margin-top:8px">
+              A seal is an <b>audit trail</b>: which catalogue row, which inputs, which driver, which file, at what
+              moment, signed by whom. It is not a certificate about reality and this platform never claims to be able to
+              issue one — a seal over a render proves the render came from that run, not that the footage is real, not
+              that the licence behind the tool was read, not that anyone agreed the film is good. The audit trail is the
+              product. The claim about reality is not one this platform is entitled to make.
+            </p>
+            <p class="note" id="planState" style="margin-top:10px"></p>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" aria-labelledby="owner-h">
+        <h2 id="owner-h">Decisions the owner keeps</h2>
+        <p class="note" style="max-width:84ch">
+          These belong to a named human and to no assistant, no automated run and no future agent working on this
+          repository. They are written as roles and categories rather than as internal codes, because the list is about
+          who decides, not about how the plumbing is arranged.
+        </p>
+        <div class="grid g2" style="margin-top:12px" id="ownerList"></div>
+        <p class="note bad" style="margin-top:12px">
+          The rule behind the list: an agent may prepare anything on this page, and may show the work in progress, but it
+          may not perform any of these acts on its own judgement — and it may not treat a silent owner as consent.
+        </p>
+      </section>
+
+      <section class="section" aria-labelledby="risk-h">
+        <h2 id="risk-h">Risks we carry, stated as categories</h2>
+        <p class="note" style="max-width:80ch">
+          Named by category and in one line each. The detail stays out of a public page on purpose.
+        </p>
+        <div class="stack" style="margin-top:12px" id="riskList"></div>
+      </section>
+
+      <section class="section" aria-labelledby="fence-h">
+        <h2 id="fence-h">The fence</h2>
+        <div id="fence"></div>
+      </section>
+
+      <footer class="foot">
+        <span class="mono" id="foot-gen"></span>
+        <a href="workflow.html">Production</a>
+        <a href="verse.html">The Verse Map</a>
+        <a href="rights.html">Rights &amp; Licensing</a>
+        <a href="verify.html">Verify a Receipt</a>
+      </footer>
+    </main>
+  </div>
+</div>
+
+<script src="data.generated.min.js"></script>
+<script src="shell.min.js"></script>
+<script>
+(function () {
+  if (!window.V || !V.data) return;
+
+  var D = V.data;
+  var S = V.stats || {};
+  var CN = D.connections || [];
+  var ST = D.stages || [];
+  var MOD = D.modules || [];
+  var DEPTHS = D.depths || {};
+  var COV = D.coverage || {};
+
+  var n = function (x) { return V.num(x); };
+  function esc(v) {
+    return String(v === null || v === undefined ? "" : v)
+      .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;").replace(/'/g, "&#39;");
+  }
+  var BY_ID = {};
+  CN.forEach(function (c) { BY_ID[c.toolId] = c; });
+
+  var wired = CN.length;
+  var depthOrder = ["drivable", "file-exchange", "portal-only", "not-yet"];
+  var DEPTH_MEANS = {
+    drivable: "the run happens without a human touching it",
+    "file-exchange": "the platform prepares inputs and ingests outputs; a person works the app",
+    "portal-only": "the platform can record and link, not operate",
+    "not-yet": "no driver exists yet",
+  };
+  var STATUS_CHIP = { partial: "warn", planned: "", gated: "bad" };
+
+  /* ------------------------------------------------------------------ header chips */
+  document.getElementById("console-chips").innerHTML = [
+    '<span class="chip gold">read-only status board</span>',
+    '<span class="chip">snapshot, not a control panel</span>',
+    '<span class="chip ok">verification free forever</span>',
+    '<span class="chip bad">no runner, no live cost meter</span>',
+  ].join("");
+  document.getElementById("console-fence").innerHTML = V.fence(
+    "Nothing on this page runs. Every count is read from the registry snapshot this site loads; every figure written as " +
+    "words is quoted from the project's own plan and labelled a target. Where the record is silent, this board says the " +
+    "work is not done and leaves it there."
+  );
+
+  /* ------------------------------------------------------------------ state band */
+  document.getElementById("band").innerHTML = [
+    V.stat(n(S.rows), "registry rows counted in the snapshot"),
+    V.stat(n(S.clearedForClientWork), "rows cleared for client work", "bad"),
+    V.stat(n(S.awaitingLicenceRead), "awaiting a human licence read", "bad"),
+    V.stat(n(S.runsAtZero), "rows recorded at $0"),
+  ].join("");
+  document.getElementById("band2").innerHTML = [
+    V.stat(n(S.runsOnYourMachine), "rows that run on your own machine"),
+    V.stat(n(COV.wired) + " of " + n(COV.total), "stages with a route behind them"),
+    V.stat(n(S.categoriesCovered) + " of " + n(S.categoriesTotal), "catalogue categories with rows"),
+    V.stat(n(S.reviewQueue), "rows standing in the licence review queue"),
+  ].join("");
+  document.getElementById("bandChips").innerHTML =
+    '<span class="chip ok">duplicate rows: ' + n(S.duplicates) + "</span>" +
+    '<span class="chip ' + (S.rowsWithoutExit ? "bad" : "ok") + '">rows with no written exit: ' + n(S.rowsWithoutExit) + "</span>" +
+    '<span class="chip warn">queue length equals the whole catalogue: ' + n(S.reviewQueue) + " of " + n(S.rows) + "</span>";
+
+  document.getElementById("depthTotal").textContent =
+    n(wired) + " tools wired · " + depthOrder.map(function (k) {
+      return k + " " + n(DEPTHS[k] || 0);
+    }).join(" · ");
+
+  document.getElementById("depths").innerHTML = depthOrder.map(function (k) {
+    return '<div class="stat ' + (k === "not-yet" ? "bad" : "plain") + '">' +
+      '<div class="v">' + n(DEPTHS[k] || 0) + '</div><div class="k">' + esc(k) + "</div>" +
+      '<p class="note" style="margin-top:6px">' + esc(DEPTH_MEANS[k]) + "</p></div>";
+  }).join("");
+
+  var drivable = DEPTHS.drivable || 0;
+  document.getElementById("depthNote").innerHTML =
+    "Of " + n(wired) + " wired tools, " + n(drivable) + " reach drivable depth — that is the whole of what the word " +
+    "<b>automated</b> may honestly cover today. " + n(DEPTHS["not-yet"] || 0) + " sit at not-yet, which is not a slow " +
+    "connection but the absence of one: nothing is wired to them, and the stage that depends on them is printed as a gap " +
+    "below rather than quietly removed from the rail.";
+
+  document.getElementById("gapNote").innerHTML =
+    "Named as gaps, in their own words: " +
+    (COV.empty || []).map(function (x) { return '<b>' + esc(x) + "</b> has no route"; }).join(", ") +
+    ((S.categoriesEmpty || []).length ? ", and the catalogue category <b>" + esc((S.categoriesEmpty || []).join(", ")) +
+      "</b> has no rows in it" : "") +
+    ". Stages counted from the snapshot: " + n(ST.length) + " in the rail, " + n(COV.wired) +
+    " routed, " + n(ST.filter(function (s) { return !(s.tools || []).length; }).length) +
+    " with nothing behind them. A gap stated is worth more than a gap averaged away.";
+
+  /* ------------------------------------------------------------------ wired table */
+  document.getElementById("conn-empty").hidden = wired !== 0;
+  document.getElementById("conn-table").hidden = wired === 0;
+  document.getElementById("conn-body").innerHTML = CN.map(function (c) {
+    var local = /your machine/.test(String(c.where || ""));
+    return "<tr>" +
+      '<td class="mono">' + esc(c.name) + "</td>" +
+      "<td>" + V.depthChip(c.depth) + "</td>" +
+      '<td>' + esc(c.where) + (local ? "" : ' <span class="chip warn">not your hardware</span>') + "</td>" +
+      "<td>" + esc(c.does) + "</td>" +
+      "<td>" + (/(^nothing|nothing )/i.test(String(c.needs || ""))
+        ? '<span class="chip ok">' + esc(c.needs) + "</span>"
+        : esc(c.needs)) + "</td>" +
+    "</tr>";
+  }).join("");
+  document.getElementById("connSummary").innerHTML =
+    "Read the last column as the build list: " +
+    n(CN.filter(function (c) { return !/^nothing/i.test(String(c.needs || "")); }).length) +
+    " of " + n(wired) + " wired tools still need something before they count as finished, and each of those needs is a " +
+    "physical thing — a binary on the machine, a stored graph, a model file, a licence a person has read — not a state of mind.";
+
+  /* ------------------------------------------------------------------ stage routes */
+  document.getElementById("stage-empty").hidden = ST.length !== 0;
+  document.getElementById("stage-table").hidden = ST.length === 0;
+  document.getElementById("stage-body").innerHTML = ST.map(function (s) {
+    var tools = s.tools || [];
+    var order = tools.length
+      ? tools.map(function (t, i) {
+          var c = BY_ID[t];
+          return '<span class="mono">' + (i + 1) + ". " + esc(c ? c.name : t) + "</span>";
+        }).join(' <span class="note">&rarr;</span> ')
+      : '<span class="chip bad">no driver routed</span>';
+    var note;
+    if (!tools.length) {
+      note = '<span class="note bad"><b>Named gap:</b> nothing is routed here. The work is either a human handoff done ' +
+        'outside the platform or it does not happen; the stage stays in the line because deleting it would hide the hole.</span>';
+    } else {
+      var missing = tools.filter(function (t) { return BY_ID[t] && !/^nothing/i.test(String(BY_ID[t].needs || "")); });
+      note = '<span class="note">' + (missing.length
+        ? "Outstanding on this route: " + esc(missing.map(function (t) { return BY_ID[t].needs; }).join("; ")) + "."
+        : "Every candidate on this route records nothing outstanding.") + "</span>";
+    }
+    return "<tr>" +
+      '<td class="mono">' + esc(s.id) + "</td>" +
+      "<td>" + order + "</td>" +
+      "<td>" + V.depthChip(s.best) + "</td>" +
+      "<td>" + note + "</td>" +
+    "</tr>";
+  }).join("");
+  var bestCount = function (k) { return ST.filter(function (s) { return s.best === k; }).length; };
+  var noTool = ST.filter(function (s) { return !(s.tools || []).length; }).length;
+  var one = function (c, sing, plur) { return c === 1 ? sing : plur; };
+  document.getElementById("stageSummary").innerHTML =
+    n(ST.length) + " stages in the rail. " +
+    n(bestCount("drivable")) + " " + one(bestCount("drivable"), "reaches", "reach") + " drivable depth at best, " +
+    n(bestCount("file-exchange")) + " " + one(bestCount("file-exchange"), "tops", "top") + " out at file exchange, " +
+    n(bestCount("portal-only")) + " " + one(bestCount("portal-only"), "stops", "stop") + " at portal-only, and " +
+    n(noTool) + " " + one(noTool, "has", "have") + " no tool behind it at all. Those counts describe the same object as " +
+    "the depth split above, seen from the stage side.";
+
+  /* ------------------------------------------------------------------ module map */
+  var CANON_LAYERS = ["platform", "intelligence", "execution", "trust-portability"];
+  var LAYERS = CANON_LAYERS.filter(function (L) { return MOD.some(function (m) { return m.layer === L; }); });
+  MOD.forEach(function (m) { if (LAYERS.indexOf(m.layer) === -1) LAYERS.push(m.layer); });
+  var layerName = {
+    platform: "Platform",
+    intelligence: "Intelligence",
+    execution: "Execution",
+    "trust-portability": "Trust &amp; portability",
+  };
+  document.getElementById("modulesIntro").innerHTML =
+    "The record declares <b>" + n(MOD.length) + "</b> modules across " + n(LAYERS.length) +
+    " layers. This is the map someone drew, not the building that exists: every status is copied from the record, and " +
+    "a planned module is a name with a purpose written next to it.";
+
+  var modRows = "";
+  LAYERS.forEach(function (L) {
+    var list = MOD.filter(function (m) { return m.layer === L; });
+    modRows += '<tr><th scope="colgroup" colspan="5" class="mono" style="padding-top:14px">' +
+      (layerName[L] || esc(L)) + " — " + n(list.length) + " declared</th></tr>";
+    modRows += list.map(function (m) {
+      return "<tr>" +
+        '<td>' + esc(m.name) + '</td>' +
+        '<td class="note">' + esc(m.purpose) + "</td>" +
+        '<td><span class="chip ' + (STATUS_CHIP[m.status] || "") + '">' + esc(m.status) + "</span></td>" +
+        '<td>' + (m.route ? '<span class="chip gold">declares a screen</span>' : '<span class="note">no screen declared</span>') + "</td>" +
+        '<td class="mono">' + n((m.dependsOn || []).length) + "</td>" +
+      "</tr>";
+    }).join("");
+  });
+  document.getElementById("mod-empty").hidden = MOD.length !== 0;
+  document.getElementById("mod-table").hidden = MOD.length === 0;
+  document.getElementById("mod-body").innerHTML = modRows;
+
+  var KEEPER = 20;
+  document.getElementById("keeperNote").innerHTML =
+    "The build plan prunes " + n(MOD.length) + " declared modules to a keeper set of <b>" + n(KEEPER) +
+    "</b> — a figure quoted from the plan as a <b>target, not a measurement</b>: nothing in the snapshot has been cut yet, " +
+    "and the cut list is the owner's to ratify, not this page's.";
+  document.getElementById("modStatus").innerHTML = ["partial", "planned", "gated"].map(function (k) {
+    return '<span class="chip ' + (STATUS_CHIP[k] || "") + '">' + esc(k) + " ×" +
+      n(MOD.filter(function (m) { return m.status === k; }).length) + "</span>";
+  }).join(" ") + ' <span class="chip bad">live ×' + n(MOD.filter(function (m) { return m.status === "live"; }).length) + "</span>";
+  document.getElementById("modScreen").innerHTML =
+    n(MOD.filter(function (m) { return !!m.route; }).length) + " of " + n(MOD.length) +
+    " modules declare a screen of their own; the rest are named and depended upon without one. This board prints the " +
+    "presence of a screen, not its address.";
+
+  /* ------------------------------------------------------------------ waves */
+  var WAVES = [
+    ["Wave 0 — consolidation",
+     "The module map is cut to the keeper set, and every frozen item carries a destination: a name, a reason, a place its " +
+     "work moves to. Nothing is deleted, so nothing is forgotten.",
+     "The repository's own self-check reports zero failed checks. Met or not met — a single failing check leaves the wave open.",
+     "Fix the checks that report as failing, in the order the self-check lists them, then run it again from the start."],
+    ["Wave 1 — one film, all local",
+     "One finished minute of film made end to end on the owner's own machine: every stage artifact hashed as it was made, " +
+     "and the dialogue gap either routed to a driver or declared openly as a human handoff.",
+     "The sealed receipt for that film verifies offline, on a second machine, with zero servers involved.",
+     "Name the stage that lost the minutes and cut that stage's machine time; if the dialogue gap is still undeclared, " +
+     "write the handoff down instead of running around it."],
+    ["Wave 2 — the ledger on real steel, and the free door live",
+     "Evidence rows live in a real database rather than in files on one laptop, and the public verify door is open to anyone: " +
+     "no account, no key, and it answers in three words — pass, fail, or cannot-check.",
+     "One genuine receipt returns approved, and one deliberately altered copy of a file does not.",
+     "Do not invite traffic to the free door until both halves answer correctly; the failing half is the work, in the order " +
+     "the two answers were checked."],
+    ["Wave 3 — the first paid anchor",
+     "One outside creator's finished work is anchored for money, while verification stays free for that creator, for the " +
+     "recipient and for anyone who finds the file afterwards.",
+     "Money has actually been received, and that customer's receipt verifies with no key and no account.",
+     "Take the anchor back down and refund. A paid channel that will not verify keyless is a payment, not a service."],
+  ];
+  document.getElementById("wave-body").innerHTML = WAVES.map(function (w) {
+    return "<tr>" +
+      '<td class="mono">' + esc(w[0]) + "</td>" +
+      "<td>" + esc(w[1]) + "</td>" +
+      '<td><span class="chip gold">binary gate</span> ' + esc(w[2]) + "</td>" +
+      '<td class="note">' + esc(w[3]) + "</td>" +
+    "</tr>";
+  }).join("");
+
+  document.getElementById("floorNote").innerHTML =
+    "Why the wall-clock gate exists rather than a price list: the plan records the local run-time measured so far at " +
+    "roughly <b>99 machine-minutes per finished minute</b>. That is above the 90.0 ceiling wave 1 sets and far above the " +
+    "45:1 target wave 3 carries, which is exactly the point of naming a number before spending money on it. The figure is " +
+    "quoted from the plan as a measured local run; this page holds no clock and reproduces no measurement.";
+
+  document.getElementById("tight").innerHTML = [
+    "Wall-clock, tightened: <b>&le; 45 machine-minutes per finished minute</b> — the same division as the wave 1 ceiling, " +
+      "measured wall-clock minutes over finished minutes on the delivered piece. <i>Plan target.</i>",
+    "Licence review, closed: <b>12 of 12</b> wired tools carrying a licence a named human has read, so no automated path " +
+      "runs on unread paperwork. <i>Plan target.</i>",
+    "The rail, complete: <b>10 of 10</b> stages routed to a driver or declared as a human handoff — the second half counts " +
+      "as closed, and an undeclared hole does not. <i>Plan target.</i>",
+    "Cost floor: <b>$3.25 per finished minute</b>, shown as its arithmetic — 20 jobs &times; $0.65 = $13.00, divided by " +
+      "4 finished minutes. <i>Plan target, not a quote.</i>",
+  ].map(function (x) { return "<li>" + x + "</li>"; }).join("");
+
+  document.getElementById("planState").innerHTML =
+    "Against that plan, the snapshot is plain: " + n(S.clearedForClientWork) + " rows cleared for client work, " +
+    n(S.awaitingLicenceRead) + " awaiting a licence read, " + n(DEPTHS["not-yet"] || 0) +
+    " wired tools still at not-yet, and the wave 2 ledger door not yet open to the public in the form described above.";
+
+  /* ------------------------------------------------------------------ owner decisions */
+  var OWNER = [
+    ["Pressing publish, and applying a migration",
+     "Anything that leaves the building or changes the stored record for good. A prepared migration is not an applied migration."],
+    ["Marking a licence as human-read",
+     "Only a person may set that state, by reading the text and writing down a decision. No run may mark its own homework."],
+    ["Any change to the signing and evidence core",
+     "The part that decides what a receipt means. It moves only on the owner's instruction, and it is reviewed as a whole."],
+    ["Pushing to a protected arm of the code",
+     "Merging into what the platform is built from stays a human act, whatever else an agent prepares."],
+    ["All communication with the outside world",
+     "Emails, replies, client promises, prices discussed, dates implied. An agent may draft; only the owner sends."],
+    ["Un-publishing a live deployment of something frozen locally",
+     "If the local copy is frozen, pulling the live one changes what a past receipt points at. That is a decision, not a cleanup."],
+    ["The payment account and the anchor price",
+     "Who is paid, through which account, and what a finished anchor costs. No figure leaves the machine without the owner."],
+    ["Ratifying the cut list",
+     "Which declared modules become the keeper set, and which are frozen with a destination."],
+    ["Un-freezing anything",
+     "A freeze is a decision that stops being revisited by default. Reopening it needs the person who closed it."],
+    ["Paid cloud work on anyone's bill but the customer's",
+     "Hosted spend belongs to a job someone has agreed to pay for. Nothing runs on credit to look impressive."],
+    ["The domain and its name service",
+     "Where the site lives on the internet, and every change to the records that point at it."],
+    ["Naming a person, not a role, as the one who reads",
+     "A licence read needs a human attached to it, and only the owner assigns who that is."],
+  ];
+  document.getElementById("ownerList").innerHTML = OWNER.map(function (o) {
+    return '<div class="card"><h3>' + esc(o[0]) + '</h3><p class="note" style="margin-top:6px">' + esc(o[1]) + "</p></div>";
+  }).join("");
+
+  /* ------------------------------------------------------------------ risks */
+  var RISKS = [
+    "Gating and permission work is not finished — the category, not the detail.",
+    "Licence review is the binding constraint: " + n(S.awaitingLicenceRead) +
+      " rows awaiting a human read, counted from the snapshot, and no engineering week changes that number.",
+    "Wall-clock economics are unproven at scale — the plan's own ceiling is a target, not a track record.",
+    "A public door that must stay free has to stay free under load, which is a cost risk before it is anything else.",
+  ];
+  document.getElementById("riskList").innerHTML = RISKS.map(function (r) {
+    return '<div class="card"><p class="note warn" style="margin:0">' + esc(r) + "</p></div>";
+  }).join("");
+
+  /* ------------------------------------------------------------------ fence + footer */
+  document.getElementById("fence").innerHTML = V.fence(
+    "This board reports a platform under construction. It does not claim the platform proves content to be true: a seal is " +
+    "an audit trail, and an audit trail is not a guarantee about reality. It runs nothing, measures nothing itself, and " +
+    "prices verification at zero in every wave of the plan — the only thing that ever costs money is anchoring finished " +
+    "work. Where the record is unknown, the word used here is unknown."
+  );
+  document.getElementById("foot-gen").textContent = V.generated();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,397 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark">
+<meta name="description" content="The Creator Passport: a portable record of a finished work that a stranger can read with zero of our servers running, and that never carries a private key. The schema is specified; no passport has been issued yet, because no film is finished and no tool row in the registry has a human licence read.">
+<title>Creator Passport — A Portable Record of a Work | Sovereign AI Film Verse</title>
+<link rel="stylesheet" href="styles.css">
+
+
+
+
+
+<!-- apex-meta:start -->
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+<link rel="canonical" href="https://filmverse-1mil8xwzv4y.qoder.website/passport.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Sovereign AI Film Verse">
+<meta property="og:title" content="Creator Passport">
+<meta property="og:description" content="The Creator Passport: a portable record of a finished work that a stranger can read with zero of our servers running, and that never carries a private key. The schema is specified; no passport has been issued yet, because no film is finished and no tool row in the registry has a human licence read.">
+<meta property="og:url" content="https://filmverse-1mil8xwzv4y.qoder.website/passport.html">
+<meta property="og:image" content="https://filmverse-1mil8xwzv4y.qoder.website/assets/dailies/frame-at-2s.jpg">
+<meta property="og:image:width" content="1280">
+<meta property="og:image:height" content="720">
+<meta property="og:image:alt" content="One frame from the pipeline's own master, extracted at two seconds.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Creator Passport">
+<meta name="twitter:description" content="The Creator Passport: a portable record of a finished work that a stranger can read with zero of our servers running, and that never carries a private key. The schema is specified; no passport has been issued yet, because no film is finished and no tool row in the registry has a human licence read.">
+<meta name="twitter:image" content="https://filmverse-1mil8xwzv4y.qoder.website/assets/dailies/frame-at-2s.jpg">
+<!-- apex-meta:end -->
+</head>
+<body data-page="passport" data-crumb="Creator Passport">
+<div class="shell">
+  <div class="main">
+    <main class="page">
+
+      <section class="stack" aria-labelledby="pp-title">
+        <div class="card gold">
+          <div class="row" id="pp-chips"></div>
+          <h1 id="pp-title">Creator Passport</h1>
+          <p class="hint">A passport is the bundle a creator owns about a finished work: who made it, which tools touched it,
+            which licence state each tool carried at the moment of use, what each stage actually produced, and the evidence
+            trail that lets a stranger check the work without trusting this platform. Its founding purpose is portability —
+            the delivery package must be readable with zero of our servers running, and it must survive the platform going
+            away. One sentence of state, first: <strong>no passport has been issued, because no film has been finished on
+            this platform yet.</strong> What follows is the shape, the doctrine, and the measured facts behind it — not a
+            live credential system.</p>
+          <div id="pp-fence"></div>
+        </div>
+        <noscript><div class="note bad">This page mounts its numbers from <span class="mono">data.generated.js</span>. With JavaScript off they cannot be printed here, and no number on this page may be quoted from memory instead of that snapshot.</div></noscript>
+      </section>
+
+      <section class="section" aria-labelledby="carries-h">
+        <h2 id="carries-h">What a passport carries</h2>
+        <p class="note">Every field is marked honestly: <span class="chip ok">specified and measured</span> means the data
+          exists in this snapshot today; <span class="chip warn">specified, not yet issued</span> means the field has a shape
+          in the schema and nothing fills it, because no work has been finished. A chip here describes the schema's state,
+          not the quality of any film.</p>
+        <div class="grid g2" id="carries-cards"></div>
+        <div class="card" style="margin-top:12px">
+          <h3>Connection depths the field draws from</h3>
+          <p class="hint">“Which tool driver touched each stage, at what depth” is not a free-text claim. Depth is one of four
+            measured values, counted here from this snapshot:</p>
+          <div class="row" id="depth-facts"></div>
+          <p class="note">A file-exchange touch must be recorded as a handoff, not as a drive. The passport carries the depth
+            word, not a flattering paraphrase of it.</p>
+        </div>
+      </section>
+
+      <section class="section" aria-labelledby="never-h">
+        <h2 id="never-h">What a passport never carries</h2>
+        <div id="never-fence"></div>
+        <div class="grid g3" style="margin-top:12px">
+          <div class="card">
+            <h3>The key rule, stated as design</h3>
+            <p class="hint">A passport carries a public identity and evidence. It never carries a private key or any secret.
+              This is not a storage decision to revisit later — a field that could hold a secret does not exist in the schema,
+              so a leaked passport bundle cannot compromise anything, by construction.</p>
+          </div>
+          <div class="card">
+            <h3>What a seal is, and is not</h3>
+            <p class="hint">A seal is an audit trail. It proves that a statement was made at a moment; it does not prove the
+              content is true, authorised, or good. Any reader of a passport — including a stranger — should treat every
+              field inside it as a recorded claim, and the passport's value as the trail that lets them check those claims
+              elsewhere.</p>
+          </div>
+          <div class="card">
+            <h3>Compatibility, not conformance</h3>
+            <p class="hint">Where field names echo C2PA vocabulary, that is an intention to speak a shared language, not a
+              claim of conformance. Nothing on this page asserts that a standard, a blockchain, or any court guarantees
+              anything about a passport.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" aria-labelledby="preview-h">
+        <h2 id="preview-h">Form a passport shape in your own browser</h2>
+        <div class="grid g-side">
+          <div class="card">
+            <h3>The preview generator</h3>
+            <p class="hint">Type a work title, keep or change the stage set — the list is the actual stage table from this
+              snapshot — and press the button. The page builds the JSON object a passport would have, with every artefact-hash
+              field left as a visibly-unfilled placeholder instead of fake hex, then computes one thing for real on your
+              machine: the SHA-256 of the exact text just formed. That is the commit mechanic, demonstrated locally and
+              honestly: the hash commits you to what was said, nothing more.</p>
+            <p class="note"><strong>Formed in your browser · nothing stored · nothing sent.</strong> No request leaves this
+              page; the hash is computed by your own browser's crypto library over the text you can read below.</p>
+            <div class="stack" style="gap:12px;margin-top:12px">
+              <div>
+                <label class="f" for="pp-name">Work title</label>
+                <input id="pp-name" type="text" maxlength="120" autocomplete="off" placeholder="e.g. the film you have not finished yet">
+              </div>
+              <div>
+                <label class="f" for="pp-stages">Stage set (Ctrl/⌘-click to change the selection)</label>
+                <select id="pp-stages" multiple size="10" aria-describedby="pp-status"></select>
+              </div>
+              <div class="row">
+                <button class="btn solid" id="pp-run" type="button">Form the preview</button>
+                <span class="chip" id="pp-status" role="status" aria-live="polite">nothing formed yet</span>
+              </div>
+            </div>
+          </div>
+          <div class="stack">
+            <div class="card gold">
+              <h3>The formed object</h3>
+              <div id="pp-out" role="region" aria-live="polite" aria-label="Formed passport preview">
+                <div class="empty">Press <strong>Form the preview</strong> — the JSON shape appears here, built and hashed on your machine.</div>
+              </div>
+            </div>
+            <div class="note warn">If your browser context does not expose the local hash function, the page says so plainly and prints no hash. It never prints a hash it did not compute.</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" aria-labelledby="gate-h">
+        <h2 id="gate-h">Portability test</h2>
+        <div class="card">
+          <div class="row">
+            <h3>The acceptance bar the platform holds itself to</h3>
+            <span class="chip bad" id="gate-state">UNTESTED</span>
+          </div>
+          <p class="hint">A delivered package — files plus passport — must verify on a second machine with
+            <strong>zero of our servers running</strong>. Not “mostly offline”. Not “offline with a fallback call to us”.
+            If the proof of the work requires us to be online, the work is not portable and the delivery is a
+            <span class="mono">fail</span>, whatever the files look like.</p>
+          <div class="note warn">Current gate result: <strong>UNTESTED</strong> — because no film has been finished, no
+            package exists to hand to a second machine, and the test cannot be run against an absence. This is a binary
+            state, deliberately: the gate has a result or it does not. There is no score, and none will be printed while
+            nothing has been delivered.</div>
+        </div>
+      </section>
+
+      <section class="section" aria-labelledby="lic-h">
+        <h2 id="lic-h">The licence reality behind every passport</h2>
+        <p class="note">A passport would record, for each tool at each stage, the licence state it carried at the moment of
+          use. Here is what that field could honestly say across the whole tool registry today — every number read from
+          the snapshot this page is built on.</p>
+        <div class="grid g4" id="lic-stats"></div>
+        <div class="row" id="cov-facts" style="margin-top:12px"></div>
+        <div id="lic-fence"></div>
+      </section>
+
+      <section class="section" aria-labelledby="why-h">
+        <h2 id="why-h">Why a creator would want one</h2>
+        <div class="grid g3">
+          <div class="card">
+            <h3>A stranger can check the work without an account</h3>
+            <p class="hint">The passport is evidence plus a pointer, not an invitation. A client, a festival, or a person who
+              found the film on a memory stick can read who touched which stage, at what depth, under what recorded licence
+              state — without signing up to anything, including us.</p>
+          </div>
+          <div class="card">
+            <h3>The record leaves with the creator</h3>
+            <p class="hint">It is a bundle of files the creator owns. If this platform disappears tomorrow, the passport for a
+              finished work is still readable, and the hashes it carries still match the files sitting next to it. Portability
+              is the feature; the platform is incidental.</p>
+          </div>
+          <div class="card">
+            <h3>Tool and licence state travel with each stage</h3>
+            <p class="hint">Not a single vague “AI-assisted” label over the whole film: which driver touched which stage, at
+              which depth, and what the licence record said at the moment of use — including “unread”, recorded as itself.
+              That is the level of detail a buyer or a regulator asks for, answered before they ask.</p>
+          </div>
+        </div>
+      </section>
+
+      <footer class="foot">
+        <span class="mono" id="foot-gen"></span>
+        <a href="workflow.html">Production</a>
+        <a href="rights.html">Rights &amp; Licensing</a>
+      </footer>
+    </main>
+  </div>
+</div>
+
+<script src="data.generated.min.js"></script>
+<script src="shell.min.js"></script>
+<script>
+(function () {
+  if (!window.V || !V.data || !Array.isArray(V.data.stages)) return;
+
+  var stages = V.data.stages;
+  var stats = V.stats || {};
+  var cov = V.data.coverage || {};
+  var depths = V.data.depths || {};
+  var conns = V.data.connections || [];
+
+  function esc(s) {
+    return String(s == null ? "" : s).replace(/[&<>"]/g, function (c) {
+      return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c];
+    });
+  }
+
+  /* ---------- header chips + opening fence ---------- */
+  var chips = [
+    '<span class="chip bad">' + V.num(stats.clearedForClientWork) + " passports issued</span>",
+    '<span class="chip gold">' + stages.length + " stages in the schema</span>",
+    '<span class="chip">' + conns.length + " tool touches in the table</span>",
+    '<span class="chip ' + (cov.wired === cov.total ? "ok" : "warn") + '">' +
+      V.num(cov.wired) + " of " + V.num(cov.total) + " stages routed</span>"
+  ];
+  document.getElementById("pp-chips").innerHTML = chips.join(" ");
+
+  document.getElementById("pp-fence").innerHTML = V.fence(
+    "Doctrine, not decoration: a seal is an audit trail — it proves a statement was made, and never that content " +
+    "is true, authorised, or good. It carries a public identity and evidence and never a private key. " +
+    "And today it is a schema with " + V.num(stats.clearedForClientWork) + " issuances behind it, because this platform " +
+    "has finished no film."
+  );
+
+  /* ---------- what a passport carries ---------- */
+  var FIELDS = [
+    ["Work identity", "A stable identifier for the finished work plus the creator's public identity — a name to file against, not a claim of legal personhood and not tied to any identity standard we have adopted.", false, "not-yet"],
+    ["Per-stage artefact hashes", "For each stage, the hash of the file that stage actually delivered — taken on admission. Today runStage() hashes no output; the field exists in the schema and nothing fills it.", false, "not-yet"],
+    ["Tool driver and depth, per stage", "Which driver touched which stage, recorded as one of the four measured depths (drivable / file-exchange / portal-only / not-yet). The depth table is counted in this snapshot, per tool, from the connection table.", true, "measured"],
+    ["Licence state of each tool at use time", "What the licence record said the moment the tool was used. “Unverified — never read” is a valid recorded answer and the most common one; an invented permission is never one. The registry-wide count of rows with a human read is printed in this snapshot.", true, "measured"],
+    ["The human handoffs", "Every file-exchange and portal-only touch names the human action that actually produced the artefact, so the record never launderes a hand-run into a “drive”.", false, "not-yet"],
+    ["Anchor / opt-in state", "Whether the creator chose to anchor the work's record publicly, and what that statement consists of. Anchoring is opt-in; nothing is anchored by default; no chain is claimed to guarantee anything.", false, "not-yet"],
+    ["The verification pointer", "Where a stranger can check the evidence with zero servers of ours running — the delivered package itself, files plus passport. Today there is no finished work for a pointer to point at.", false, "not-yet"]
+  ];
+  var carry = "";
+  for (var f = 0; f < FIELDS.length; f++) {
+    var fd = FIELDS[f];
+    var badge = fd[2]
+      ? '<span class="chip ok">specified and measured</span>'
+      : '<span class="chip warn">specified, not yet issued</span>';
+    carry += '<article class="card"><div class="row"><h3>' + esc(fd[0]) + "</h3>" + badge + "</div>" +
+             '<p class="hint">' + esc(fd[1]) + "</p></article>";
+  }
+  document.getElementById("carries-cards").innerHTML = carry;
+
+  var DEPTH_ORDER = ["drivable", "file-exchange", "portal-only", "not-yet"];
+  var dHtml = "";
+  for (var d = 0; d < DEPTH_ORDER.length; d++) {
+    var k = DEPTH_ORDER[d];
+    if (!(k in depths)) continue;
+    dHtml += V.depthChip(k) + " " + V.num(depths[k]) + " tool" + (depths[k] === 1 ? "" : "s") + " &nbsp;";
+  }
+  document.getElementById("depth-facts").innerHTML = '<span class="row">' + dHtml + "</span>";
+
+  /* ---------- what it never carries ---------- */
+  document.getElementById("never-fence").innerHTML = V.fence(
+    "A passport never carries: a private key or any secret · a payment credential or card data · a claim that its contents " +
+    "are true · any personal data of viewers. None of these fields exist in the schema — not “disabled”, not “off by default”. " +
+    "A bundle you can hand to a stranger must be safe to hand to a stranger."
+  );
+
+  /* ---------- preview generator ---------- */
+  var sel = document.getElementById("pp-stages");
+  var optHtml = "";
+  for (var s = 0; s < stages.length; s++) {
+    optHtml += '<option value="' + esc(stages[s].id) + '" selected>' + esc(stages[s].id) + "</option>";
+  }
+  sel.innerHTML = optHtml;
+
+  var out = document.getElementById("pp-out");
+  var status = document.getElementById("pp-status");
+
+  function pickedStages() {
+    var out = [];
+    for (var i = 0; i < sel.options.length; i++) if (sel.options[i].selected) out.push(sel.options[i].value);
+    return out;
+  }
+
+  function buildPassport(title, picks) {
+    var byId = {};
+    for (var i = 0; i < stages.length; i++) byId[stages[i].id] = stages[i];
+    var stageObj = {};
+    for (var p = 0; p < picks.length; p++) {
+      var st = byId[picks[p]] || { tools: [], best: "not-yet" };
+      stageObj[picks[p]] = {
+        driversTouched: st.tools.length ? st.tools : ["no tool routed in this snapshot"],
+        recordedDepth: st.best || "not-yet",
+        artefactSha256: "not produced yet — no run has hashed an output",
+        licenceStateAtUse: "unverified — awaiting a human read",
+        humanHandoff: st.best === "file-exchange" || st.best === "portal-only"
+          ? "a human operates the app; APEX prepares and ingests"
+          : "none recorded"
+      };
+    }
+    return {
+      passport: "creator-passport/preview-0",
+      issued: false,
+      formation: "formed in your browser · nothing stored · nothing sent",
+      workIdentity: { title: title, id: "not issued — no finished film exists on this platform" },
+      publicIdentity: "a public name and key the creator owns — placeholder, none registered",
+      privateKeyFields: "none exist in this schema — a passport never carries a private key or secret",
+      stages: stageObj,
+      anchorState: "opt-in · nothing anchored · anchoring is a recorded statement, not proof the statement is true",
+      verificationPointer: "the delivered bundle itself — must verify on a second machine with zero of our servers running",
+      portabilityGate: "UNTESTED — no package has been delivered",
+      toolRegistryAtFormation: {
+        rowsCounted: stats.rows,
+        clearedForClientWork: stats.clearedForClientWork,
+        awaitingLicenceRead: stats.awaitingLicenceRead
+      },
+      honesty: "This object records that statements were made. It does not prove any content true, authorised, or good."
+    };
+  }
+
+  function hex(buf) {
+    var a = new Uint8Array(buf), h = "";
+    for (var i = 0; i < a.length; i++) h += a[i].toString(16).padStart(2, "0");
+    return h;
+  }
+
+  function render(text, digest, err) {
+    out.innerHTML = "";
+    var pre = V.el('<pre class="mono" style="margin:0;white-space:pre-wrap;overflow-wrap:anywhere;word-break:break-word;font-size:11.5px;line-height:1.45;max-height:480px;overflow-y:auto;background:var(--ink-2);border:1px solid var(--line);padding:12px"></pre>');
+    pre.textContent = text + (digest
+      ? "\n\n// SHA-256 of the exact text above, computed on your machine:\n// " + digest
+      : "\n\n// " + (err || "hash not computed") + "\n// The text above is shown without a hash — this page prints no hash it did not compute.");
+    out.appendChild(pre);
+  }
+
+  function form() {
+    var title = document.getElementById("pp-name").value.trim() || "(no title typed)";
+    var picks = pickedStages();
+    if (!picks.length) {
+      out.innerHTML = '<div class="empty">No stage selected — a passport for zero stages is not a passport for a work. Pick at least one stage.</div>';
+      status.textContent = "nothing formed — no stage picked";
+      return;
+    }
+    var text = JSON.stringify(buildPassport(title, picks), null, 2);
+    if (!(window.crypto && window.crypto.subtle && window.crypto.subtle.digest)) {
+      render(text, null, "this browser context does not expose crypto.subtle — the hash could not be computed locally");
+      status.textContent = "formed · hash unavailable in this browser context";
+      return;
+    }
+    status.textContent = "forming…";
+    window.crypto.subtle.digest("SHA-256", new TextEncoder().encode(text)).then(function (buf) {
+      render(text, hex(buf));
+      status.textContent = "formed · hashed locally";
+    }, function () {
+      render(text, null, "the local hash call failed in this browser");
+      status.textContent = "formed · hash failed locally";
+    });
+  }
+
+  document.getElementById("pp-run").addEventListener("click", form);
+
+  /* ---------- licence reality ---------- */
+  document.getElementById("lic-stats").innerHTML = [
+    V.stat(V.num(stats.rows), "registry rows counted"),
+    V.stat(V.num(stats.clearedForClientWork), "cleared for client work", "bad"),
+    V.stat(V.num(stats.awaitingLicenceRead), "awaiting a licence read"),
+    V.stat(V.num(stats.reviewQueue), "in the review queue"),
+    V.stat(V.num(stats.duplicates), "duplicate rows", "plain"),
+    V.stat(V.num(stats.rowsWithoutExit), "rows without a recorded exit", "plain"),
+    V.stat(V.num(stats.categoriesCovered) + " / " + V.num(stats.categoriesTotal), "categories covered", "plain"),
+    V.stat(V.num(stats.reviewQueue) + " / " + V.num(stats.rows), "of the whole registry sits unread", "plain")
+  ].join("");
+
+  var emptyCov = (cov.empty || []).length ? cov.empty.join(", ") : "none";
+  document.getElementById("cov-facts").innerHTML =
+    '<span class="chip ' + (cov.wired === cov.total ? "ok" : "bad") + '">' + V.num(cov.wired) + " of " + V.num(cov.total) + " stages routed</span>" +
+    '<span class="chip bad">no driver routed: ' + esc(emptyCov) + "</span>";
+
+  document.getElementById("lic-fence").innerHTML = V.fence(
+    "The blunt sentence: an unread licence does not warn about client work at the driver door — it stops it. " +
+    "With " + V.num(stats.awaitingLicenceRead) + " of " + V.num(stats.rows) + " rows still unread, every passport formed today " +
+    "would record “unverified” in the licence field for every tool it names. That field is why the passport exists: the " +
+    "platform's job is to keep the answer honest, never to guess it."
+  );
+
+  /* ---------- footer ---------- */
+  document.getElementById("foot-gen").textContent = V.generated();
+  document.querySelector("footer.foot").insertAdjacentHTML("beforeend",
+    "<div style='flex-basis:100%'>" + V.fence(
+      "Honesty line: nothing on this page has been issued, verified, anchored or delivered. The passport is a schema, a " +
+      "doctrine, and a preview that runs on your machine — and the first real one waits on the first real finished film."
+    ) + "</div>");
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,30 @@
+{
+  "ticks": 1,
+  "history": [
+    {
+      "at": "2026-11-01T19:57:45.051Z",
+      "ok": false,
+      "failing": [
+        "liveness",
+        "repo-hygiene"
+      ],
+      "s": 3
+    }
+  ],
+  "lastTick": "2026-11-01T19:57:45.051Z",
+  "lastGuard": {
+    "ok": false,
+    "failing": [
+      "liveness",
+      "repo-hygiene"
+    ]
+  },
+  "openTasks": [
+    "regenerate-data",
+    "route-stage",
+    "verify-links",
+    "creative-language",
+    "licence-read"
+  ],
+  "thought": null
+}

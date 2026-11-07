@@ -1,0 +1,756 @@
+# Publish / delivery engine survey — the last mile: package it, ship it, prove who made it
+
+Compiled 2026-11-04 for Sovereign AI Film Verse (repo `D:\ApexEmpire\films\lllppp`). Shape copied verbatim from
+`src/lib/apex/engines/contract.ts` (`Engine`, nested `licence`/`ceiling`/`body`/`board`, `driver` union,
+`kind: "weights" | "api" | "cli" | "app"`). This is the `publish` stage: the finished master becomes a file
+somewhere a person can watch it, plus the paperwork that says who made it.
+
+Rules held: an unverified value is `null`, never a guess; every `licence.evidenceUrl`, `vendorUrl` and
+`releasedSource` below is a URL that was actually fetched (or read verbatim in a search result) on the compile
+date. Conventions for this cluster: `ceiling.maxEdge`/`maxSeconds`/`fps` are `null` unless a primary doc states a
+hard cap (packagers and encoders are not resolution-capped by their own code), `nativeAudio` is false (a
+packager never invents sound), `lipSync` is null. `priceUsdPerSecond` is US$ per one second of finished output:
+`0` for self-hosted CLIs and for ingest calls whose published constraint is quota rather than money, `null` where
+no per-second price exists on record, with the arithmetic shown in the string where a per-minute rate was
+converted. `board` is null on every row — no independent blind-vote arena measures delivery tools; a "delivery
+score" is either a conformance test (MediaConch/QCTools, in the caption-QC-deliver survey) or a watch-through,
+neither of which is an Elo board.
+
+```ts
+import type { Engine } from "../src/lib/apex/engines";
+
+const MEASURED = "2026-11-04";
+
+export const SURVEY_PUBLISH: Engine[] = [
+  // ==================== cinema + broadcast masters (open source authoring) ====================
+  {
+    id: "dcp-o-matic",
+    name: "DCP-o-matic 2 (dcpomatic2_create / dcpomatic2_cli)",
+    stage: "publish",
+    kind: "cli",
+    vendorUrl: "http://dcpomatic.com",
+    sourceRepository: "https://github.com/cth103/dcpomatic",
+    licence: {
+      spdx: "GPL-2.0-or-later",
+      evidenceUrl: "https://raw.githubusercontent.com/cth103/dcpomatic/main/COPYING",
+      excludedTerritories: [],
+      revenueClause:
+        "GPL v2 (or, at your option, any later version) — the repo ships the verbatim GPLv2 text and the source headers say 'either version 2 of the License, or (at your option) any later version'. Copyleft bites the tool you distribute, never the DCP you screen; no revenue or territory clause found",
+      attested: "machine",
+    },
+    released: "2026-10-16",
+    releasedSource: "http://dcpomatic.com/download",
+    ceiling: { maxEdge: null, maxSeconds: null, fps: null, nativeAudio: false, lipSync: null },
+    body: { vramGb: 0, weightsPublic: true, executors: ["local-cli"] },
+    priceUsdPerSecond: 0,
+    priceSource: "free GPL tool on your own box; the cost is the encode (CPU) and, at the venue, the KDM ceremony",
+    board: null,
+    driver: "drivable",
+    fits:
+      "The only row here that produces a theatrical master: the manual documents four command-line tools — dcpomatic2_create builds the film directory and metadata from MP4/MOV/MKV, image sequences (TIFF/DPX), WAV/MP3/AIFF and .srt/DCP-XML/.ssa subtitles, dcpomatic2_cli runs the transcode headlessly, dcpomatic2_kdm_cli mints KDMs and dcpomatic2_map re-cuts existing DCPs. It even supports the cinema content-type flags (FTR/TLR/TST/ADV…) and container ratios, so a festival slot is a scriptable step rather than a favour.",
+    measuredAt: MEASURED,
+  },
+  {
+    id: "bmx-ebu",
+    name: "bmx (EBU fork: raw2bmx / bmxtranswrap / mxf2raw)",
+    stage: "publish",
+    kind: "cli",
+    vendorUrl: "https://github.com/ebu/bmx",
+    sourceRepository: "https://github.com/ebu/bmx",
+    licence: {
+      spdx: "BSD-3-Clause",
+      evidenceUrl: "https://raw.githubusercontent.com/ebu/bmx/main/COPYING",
+      excludedTerritories: [],
+      revenueClause:
+        "BSD-3-Clause (BBC copyright, 'Copyright (C) 2014, British Broadcasting Corporation'): no revenue clause, no territory ban; the only extra condition is the no-endorsement clause",
+      attested: "machine",
+    },
+    released: "2026-05-11",
+    releasedSource: "https://github.com/ebu/bmx/releases/tag/v1.7",
+    ceiling: { maxEdge: null, maxSeconds: null, fps: null, nativeAudio: false, lipSync: null },
+    body: { vramGb: 0, weightsPublic: true, executors: ["local-cli"] },
+    priceUsdPerSecond: 0,
+    priceSource: "free BSD tool, CPU only",
+    board: null,
+    driver: "drivable",
+    fits:
+      "The MXF author for broadcasters and streaming-platform masters: the README lists SMPTE ST 378 MXF OP1a, RDD 9 XDCAM, ST 386 D-10/IMX, AMWA AS-10 and AS-11 Media Contribution, Avid OPAtom, WAV and SMPTE ST 2067-5 IMF Essence Component, with essence support for AVC-Intra (RP 2027), DV, MPEG-2, JPEG 2000 and RDD 36 Apple ProRes. LANDMINE worth knowing: the original bbc/bmx repository is archived — the maintained line is this EBU fork, so pin ebu/bmx and not bbc/bmx.",
+    measuredAt: MEASURED,
+  },
+  {
+    id: "mkvtoolnix",
+    name: "MKVToolNix (mkvmerge / mkvextract / mkvinfo)",
+    stage: "publish",
+    kind: "cli",
+    vendorUrl: "https://mkvtoolnix.download/",
+    sourceRepository: "https://codeberg.org/mbunkus/mkvtoolnix",
+    licence: {
+      spdx: "GPL-2.0-or-later",
+      evidenceUrl: "https://codeberg.org/mbunkus/mkvtoolnix/raw/branch/main/COPYING",
+      excludedTerritories: [],
+      revenueClause:
+        "GPL v2 (the README states 'This code comes under the GPL v2 (see www.gnu.org or the file COPYING)' and the COPYING file is the GPLv2 text); note the repo separately marks some bundled parts LGPL-2.1-or-later. Copyleft on the shipped binary, nothing on the .mkv you produce",
+      attested: "machine",
+    },
+    released: "2026-10-18",
+    releasedSource: "https://mkvtoolnix.download/",
+    ceiling: { maxEdge: null, maxSeconds: null, fps: null, nativeAudio: false, lipSync: null },
+    body: { vramGb: 0, weightsPublic: true, executors: ["local-cli"] },
+    priceUsdPerSecond: 0,
+    priceSource: "free GPL tool, CPU only",
+    board: null,
+    driver: "drivable",
+    fits:
+      "The archival master box: Matroska is the container that survives a film longest, and mkvmerge multiplexes V/M/a tracks, chapters, tags and multiple subtitle languages without re-encoding a single frame. Release cadence is monthly (v96 → v103 between 2025-11 and 2026-10 on the download page), which matters when a codec edge case blocks you.",
+    measuredAt: MEASURED,
+  },
+  {
+    id: "shaka-packager",
+    name: "Shaka Packager (Google)",
+    stage: "publish",
+    kind: "cli",
+    vendorUrl: "https://github.com/shaka-project/shaka-packager",
+    sourceRepository: "https://github.com/shaka-project/shaka-packager",
+    licence: {
+      spdx: "BSD-3-Clause",
+      evidenceUrl: "https://raw.githubusercontent.com/shaka-project/shaka-packager/main/LICENSE",
+      excludedTerritories: [],
+      revenueClause: "none (BSD-3-Clause, Google 2014) — no revenue clause, no territory ban; only the endorsement condition",
+      attested: "machine",
+    },
+    released: "2026-07-27",
+    releasedSource: "https://github.com/shaka-project/shaka-packager/releases/tag/v3.9.3",
+    ceiling: { maxEdge: null, maxSeconds: null, fps: null, nativeAudio: false, lipSync: null },
+    body: { vramGb: 0, weightsPublic: true, executors: ["local-cli"] },
+    priceUsdPerSecond: 0,
+    priceSource: "free BSD tool, CPU-bound muxing; the DRM key systems it talks to are separately contracted",
+    board: null,
+    driver: "drivable",
+    fits:
+      "One binary emits both storefront formats: the README lists DASH and HLS, VOD and live, CENC encryption, and Widevine / PlayReady / FairPlay / Marlin key systems, plus a real subtitle table (Text WebVTT in and out, WebVTT-in-MP4 out, TTML and TTML-in-MP4 out, DVB-SUB in). For a film this is the row that carries captions to the player as a track instead of burning them into the picture — cleanest licence in the packager set.",
+    measuredAt: MEASURED,
+  },
+  {
+    id: "gpac-mp4box",
+    name: "GPAC / MP4Box",
+    stage: "publish",
+    kind: "cli",
+    vendorUrl: "https://gpac.io/",
+    sourceRepository: "https://github.com/gpac/gpac",
+    licence: {
+      spdx: "LGPL-2.1-or-later",
+      evidenceUrl: "https://raw.githubusercontent.com/gpac/gpac/master/COPYING",
+      excludedTerritories: [],
+      revenueClause:
+        "LANDMINE (dual licence, not a territory clause): README states 'GPAC is distributed under the LGPL v2.1 or later, and is also available, for most of it, under a commercial license (motionspell.com/gpac-licensing)'. LGPL compliance (dynamic linking, licence text shipped) is required before the paid route even matters; a statically-linked proprietary product is exactly the case the commercial licence is sold for",
+      attested: "machine",
+    },
+    released: "2026-09-24",
+    releasedSource: "https://github.com/gpac/gpac/releases/tag/abi-16.27",
+    ceiling: { maxEdge: null, maxSeconds: null, fps: null, nativeAudio: false, lipSync: null },
+    body: { vramGb: 0, weightsPublic: true, executors: ["local-cli"] },
+    priceUsdPerSecond: 0,
+    priceSource: "free under LGPL on your own machine; CPU only",
+    board: null,
+    driver: "drivable",
+    fits:
+      "The conformance workhorse: MP4Box writes the ISOBMFF/CMAF fragments and the DASH/HLS manifests, and the README claims containers MP4/fMP4/CMAF/Quicktime MOV/ProRes MOV plus subtitle formats 'WebVTT, TTML (full, EBU-TTD…)' — EBU-TTD in is the broadcast-subtitle path a finished film needs. Released roughly monthly (abi-16.22 … abi-16.27 across mid-2026), so it is the opposite of the stale rows here.",
+    measuredAt: MEASURED,
+  },
+  {
+    id: "bento4",
+    name: "Bento4 (mp4dump / mp4-mpegts-muxer / ISMV tools)",
+    stage: "publish",
+    kind: "cli",
+    vendorUrl: "https://www.bento4.com/",
+    sourceRepository: "https://github.com/axiomatic-systems/Bento4",
+    licence: {
+      spdx: "GPL-2.0-or-later",
+      evidenceUrl: "https://www.bento4.com/about/",
+      excludedTerritories: [],
+      revenueClause:
+        "LANDMINE (dual licence): the about page says 'This software is available under two different licenses' — the GPL applies 'for applications that are entirely distributable under the terms of the GPL', and 'for applications that cannot be entirely distributable under the terms of the GPL … a non-GPL commercial license is available from Axiomatic Systems LLC'. A closed-source delivery product must buy the paid licence",
+      attested: "human",
+    },
+    released: "2023-11-25",
+    releasedSource: "https://github.com/axiomatic-systems/Bento4/releases/tag/v1.6.0-641",
+    ceiling: { maxEdge: null, maxSeconds: null, fps: null, nativeAudio: false, lipSync: null },
+    body: { vramGb: 0, weightsPublic: true, executors: ["local-cli"] },
+    priceUsdPerSecond: 0,
+    priceSource: "$0 under the GPL path on your own machine; a commercial licence is a separate negotiated cost",
+    board: null,
+    driver: "needs-licence-read",
+    fits:
+      "Historically the ISMV / smooth-streaming and fragmented-MP4 surgeon, and still the best inspector of MP4 box structure when a player rejects your file. Two reasons it ranks behind Shaka and GPAC: the licence forks into GPL-or-paid depending on how your app is distributed, and the newest tag on the repo is v1.6.0-641 from 2023-11-25, so the staleness gate fires as well.",
+    measuredAt: MEASURED,
+  },
+  {
+    id: "ffmpeg-delivery",
+    name: "FFmpeg (delivery transcodes, caption muxing, BWF/WAV, loudness + watermark filters)",
+    stage: "publish",
+    kind: "cli",
+    vendorUrl: "https://github.com/FFmpeg/FFmpeg",
+    sourceRepository: "https://github.com/FFmpeg/FFmpeg",
+    licence: {
+      spdx: "LGPL-2.1-or-later",
+      evidenceUrl: "https://raw.githubusercontent.com/FFmpeg/FFmpeg/master/LICENSE.md",
+      excludedTerritories: [],
+      revenueClause:
+        "LICENSE.md: most files are LGPL v2.1+; 'some optional parts are licensed under the GNU General Public License version 2 or later (GPL v2+) … you have to explicitly pass --enable-gpl to configure to activate them. In this case, FFmpeg's license changes to GPL v2+'. So the licence of YOUR binary depends on the configure flags and external libs linked (x264/x265 pull it to GPL). Copyleft applies to the tool you ship, never to the master it writes",
+      attested: "machine",
+    },
+    released: "2026-09-18",
+    releasedSource: "https://github.com/FFmpeg/FFmpeg/releases/tag/n9.0.2",
+    ceiling: { maxEdge: null, maxSeconds: null, fps: null, nativeAudio: false, lipSync: null },
+    body: { vramGb: 0, weightsPublic: true, executors: ["local-cli", "rented-gpu"] },
+    priceUsdPerSecond: 0,
+    priceSource: "free tool; the cost is the machine (CPU, or a rented GPU for nvenc/hevc_nvenc passes)",
+    board: null,
+    driver: "drivable",
+    fits:
+      "The default delivery engine: writes the mezzanine (ProRes/DNXHD via its own encoders, XDCIM, IMF-style JPEG 2000), muxes WebVTT/S/MATROSKA subtitle tracks instead of burning them, wraps Broadcast Wave audio, and normalises loudness for a platform's spec. Every other row here assumes FFmpeg already produced the essence, so it is the spine of the road's last stage.",
+    measuredAt: MEASURED,
+  },
+  {
+    id: "svt-av1",
+    name: "SVT-AV1 (Samsung/Intel Netflix AV1 encoder)",
+    stage: "publish",
+    kind: "cli",
+    vendorUrl: "https://github.com/AOMediaCodec/SVT-AV1",
+    sourceRepository: "https://github.com/AOMediaCodec/SVT-AV1",
+    licence: {
+      spdx: "BSD-3-Clause-Clear",
+      evidenceUrl: "https://raw.githubusercontent.com/AOMediaCodec/SVT-AV1/main/LICENSE.md",
+      excludedTerritories: [],
+      revenueClause:
+        "LANDMINE (patent grant with conditions, not a copyright one): README — 'Starting from v0.9, SVT-AV1 is licensed under the BSD-3-clause clear license and the Alliance for Open Media Patent License 1.0'. The PATENTS text grants a 'non-sublicensable, perpetual, worldwide, non-exclusive, no-charge, royalty-free' patent licence, but conditions it on making your own Necessary Claims available and reproducing the licence next to every Implementation, and carries a Defensive Termination: file a patent suit claiming an AV1 implementation infringes and your grants end (unless it was a defensive suit)",
+      attested: "machine",
+    },
+    released: "2026-11-02",
+    releasedSource: "https://github.com/AOMediaCodec/SVT-AV1/releases/tag/v4.3.0",
+    ceiling: { maxEdge: null, maxSeconds: null, fps: null, nativeAudio: false, lipSync: null },
+    body: { vramGb: 0, weightsPublic: true, executors: ["local-cli", "rented-gpu"] },
+    priceUsdPerSecond: 0,
+    priceSource: "free encoder, CPU (it is the slow one; the cost is wall-clock, not licence)",
+    board: null,
+    driver: "drivable",
+    fits:
+      "The permissive AV1 encoder for the web master: a royalty-free format at the patent level (the AOM grant is 'no-charge, royalty-free'), BSD-3-Clear code, and an extremely active train (v4.2.0 2026-08-09, v4.3.0 2026-11-02). Use it when a platform accepts AV1 and you want a small file you can ship anywhere without a codec-pool royalty; the AOM conditions only bite if you distribute a modified encoder as a product or start patent litigation.",
+    measuredAt: MEASURED,
+  },
+  {
+    id: "libaom-av1",
+    name: "libaom / aomenc (Alliance for Open Media reference AV1 encoder)",
+    stage: "publish",
+    kind: "cli",
+    vendorUrl: "https://aomedia.googlesource.com/aom",
+    sourceRepository: "https://aomedia.googlesource.com/aom",
+    licence: {
+      spdx: "BSD-2-Clause",
+      evidenceUrl: "https://aomedia.googlesource.com/aom/+/refs/heads/main/LICENSE?format=TEXT",
+      excludedTerritories: [],
+      revenueClause:
+        "LICENSE is the two-clause BSD text, 'Copyright (c) 2016, Alliance for Open Media. All rights reserved.' — no endorsement clause, no revenue clause, no territory ban; AV1 itself is royalty-free at the format level",
+      attested: "machine",
+    },
+    released: null,
+    releasedSource: null,
+    ceiling: { maxEdge: null, maxSeconds: null, fps: null, nativeAudio: false, lipSync: null },
+    body: { vramGb: 0, weightsPublic: true, executors: ["local-cli", "rented-gpu"] },
+    priceUsdPerSecond: 0,
+    priceSource: "free reference encoder, CPU; it is the slowest and highest-quality-per-bit of the AV1 pair",
+    board: null,
+    driver: "drivable",
+    fits:
+      "The quality ceiling for an AV1 delivery master: aomenc is the AOM reference implementation, so where SVT-AV1 trades a little quality for speed you use this for a hero encode or to settle a bit-rate argument. No dated release tag was pinned in this pass (released null) — the source is a live googlesource tree.",
+    measuredAt: MEASURED,
+  },
+  {
+    id: "x264",
+    name: "x264 (H.264/AVC encoder)",
+    stage: "publish",
+    kind: "cli",
+    vendorUrl: "https://github.com/mirror/x264",
+    sourceRepository: "https://github.com/mirror/x264",
+    licence: {
+      spdx: "GPL-2.0-or-later",
+      evidenceUrl: "https://raw.githubusercontent.com/mirror/x264/master/COPYING",
+      excludedTerritories: [],
+      revenueClause:
+        "COPYING is the GPLv2 text and encoder.c says 'either version 2 of the License, or (at your option) any later version' — a GPL build links into your pipeline, not your film. SEPARATE LANDMINE, format level: H.264 is covered by MPEG patent pools; the pool terms were not read from a primary source in this pass, so commercial distribution of an H.264 master is an open clearance item even though the code itself is clean",
+      attested: "machine",
+    },
+    released: null,
+    releasedSource: null,
+    ceiling: { maxEdge: null, maxSeconds: null, fps: null, nativeAudio: false, lipSync: null },
+    body: { vramGb: 0, weightsPublic: true, executors: ["local-cli"] },
+    priceUsdPerSecond: 0,
+    priceSource: "free tool; linking it makes your FFmpeg build GPL v2+ (--enable-gpl --enable-libx264)",
+    board: null,
+    driver: "drivable",
+    fits:
+      "Still the format every screen, server and phone agrees on, so it remains the safe web/social master when AV1 or HEVC acceptance is uncertain. It is the encoder that changes your FFmpeg licence from LGPL to GPL v2+, so if you ship an app rather than a file, build it out-of-process. No dated release tag was pinned (x264 ships snapshots, not releases).",
+    measuredAt: MEASURED,
+  },
+  {
+    id: "x265",
+    name: "x265 (HEVC/H.265 encoder)",
+    stage: "publish",
+    kind: "cli",
+    vendorUrl: "https://bitbucket.org/multicoreware/x265_git",
+    sourceRepository: "https://bitbucket.org/multicoreware/x265_git",
+    licence: {
+      spdx: "GPL-2.0-or-later",
+      evidenceUrl: "https://bitbucket.org/multicoreware/x265_git/raw/HEAD/COPYING",
+      excludedTerritories: [],
+      revenueClause:
+        "LANDMINE (dual licence, straight from the licence file): the COPYING text ends 'This program is also available under a commercial proprietary license. For more information, contact us at license @ x265.com.' — the GPL path requires your whole distributed product to be GPL-compatible, otherwise MulticoreWare sells the paid licence. encoder.cpp confirms 'either version 2 … or (at your option) any later version'. Format-level HEVC pool licensing is a further, separate clearance item not read in this pass",
+      attested: "machine",
+    },
+    released: null,
+    releasedSource: null,
+    ceiling: { maxEdge: null, maxSeconds: null, fps: null, nativeAudio: false, lipSync: null },
+    body: { vramGb: 0, weightsPublic: true, executors: ["local-cli", "rented-gpu"] },
+    priceUsdPerSecond: 0,
+    priceSource: "free under GPL terms on your own machine; a commercial licence is a separate cost",
+    board: null,
+    driver: "needs-licence-read",
+    fits:
+      "Where a delivery spec names HEVC (a ProRes-to-HEVC broadcast handoff, a 10-bit HDR master, Apple-device playback) and you need 10-bit output at half the H.264 size. It is the one encoder in this cluster whose licence file itself advertises the paid fork, so the platform's licence gate should treat a distributed product linking it as needs-licence-read even though running it locally to write a file is uncontroversial.",
+    measuredAt: MEASURED,
+  },
+  {
+    id: "prores-ffmpeg",
+    name: "Apple ProRes via FFmpeg (prores / prores_ks encoders)",
+    stage: "publish",
+    kind: "cli",
+    vendorUrl: "https://github.com/FFmpeg/FFmpeg",
+    sourceRepository: "https://github.com/FFmpeg/FFmpeg",
+    licence: {
+      spdx: "LGPL-2.1-or-later",
+      evidenceUrl: "https://raw.githubusercontent.com/FFmpeg/FFmpeg/master/LICENSE.md",
+      excludedTerritories: [],
+      revenueClause:
+        "LANDMINE (format, not code): the FFmpeg side is LGPL v2.1+ (the encoders themselves are part of libavcodec), and FFmpeg's own doc/encoders.texi documents a 'ProRes' section — 'Apple ProRes encoder. FFmpeg contains 2 ProRes encoders, the prores-aw and prores-ks encoder' with profiles proxy/lt/standard/hq/4444/4444xq. But Apple's ProRes is licensed and certified: the U.S. Library of Congress format note states 'Apple has licensed Apple ProRes for use in specific products and workflows' and that Apple says of unauthorized third-party implementations, 'including FFmpeg', that they 'might result in decoding errors, performance degradation, incompatibility, and instability'. Apple's licence text (open.prores.com) could not be fetched in this pass — SSL handshake failed — so the commercial-redistribution question is explicitly unresolved",
+      attested: null,
+    },
+    released: null,
+    releasedSource: null,
+    ceiling: { maxEdge: null, maxSeconds: null, fps: null, nativeAudio: false, lipSync: null },
+    body: { vramGb: 0, weightsPublic: true, executors: ["local-cli"] },
+    priceUsdPerSecond: 0,
+    priceSource: "no FFmpeg-side charge (it is your own CPU); any Apple certification/licence cost is unknown and not quoted here",
+    board: null,
+    driver: "needs-licence-read",
+    fits:
+      "The edit-friendly mezzanine everybody's NLE already opens, and the format most post houses will accept as a mastering handoff, so you want it. Honest state of play: the code is free and the encode works, but shipping 'ProRes' as a named feature of a commercial product is an Apple licensing question that was not answerable from a primary source today — keep it as an internal mezzanine until that is read.",
+    measuredAt: MEASURED,
+  },
+
+  // ==================== ingest / upload APIs the creator connects with their OWN key (BYOK) ====================
+  {
+    id: "youtube-data-api",
+    name: "YouTube Data API v3 (videos.insert upload)",
+    stage: "publish",
+    kind: "api",
+    vendorUrl: "https://developers.google.com/youtube/v3/docs/videos/insert",
+    sourceRepository: null,
+    licence: {
+      spdx: "NOASSERTION",
+      evidenceUrl: "https://developers.google.com/youtube/v3/docs/videos/insert",
+      excludedTerritories: [],
+      revenueClause:
+        "Google/YouTube API Services terms (not an open licence) — the doc page read here carries no territory or revenue clause; the constraint it does publish is quota. The full terms text was not parsed in this pass, so treat output rights and storage/caching limits as unread rather than clear",
+      attested: "human",
+    },
+    released: null,
+    releasedSource: null,
+    ceiling: { maxEdge: null, maxSeconds: null, fps: null, nativeAudio: false, lipSync: null },
+    body: { vramGb: null, weightsPublic: false, executors: ["vendor-api"] },
+    priceUsdPerSecond: 0,
+    priceSource:
+      "no USD price exists for the call — the doc states 'Maximum file size: 256GB' and 'Quota impact: 100 calls per day. A call to this method has a quota cost of 1 unit in the Video Uploads quota bucket', so the gate is uploads-per-day, not money",
+    board: null,
+    driver: "drivable",
+    fits:
+      "The free premiere slot and the biggest per-file allowance of any row here (256 GB is more master than a film needs). Read the quota as a schedule: 100 uploads per day per project is fine for a slate but it is a daily ceiling you must queue around, and it is OAuth against the channel owner's own account, which is exactly the BYOK model the platform uses.",
+    measuredAt: MEASURED,
+  },
+  {
+    id: "vimeo-direct-upload",
+    name: "Vimeo API v3 (Direct Upload, PATCH /me/videos)",
+    stage: "publish",
+    kind: "api",
+    vendorUrl: "https://developer.vimeo.com/api/upload/videos",
+    sourceRepository: null,
+    licence: {
+      spdx: "NOASSERTION",
+      evidenceUrl: "https://help.vimeo.com/hc/en-us/articles/12427803706001-How-to-request-API-upload-access",
+      excludedTerritories: [],
+      revenueClause:
+        "LANDMINE (approval + plan gated, not open): 'Developers who have not purchased a Vimeo paid plan, including free users, who want to upload videos using the Vimeo API must request upload access permission' — a human Vimeo approval step, and upload quotas are tied to the membership tier (doc table: 'Vimeo Free, 500 MB per week, up to 5 GB total, with a limit of 10 uploads per day'). Commercial use means a paid Vimeo plan, i.e. subscription-only rather than per-second",
+      attested: "human",
+    },
+    released: null,
+    releasedSource: null,
+    ceiling: { maxEdge: null, maxSeconds: null, fps: null, nativeAudio: false, lipSync: null },
+    body: { vramGb: null, weightsPublic: false, executors: ["vendor-api"] },
+    priceUsdPerSecond: null,
+    priceSource:
+      "the upload call itself carries no per-second price; cost is the membership plan whose tier sets the quota (Free = 500 MB/week, 5 GB total, 10 uploads/day per the doc table). Per-tier prices for Starter and above were not read from a primary page in this pass, so no per-second figure is quoted",
+    board: null,
+    driver: "needs-licence-read",
+    fits:
+      "The cinephile's screening room — Vimeo is where a finished film is expected to look un-compressed and be ad-free, and its API is a normal resumable bytestream upload you can script with the creator's token. Plan for two non-technical gates before any pipeline run: app upload-access approval, and a plan tier whose weekly quota (not a per-second bill) is what actually limits a festival push.",
+    measuredAt: MEASURED,
+  },
+  {
+    id: "tiktok-content-posting",
+    name: "TikTok Content Posting API (direct post)",
+    stage: "publish",
+    kind: "api",
+    vendorUrl: "https://developers.tiktok.com/doc/content-posting-api-reference-direct-post",
+    sourceRepository: null,
+    licence: {
+      spdx: "NOASSERTION",
+      evidenceUrl: "https://developers.tiktok.com/doc/content-posting-api-reference-direct-post",
+      excludedTerritories: [],
+      revenueClause:
+        "LANDMINE (audit gate on visibility): the API reference states 'All content posted by unaudited clients will be restricted to private viewing mode. Once you have successfully tested your integration, to lift the restriction on content visibility, your API client must undergo an audit to verify compliance with our Terms of Service'. So an un-audited integration publishes nothing anybody can see. privacy_level is an enum (PUBLIC_TO_EVERYONE / MUTUAL_FOLLOW_FRIENDS / FOLLOWER_OF_CREATOR / SELF_ONLY) and must match what /creator_info/query returns",
+      attested: "human",
+    },
+    released: null,
+    releasedSource: null,
+    ceiling: { maxEdge: null, maxSeconds: null, fps: null, nativeAudio: false, lipSync: null },
+    body: { vramGb: null, weightsPublic: false, executors: ["vendor-api"] },
+    priceUsdPerSecond: null,
+    priceSource:
+      "no USD price published for the posting call; the doc publishes byte-level mechanics instead (FILE_UPLOAD with video_size/chunk_size/total_chunk_count, or PULL_FROM_URL with a public video_url). Max duration/size limits were not readable from the primary doc in this pass, so they are left null rather than guessed",
+    board: null,
+    driver: "needs-licence-read",
+    fits:
+      "The vertical-teaser cut of the film goes here, and the API is genuinely scriptable (initialize/chunk append/finalize, or hand TikTok a public URL). The one thing a schedule must respect is the audit: until the app passes TikTok's compliance review every post lands in private viewing mode, which looks like a successful 200 response and an empty channel.",
+    measuredAt: MEASURED,
+  },
+  {
+    id: "instagram-reels-api",
+    name: "Instagram Platform API (media_create with media_type=REELS)",
+    stage: "publish",
+    kind: "api",
+    vendorUrl: "https://developers.facebook.com/documentation/instagram-platform/content-publishing",
+    sourceRepository: null,
+    licence: {
+      spdx: "NOASSERTION",
+      evidenceUrl: "https://developers.facebook.com/documentation/instagram-platform/content-publishing",
+      excludedTerritories: [],
+      revenueClause:
+        "Meta Platform terms, not an open licence. Two practical constraints read from the doc itself: it is for 'Instagram professional accounts using the Instagram Platform', and for the URL-pull path 'We will cURL your image using the passed in URL so it must be on a public server' — i.e. the master has to be fetchable by Meta before it can be posted. Branded-content features additionally require instagram_branded_content_creator or instagram_basic; app-eligibility/review text was not parsed in this pass",
+      attested: "human",
+    },
+    released: null,
+    releasedSource: null,
+    ceiling: { maxEdge: null, maxSeconds: null, fps: null, nativeAudio: false, lipSync: null },
+    body: { vramGb: null, weightsPublic: false, executors: ["vendor-api"] },
+    priceUsdPerSecond: null,
+    priceSource:
+      "no per-call or per-second price is published; the cost is the public-hosting of the file you hand it (a CDN/object-storage line, not a Meta fee), and it is billed outside this API",
+    board: null,
+    driver: "needs-licence-read",
+    fits:
+      "Reels publishing is a two-call dance — create the container (media_type VIDEO|REELS|STORIES, upload_type resumable for a large video), then publish it — and it is scriptable with the creator's own token. The architectural consequence for a film pipeline is that the master must first land at a public URL, so this row is really 'Cloudflare/R2/S3 + Meta ingest', and that intermediate hosting has its own price.",
+    measuredAt: MEASURED,
+  },
+  {
+    id: "x-media-upload",
+    name: "X API v2 media upload (initialize / append / finalize)",
+    stage: "publish",
+    kind: "api",
+    vendorUrl: "https://docs.x.com/x-api/media/introduction.md",
+    sourceRepository: null,
+    licence: {
+      spdx: "NOASSERTION",
+      evidenceUrl: "https://docs.x.com/x-api/media/quickstart/media-upload-chunked.md",
+      excludedTerritories: [],
+      revenueClause:
+        "LANDMINE (plan-gated capability, not a licence): the docs state duration and size limits 'depend on the authenticated user's X Premium / verified status — not your developer API plan', i.e. long-form posting requires the human behind the account to hold a Premium subscription; the older command-style POST /2/media/upload INIT/APPEND parameters are explicitly deprecated in favour of the dedicated v2 paths. X's developer terms were not parsed in this pass",
+      attested: "human",
+    },
+    released: null,
+    releasedSource: null,
+    ceiling: { maxEdge: null, maxSeconds: 7500, fps: null, nativeAudio: false, lipSync: null },
+    body: { vramGb: null, weightsPublic: false, executors: ["vendor-api"] },
+    priceUsdPerSecond: null,
+    priceSource:
+      "no per-second price. X is pay-per-usage with per-endpoint costs ('For current pricing per endpoint and operation, visit the Developer Console' — docs.x.com/x-api/fundamentals/post-cap.md), so prices are behind an authenticated console and cannot be quoted honestly here; media upload itself is billed as part of that credit model",
+    board: null,
+    driver: "drivable",
+    fits:
+      "The clip-drop channel, and technically the most honest API in this group: real chunked upload with initialize/append/finalize/status and documented ceilings — 8 GB / 20 minutes for a normal account, 16 GB / 125 minutes for a Premium one (maxSeconds=7500 is 125 min), minimum duration 0.5 s. A film can genuinely be posted whole. The budget is unpredictable because X only shows per-endpoint prices inside the console.",
+    measuredAt: MEASURED,
+  },
+  {
+    id: "mux-direct-uploads",
+    name: "Mux Direct Uploads (upload URL → asset → HLS/DASH)",
+    stage: "publish",
+    kind: "api",
+    vendorUrl: "https://www.mux.com/pricing",
+    sourceRepository: null,
+    licence: {
+      spdx: "NOASSERTION",
+      evidenceUrl: null,
+      excludedTerritories: [],
+      revenueClause:
+        "vendor SaaS agreement; the pricing/docs pages read in this pass carry no licence grant or territory clause, and the Mux Terms of Service text was not fetched — output rights and the per-plan terms remain unread (hence no attestation)",
+      attested: null,
+    },
+    released: null,
+    releasedSource: null,
+    ceiling: { maxEdge: 3840, maxSeconds: null, fps: null, nativeAudio: false, lipSync: null },
+    body: { vramGb: null, weightsPublic: false, executors: ["vendor-api"] },
+    priceUsdPerSecond: 0.000781,
+    priceSource:
+      "derived from the published per-minute encoding table on mux.com/docs/pricing/overview: Premium quality input, 1080p, first 5,000 minutes = $0.046875 per minute → $0.046875 ÷ 60 = $0.00078125 per output second. Same table: Plus 1080p $0.03125/min = $0.000521/s, Plus 4K $0.10/min = $0.001667/s, Premium 4K $0.15/min = $0.0025/s; Basic-quality input is $0 ('There is no charge for video input when using basic quality'). Storage and delivery are separate recurring costs (each month includes 100,000 free delivery minutes)",
+    board: null,
+    driver: "drivable",
+    fits:
+      "One API call from finished master to playable-anything: create a Direct Upload, PUT the file to the returned URL, and Mux owns the ladder, DRM hooks and CDN under the creator's key. It is the only ingest row with a real per-minute encode price, so it is also the one the platform can quote a job cost for in advance — at Premium 1080p, a 90-minute film is 5,400 s × $0.000781 ≈ $4.22 of encoding before storage and delivery.",
+    measuredAt: MEASURED,
+  },
+  {
+    id: "cloudflare-stream",
+    name: "Cloudflare Stream (API upload / tus resumable / pull-from-link)",
+    stage: "publish",
+    kind: "api",
+    vendorUrl: "https://developers.cloudflare.com/stream/pricing/",
+    sourceRepository: null,
+    licence: {
+      spdx: "NOASSERTION",
+      evidenceUrl: "https://developers.cloudflare.com/stream/pricing/",
+      excludedTerritories: [],
+      revenueClause:
+        "vendor SaaS terms; the pricing page read here publishes rates and no licence grant or territory clause. Stream's own plan terms were not fetched, so output-rights questions stay unread rather than assumed clean",
+      attested: "human",
+    },
+    released: null,
+    releasedSource: null,
+    ceiling: { maxEdge: null, maxSeconds: null, fps: null, nativeAudio: false, lipSync: null },
+    body: { vramGb: null, weightsPublic: false, executors: ["vendor-api"] },
+    priceUsdPerSecond: null,
+    priceSource:
+      "no per-second-of-processing price published: storage is prepaid '$5 per month for each 1,000 minutes of video storage capacity' and delivery is post-paid '$1 per 1,000 minutes delivered' (developers.cloudflare.com/stream/pricing). If you convert anyway: $5 ÷ 1,000 min = $0.005/min ≈ $0.0000833/s of a stored master, and $1 ÷ 1,000 min ≈ $0.0000167/s per minute actually delivered — but both are recurring/usage dimensions, not a per-job cost, so the field stays null",
+    board: null,
+    driver: "drivable",
+    fits:
+      "The cheapest way to put a film behind a URL that will not fall over: API upload, tus resumable upload for large files, or pull-from-link, with encoding and a global CDN included, and a documented 30 GB per-file ceiling ('Files must be less than 30 GB') plus an unusually wide ingest list — MP4, MOV, MKV, MXF, MPEG-2 TS, WebM. Because the bill is per-minute-stored and per-minute-delivered, budget it as a hosting line rather than a render cost.",
+    measuredAt: MEASURED,
+  },
+
+  // ==================== provenance, watermarking, the paperwork ====================
+  {
+    id: "c2pa-rs",
+    name: "c2pa-rs (CAI Rust SDK, C2PA manifests + Content Credentials)",
+    stage: "publish",
+    kind: "cli",
+    vendorUrl: "https://c2pa.org/",
+    sourceRepository: "https://github.com/contentauth/c2pa-rs",
+    licence: {
+      spdx: "Apache-2.0 OR MIT",
+      evidenceUrl: "https://raw.githubusercontent.com/contentauth/c2pa-rs/main/LICENSE-MIT",
+      excludedTerritories: [],
+      revenueClause:
+        "none (repo ships LICENSE-MIT — 'MIT License, © Copyright 2020 Adobe' — and the Apache text alongside; either path is permissive, no revenue clause, no territory ban). Separate commercial matter: the signing certificate / trust list you use to make credentials verifiable is not free or open",
+      attested: "machine",
+    },
+    released: "2026-11-03",
+    releasedSource: "https://github.com/contentauth/c2pa-rs/releases/tag/c2pa-v0.91.10",
+    ceiling: { maxEdge: null, maxSeconds: null, fps: null, nativeAudio: false, lipSync: null },
+    body: { vramGb: 0, weightsPublic: true, executors: ["local-cli"] },
+    priceUsdPerSecond: 0,
+    priceSource: "free open-source SDK (the same release train ships a C-FFI build); only certificates may cost money",
+    board: null,
+    driver: "drivable",
+    fits:
+      "Provenance as a file format rather than a logo: it creates and signs C2PA claims and manifests per the published C2PA specification (2.x, per the README's links) and embeds them in the master — the supported-formats table covers mp4, mov, avi, wav and mp3, so a delivery file can carry its own cast-and-crew/generation history. It is a library you compile into a signing step, not a turnkey CLI: no command-line binary was documented in the README read here, so budget the small wrapper. Python bindings (contentauth/c2pa-python, MIT/Apache, v0.38.3 2026-10-27) exist if you prefer that side of the house.",
+    measuredAt: MEASURED,
+  },
+  {
+    id: "videoseal",
+    name: "VideoSeal / PixelSeal (Meta invisible video watermarking)",
+    stage: "publish",
+    kind: "weights",
+    vendorUrl: "https://github.com/facebookresearch/videoseal",
+    sourceRepository: "https://github.com/facebookresearch/videoseal",
+    licence: {
+      spdx: "MIT",
+      evidenceUrl: "https://raw.githubusercontent.com/facebookresearch/videoseal/main/LICENSE",
+      excludedTerritories: [],
+      revenueClause: "none (MIT, 'Copyright (c) Meta Platforms, Inc. and affiliates.') — commercial output permitted; the checkpoint itself is tagged license:mit on Hugging Face",
+      attested: "machine",
+    },
+    released: null,
+    releasedSource: null,
+    ceiling: { maxEdge: null, maxSeconds: null, fps: null, nativeAudio: false, lipSync: null },
+    body: { vramGb: null, weightsPublic: true, executors: ["local-cli", "rented-gpu"] },
+    priceUsdPerSecond: 0,
+    priceSource: "free MIT weights, downloadable checkpoints; the GPU minute is the only cost",
+    board: null,
+    driver: "drivable",
+    fits:
+      "The invisible half of provenance, and the half that survives a screen recording: a per-frame embedded payload with a tunable imperceptibility/robustness trade-off, plus an evaluation harness so you can gate on measured survival through a real re-encode instead of trusting a badge. Complements c2pa-rs — a manifest says what happened, a watermark says so after someone strips the metadata. No dated release tag exists for the repo (released null), and no VRAM floor is published.",
+    measuredAt: MEASURED,
+  },
+  {
+    id: "invisible-watermark",
+    name: "invisible-watermark (ShieldMnt: dwtDct / dwtDctSvd / RivaGAN)",
+    stage: "publish",
+    kind: "cli",
+    vendorUrl: "https://github.com/ShieldMnt/invisible-watermark",
+    sourceRepository: "https://github.com/ShieldMnt/invisible-watermark",
+    licence: {
+      spdx: "MIT",
+      evidenceUrl: "https://raw.githubusercontent.com/ShieldMnt/invisible-watermark/main/LICENSE",
+      excludedTerritories: [],
+      revenueClause:
+        "none for the library (MIT, 'Copyright (c) 2021 ShieldMnt'). LANDMINE on the deep-learning variant: the README lists 'RivaGAN, a deep-learning model trained from Hollywood2 movie clips dataset' — the Hollywood2 dataset's own terms were not read in this pass, so a commercial RivaGAN path is an open clearance item while the CPU dwtDct methods are clean",
+      attested: "machine",
+    },
+    released: null,
+    releasedSource: null,
+    ceiling: { maxEdge: null, maxSeconds: null, fps: null, nativeAudio: false, lipSync: null },
+    body: { vramGb: 0, weightsPublic: true, executors: ["local-cli"] },
+    priceUsdPerSecond: 0,
+    priceSource: "free MIT library, CPU only — README: 'it doesn't support GPU acceleration … the other methods are too slow on a CPU only environment'",
+    board: null,
+    driver: "needs-licence-read",
+    fits:
+      "Read this row for what it is NOT: the README describes it as watermarking 'over image', so it stamps posters, stills and title cards, not a feature-length frame sequence — that job belongs to VideoSeal. It is pip-installable and scriptable today (which is why it beats commercial tools for a per-frame pre-roll/poster mark), but the repo itself calls the project experimental, and the note in the candidate list attributing it to Digimarc is wrong: Digimarc's marker is a separate commercial product and no open source was located for it.",
+    measuredAt: MEASURED,
+  },
+];
+```
+
+## Sources
+
+Licence / spec / price evidence — every URL below was fetched (raw licence text, doc page, release tag) or read
+verbatim in a search result on 2026-11-04:
+
+**Packaging and authoring**
+- http://dcpomatic.com — DCP-o-matic home site (frame-wraps dcpomatic.com content).
+- http://dcpomatic.com/download — "Stable release: 2.18.51 16th October 2026".
+- http://dcpomatic.com/development — "Clone the git repository using: git clone https://git.carlh.net/git/dcpomatic.git", mirrored on GitHub (cth103/dcpomatic).
+- https://raw.githubusercontent.com/cth103/dcpomatic/main/COPYING — verbatim GPLv2 text; `/main/src/lib/util.cc` header: "either version 2 of the License, or (at your option) any later version".
+- https://dcpomatic.com/manual/html/ch15.html — four CLI tools: dcpomatic2_create / dcpomatic2_cli / dcpomatic2_kdm_cli / dcpomatic2_map; input types (MP4/MOV/MKV, TIFF/DPX, WAV/MP3/AIFF, .srt/DCP XML/.ssa), options `--dcp-content-type` FTR…ADV, `--container-ratio`, `--no-encrypt`/`--encrypt`.
+- https://dcpomatic.com/manual/html/ch01.html — "Create Digital Cinema Packages (DCPs) from video, audio, subtitle and closed-caption files".
+- https://raw.githubusercontent.com/ebu/bmx/main/COPYING — BSD-3-style "Copyright (C) 2014, British Broadcasting Corporation".
+- https://raw.githubusercontent.com/ebu/bmx/main/README.md — ST 377-1 MXF, ST 378 OP1a, RDD 9, ST 386 D-10/IMX, AMWA AS-10/AS-11, Avid OPAtom, WAV, ST 2067-5 IMF Essence Component; RP 2027 AVC-Intra, ST 356, DV, MPEG-2, JPEG 2000, RDD 36 ProRes tools (raw2bmx, bmxtranswrap, mxf2raw, bmxparse, movdump, rdd36dump).
+- https://github.com/bbc/bmx — archive notice: "This repository is no longer being actively maintained and has been archived… An EBU fork of bmx has been created at https://github.com/ebu/bmx"; bbc/bmx v1.6 tag dated 2025-03-28.
+- https://github.com/ebu/bmx/releases/tag/v1.7 — v1.7 tag dated 2026-05-11.
+- https://codeberg.org/mbunkus/mkvtoolnix/raw/branch/main/COPYING — GPLv2 text; README: "This code comes under the GPL v2"; some bundled parts marked "GNU Lesser General Public License v2.1 or later".
+- https://mkvtoolnix.download/ — "2026-10-18: Released v103.0", "2026-09-14: Released v102.0", "2026-08-24: v101.0", "2025-11-08: v96.0".
+- https://raw.githubusercontent.com/shaka-project/shaka-packager/main/LICENSE — BSD-3-Clause, "Copyright 2014, Google LLC".
+- https://raw.githubusercontent.com/shaka-project/shaka-packager/main/README.md — DASH + HLS, VOD and Live, key systems Widevine/PlayReady/FairPlay/Marlin, CENC; subtitle table (Text WebVTT in/out, WebVTT-in-MP4 out, Text TTML out, TTML-in-MP4 out, DVB-SUB in).
+- https://github.com/shaka-project/shaka-packager/releases/tag/v3.9.3 — dated 2026-07-27.
+- https://raw.githubusercontent.com/gpac/gpac/master/COPYING — LGPL v2.1 text.
+- https://raw.githubusercontent.com/gpac/gpac/master/README.md — "GPAC is distributed under the LGPL v2.1 or later, and is also available, for most of it, under a commercial license (motionspell.com/gpac-licensing)"; containers "MP4/fMP4/CMAF/Quicktime MOV/ProRes MOV", subtitles "WebVTT, TTML (full, EBU-TTD, …)", streaming "Apple HLS, MPEG-DASH, ATSC 3.0 ROUTE".
+- https://github.com/gpac/gpac/releases/tag/abi-16.27 — dated 2026-09-24 (abi-16.22 → abi-16.27 all in Jul–Sep 2026).
+- https://www.bento4.com/about/ — "This software is available under two different licenses… For applications that are entirely distributable under the terms of the GPL, the Bento4 GPL license applies… a non-GPL commercial license is available from Axiomatic Systems LLC."
+- https://github.com/axiomatic-systems/Bento4/releases/tag/v1.6.0-641 — dated 2023-11-25 (newest tag).
+- https://raw.githubusercontent.com/FFmpeg/FFmpeg/master/LICENSE.md — LGPL v2.1+ default, GPL v2+ optional parts requiring `--enable-gpl`.
+- https://raw.githubusercontent.com/FFmpeg/FFmpeg/master/doc/encoders.texi — "ProRes / Apple ProRes encoder. FFmpeg contains 2 ProRes encoders, the prores-aw and prores-ks encoder", profiles proxy/lt/standard/hq/4444/4444xq.
+- https://github.com/FFmpeg/FFmpeg/tags → n9.0.2 dated 2026-09-18 (also n8.1.3 dated 2026-09-21).
+- https://raw.githubusercontent.com/AOMediaCodec/SVT-AV1/main/LICENSE.md — "BSD 3-Clause Clear License / The Clear BSD License, Copyright (c) 2021, Alliance for Open Media".
+- https://raw.githubusercontent.com/AOMediaCodec/SVT-AV1/main/README.md — "Up to v0.8.7 … BSD-2-clause license and the Alliance for Open Media Patent License 1.0… Starting from v0.9 … BSD-3-clause clear license and the Alliance for Open Media Patent License 1.0".
+- https://raw.githubusercontent.com/AOMediaCodec/SVT-AV1/main/PATENTS.md — AOM Patent License 1.0: "non-sublicensable, perpetual, worldwide, non-exclusive, no-charge, royalty-free", Availability condition, and "Defensive Termination" clause.
+- https://github.com/AOMediaCodec/SVT-AV1/releases/tag/v4.3.0 — dated 2026-11-02 (v4.2.0 2026-08-09).
+- https://aomedia.googlesource.com/aom/+/refs/heads/main/LICENSE?format=TEXT — decoded: "Copyright (c) 2016, Alliance for Open Media. All rights reserved." + two-clause BSD conditions.
+- https://raw.githubusercontent.com/mirror/x264/master/COPYING — GPLv2 text; encoder/encoder.c header "either version 2 … or (at your option) any later version".
+- https://bitbucket.org/multicoreware/x265_git/raw/HEAD/COPYING — GPLv2 text ending "This program is also available under a commercial proprietary license. For more information, contact us at license @ x265.com."; source/encoder/encoder.cpp header GPL v2+.
+- https://www.loc.gov/preservation/digital/formats/fdd/fdd000389.shtml — "Apple has licensed Apple ProRes for use in specific products and workflows. The full list of licensed products is available"; "Apple licenses and certifies specific third party products and workflows"; Apple's complaint about unauthorized implementations "including FFmpeg".
+
+**Ingest / upload APIs (BYOK)**
+- https://developers.google.com/youtube/v3/docs/videos/insert — "Maximum file size: 256GB"; "Quota impact: 100 calls per day. A call to this method has a quota cost of 1 unit in the Video Uploads quota bucket."
+- https://developer.vimeo.com/api/upload/videos — "Upload quota by membership level. Vimeo Free, 500 MB per week, up to 5 GB total, with a limit of 10 uploads per day. Vimeo Starter, 5 GB per …" (read in search result; the page itself is client-rendered).
+- https://help.vimeo.com/hc/en-us/articles/12427803706001-How-to-request-API-upload-access — "Developers who have not purchased a Vimeo paid plan, including free users, who want to upload videos using the Vimeo API must request upload access permission".
+- https://developers.tiktok.com/doc/content-posting-api-reference-direct-post — "All content posted by unaudited clients will be restricted to private viewing mode… your API client must undergo an audit to verify compliance with our Terms of Service"; `video_size`/`chunk_size`/`total_chunk_count` (FILE_UPLOAD) and `video_url` (PULL_FROM_URL); `privacy_level` enum PUBLIC_TO_EVERYONE / MUTUAL_FOLLOW_FRIENDS / FOLLOWER_OF_CREATOR / SELF_ONLY.
+- https://developers.facebook.com/documentation/instagram-platform/content-publishing — "Instagram professional accounts using the Instagram Platform"; `image_url or video_url … "We will cURL your image using the passed in URL so it must be on a public server"`; `media_type` VIDEO|REELS|STORIES; `upload_type resumable` for large video; branded-content permissions `instagram_branded_content_creator` / `instagram_basic`.
+- https://docs.x.com/x-api/media/introduction.md (markdown form of the media-upload overview; fetched 2026-11-04) — limits: default `tweet_video`/`amplify_video` 20 min / 8 GB; X Premium 125 min / 16 GB; `dm_video` 140 s / 512 MB (Premium 10 min / 1 GB); "Minimum video duration is 0.5 seconds"; limits depend on the user's Premium status, "not your developer API plan".
+- https://docs.x.com/x-api/media/quickstart/media-upload-chunked.md — v2 flow INIT/APPEND/FINALIZE/STATUS; `POST /2/media/upload/initialize` accepts `total_bytes` up to 16 GB; old `command=INIT` parameters deprecated.
+- https://docs.x.com/x-api/fundamentals/post-cap.md — "X API v2 uses pay-per-usage pricing"; "For current pricing per endpoint and operation, visit the Developer Console"; monthly cap of 3 million Post reads on pay-per-usage.
+- https://www.mux.com/docs/pricing/overview — Basic input "no charge"; Plus input per minute (first 5,000 min): 720p $0.025000, 1080p $0.031250, 1440p $0.050000, 4K $0.100000, audio-only $0.002500; Premium input: 720p $0.037500, 1080p $0.046875, 1440p $0.075000, 4K $0.150000; "Each month includes 100,000 free delivery minutes … and a $20 monthly usage credit"; storage is by minute stored, prorated.
+- https://www.mux.com/docs/guides/upload-files-directly — "The first step is creating a new Direct Upload … The Mux API will return an authenticated URL that you can use directly" (read in search result).
+- https://developers.cloudflare.com/stream/pricing/ — storage "$5 per month for each 1,000 minutes of video storage capacity"; delivery "$1 per 1,000 minutes delivered"; playback billed in 4-second segments for uploaded content; last updated 2026-10-27.
+- https://developers.cloudflare.com/stream/uploading-videos/index.md — "Files must be less than 30 GB"; supported containers MP4, MKV, MOV, AVI, FLV, MPEG-2 TS, MPEG-2 PS, MXF, LXF, GXF, 3GP, WebM, MPG, Quicktime.
+- https://developers.cloudflare.com/stream/llms.txt — upload method pages: Direct creator uploads, "Resumable and large files (tus)", "Basic video uploads" (files under 200 MB), Upload with a link, Add captions, Apply watermarks.
+
+**Provenance / watermarking**
+- https://raw.githubusercontent.com/contentauth/c2pa-rs/main/LICENSE-MIT — "MIT License, © Copyright 2020 Adobe" (LICENSE-APACHE ships alongside).
+- https://raw.githubusercontent.com/contentauth/c2pa-rs/main/README.md — "The CAI Rust library is part of the Content Authenticity Initiative open-source SDK"; create/sign C2PA claims and manifests (links to C2PA Specification 2.4) and CAWG identity assertions.
+- https://raw.githubusercontent.com/contentauth/c2pa-rs/main/docs/supported-formats.md — extension table includes `avi`, `mp4`, `mov`, `wav`, `mp3`, `avif`, `c2pa` (no `mxf`).
+- https://github.com/contentauth/c2pa-rs/releases/tag/c2pa-v0.91.10 — dated 2026-11-03 (also c2pa-c-ffi-v0.91.10 the same day).
+- https://raw.githubusercontent.com/contentauth/c2pa-python/main/LICENSE-MIT + /main/README.md — MIT; `pip install c2pa-python`; points at the c2pa-rs supported-formats doc; v0.38.3 tag dated 2026-10-27.
+- https://raw.githubusercontent.com/facebookresearch/videoseal/main/LICENSE — "MIT License, Copyright (c) Meta Platforms, Inc. and affiliates."
+- https://huggingface.co/api/models/facebook/video_seal — license tag `mit`, lastModified 2024-12-14.
+- https://raw.githubusercontent.com/ShieldMnt/invisible-watermark/main/LICENSE — "MIT License, Copyright (c) 2021 ShieldMnt".
+- https://raw.githubusercontent.com/ShieldMnt/invisible-watermark/main/README.md — "python library and command line tool for creating invisible watermark over image"; "still experimental and it doesn't support GPU acceleration"; default `dwtDct` is CPU-fast, others slow; "RivaGAN, a deep-learning model trained from Hollywood2 movie clips dataset".
+
+## Not verified
+
+Deliberately excluded or recorded as `null`, with the missing evidence named:
+
+- **Bilibili upload (candidate from the brief) — excluded, no primary API.** open.bilibili.com is a partner
+  platform that begins "1. 注册账号 2. 资质认证 3. 接入应用" (register → qualification certification → onboard an
+  app), i.e. there is no self-serve developer upload key. The widely-used `x/upload` endpoints come from the
+  community `bilibili-API-collect` repository, which search shows "was archived by the owner on Jan 28, 2026. It
+  is now read-only." Documenting an unofficial, archived reverse-engineered endpoint as a delivery row would be
+  a guess, so it is out.
+- **Digimarc (candidate "invisible-watermark (Digimarc)") — excluded.** No open-source Digimarc code or licence
+  page was located in this pass; the `invisible-watermark` row above is ShieldMnt's MIT library, not Digimarc's
+  product, and the mis-attribution is corrected in its `revenueClause`.
+- **IMF (SMPTE ST 2067) packaging as its own row — partial only.** bmx covers ST 2067-5 Essence Component
+  (verified), but the community IMF validators `Photon` and `mjiggidy/imflib` were reached only via search
+  snippets: no `https://raw.githubusercontent.com/mikdsmith/photon/...` LICENSE path resolved (404 on main and
+  master), so neither has a verified licence file and neither is listed.
+- **AS-11 / DPP UK broadcast delivery beyond bmx — not verified.** No separate open packager or its licence was
+  read; bmx's README is the only AS-11 evidence in this survey.
+- **`causal-cli` / turnkey C2PA command line — not claimed.** Neither c2pa-rs nor c2pa-python README documents a
+  command-line binary; probing `cai-cli/Cargo.toml` and `cli/Cargo.toml` in c2pa-rs both returned 404. The rows
+  therefore say "compile it into your own signing step".
+- **TikTok max duration / max file size — null.** The primary doc read here gives the upload mechanics but no
+  numeric ceiling; third-party blog numbers were not accepted.
+- **Vimeo tiers above Free, and the maximum single-file size — null.** The doc table was only readable from the
+  search snippet through "Vimeo Starter, 5 GB per …"; the client-rendered page would not resolve, so no upper-tier
+  quota is recorded.
+- **X per-request prices — null.** docs.x.com explicitly routes pricing to the authenticated Developer Console
+  ("For current pricing per endpoint and operation, visit the Developer Console"), so no figure could be read
+  from a primary page.
+- **`ceiling.maxEdge` for every packager and encoder — null deliberately.** None of SVT-AV1, libaom, x264, x265,
+  Shaka Packager, GPAC, bmx or DCP-o-matic publishes a hard maximum frame size for the tool itself in the primary
+  sources read here (a container/spec limit is not the same claim). Only X (7500 s = 125 min Premium post) and
+  Mux (3840 = on-demand "up to 4K", live "up to 1080p") carry a verified number.
+- **`released` null on libaom, x264, x265, VideoSeal, invisible-watermark, the ProRes row and every API row.**
+  No dated primary release tag exists to cite (x264 and libaom ship source snapshots; VideoSeal has no GitHub
+  releases; the SaaS APIs have no versioned release page).
+- **Apple's ProRes licence text — unresolved, and said so.** `https://open.prores.com` failed its TLS handshake
+  from this machine (and `urllib` raised TLSV1_UNRECOGNIZED_NAME), so the row cites the Library of Congress note
+  that Apple "licenses and certifies specific third party products and workflows" and leaves the actual Apple
+  licence terms unread; `attested: null`, `driver: needs-licence-read`.
+- **YouTube/Vimeo/Meta/TikTok/X API terms-of-service texts — not parsed.** Each row states only the constraint
+  the page actually published (quota, approval, audit, public-URL pull, Premium gating). No claim is made that
+  these ToSs permit or forbid commercial resale of API access, because that text was not read.
+- **`excludedTerritories: []` everywhere.** No licence text read in this pass (GPLv2, LGPL-2.1, BSD-3-Clear, MIT,
+  Apache-2.0, AOM Patent 1.0) names a country; the AOM patent grant is explicitly "worldwide".
+- **`vramGb` null on the 7 API rows and on VideoSeal.** No vendor publishes a GPU floor for the SaaS ingest rows
+  (they have none) and none is published for VideoSeal in the sources read; RivaGAN inside `invisible-watermark`
+  is CPU-only per its README, so that row carries `vramGb: 0` with the caveat in `priceSource`. The `0` on the
+  pure-CPU CLIs is the same convention the existing `publish` rows in
+  `src/lib/apex/engines/caption-qc-deliver.ts` use.
+- **`board: null` on all 22 rows.** There is no blind-vote arena for packaging, ingest or provenance tools; the
+  nearest honest measurements are conformance suites (MediaConch) and platform re-upload behaviour, neither of
+  which produces an Elo. Any "delivery quality ranking" in this dictionary would be invented, so none is.
+- **Overlap with the existing `publish` rows in `caption-qc-deliver.ts`** (shaka-packager, bento4, gpac-mp4box,
+  mux, youtube-data-api, c2pa-rs, videoseal): kept here because this survey is the delivery cluster, and
+  re-verified independently. Two numbers were **corrected** against primary sources: the YouTube row in that file
+  calls the upload "100 calls/day at 1 unit" (matches the doc, confirmed) but the Mux row there says no
+  per-processed-second price is published — the current pricing page does publish per-minute input rates
+  (Plus 1080p $0.03125/min, Premium 1080p $0.046875/min), so this survey prices Mux at $0.000781/s for a Premium
+  1080p encode and shows the arithmetic.

@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Cinema — a house of open-source tools, and films nobody has to believe | Sovereign AI Film Verse</title>
+<meta name="description" content="A live 3D constellation of 1,109 catalogued tools, twelve of which we actually drive. The cinematic front door to Sovereign AI Film Verse — and a working preview of the studio behind it.">
+<meta name="theme-color" content="#06050a">
+<meta name="color-scheme" content="dark">
+<link rel="preload" href="fonts/BebasNeue-400.woff2" as="font" type="woff2" crossorigin>
+<link rel="stylesheet" href="fonts.css">
+<link rel="stylesheet" href="verse.css">
+<!-- Every script defers: the page paints its own title before a single byte of data or GSAP runs. -->
+<script src="data.generated.min.js" defer></script>
+<script src="tool-links.min.js" defer></script>
+<script src="shell.min.js" defer></script>
+<script src="vendor/gsap/gsap.min.js" defer></script>
+<script src="vendor/gsap/ScrollTrigger.min.js" defer></script>
+<script src="vendor/gsap/SplitText.min.js" defer></script>
+<noscript><style>
+  /* With no script to mark them, the rises must simply be visible. */
+  .rise { opacity: 1; transform: none; filter: none; }
+  #curtain { display: none; }
+</style></noscript>
+
+
+
+
+<!-- apex-meta:start -->
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+<link rel="canonical" href="https://filmverse-1mil8xwzv4y.qoder.website/cinema.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Sovereign AI Film Verse">
+<meta property="og:title" content="The Cinema — Sovereign AI Film Verse">
+<meta property="og:description" content="A live 3D constellation of 1,109 catalogued tools, twelve of which we actually drive. The cinematic front door to Sovereign AI Film Verse — and a working preview of the studio behind it.">
+<meta property="og:url" content="https://filmverse-1mil8xwzv4y.qoder.website/cinema.html">
+<meta property="og:image" content="https://filmverse-1mil8xwzv4y.qoder.website/assets/dailies/frame-at-2s.jpg">
+<meta property="og:image:width" content="1280">
+<meta property="og:image:height" content="720">
+<meta property="og:image:alt" content="One frame from the pipeline's own master, extracted at two seconds.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="The Cinema — Sovereign AI Film Verse">
+<meta name="twitter:description" content="A live 3D constellation of 1,109 catalogued tools, twelve of which we actually drive.">
+<meta name="twitter:image" content="https://filmverse-1mil8xwzv4y.qoder.website/assets/dailies/frame-at-2s.jpg">
+<!-- apex-meta:end -->
+</head>
+<body class="cine">
+
+<canvas id="stage" aria-hidden="true"></canvas>
+<div class="grade" aria-hidden="true"></div>
+
+<button id="motion" class="motion-ctl" type="button" aria-pressed="true"
+  title="Turn the movement in this page on or off">MOTION <span id="motion-state">ON</span></button>
+
+<div id="curtain" role="status" aria-live="polite">
+  <div class="ttl">Assembling the verse</div>
+  <div class="bar"><i id="curtain-bar"></i></div>
+  <div class="sub" id="curtain-sub">lighting the set</div>
+</div>
+
+<main class="reel">
+
+  <!-- ACT I -->
+  <section class="act" id="act-open">
+    <div class="kicker">Melbourne · ROCKYFILMS888 PTY LTD</div>
+    <h1 class="mast" id="mast">SOVEREIGN<br>AI <span class="g">FILM</span><br>VERSE</h1>
+    <p class="lede rise">One house. Every open-source tool worth owning, running on your own machine — and a finished film you never have to ask anyone to believe.</p>
+    <div class="rise" style="display:flex;gap:14px;flex-wrap:wrap">
+      <a class="chip" href="studio.html" style="padding:13px 22px;font-size:11px">Open the Studio</a>
+      <a class="chip ok" href="verify.html" style="padding:13px 22px;font-size:11px">Check a receipt — free, no account</a>
+    </div>
+    <div class="kicker rise" id="scroll-hint" style="margin-top:18px;opacity:.55">scroll ↓</div>
+  </section>
+
+  <!-- ACT II -->
+  <section class="act" id="act-army">
+    <div class="kicker">Act II · The army</div>
+    <h2 class="act-title rise">Not a metaphor.<br>A headcount.</h2>
+    <p class="line rise">Every point of gold above you is one tool we found, named, and wrote down. It is not decoration — the field is drawn straight from the catalogue, so the shape of this sky <em>is</em> the shape of our list.</p>
+    <div class="cards" id="army-cards"></div>
+    <p class="fence rise"><b>What this sky is not:</b> a promise. Being on the list means we know the tool exists and what it is for. It does not mean we can drive it, and it does not mean anyone has read its licence.</p>
+  </section>
+
+  <!-- ACT III -->
+  <section class="act" id="act-rail">
+    <div class="kicker">Act III · The rail</div>
+    <h2 class="act-title rise">Ten beats,<br>board to release.</h2>
+    <p class="line rise">A film walks the same road every time. This is ours — with what actually runs each beat, and where a person still has to sit down and finish the job.</p>
+    <div class="rail" id="rail" tabindex="0" role="list" aria-label="The ten beats of production"></div>
+  </section>
+
+  <!-- ACT IV -->
+  <section class="act" id="act-proof">
+    <div class="kicker">Act IV · The proof</div>
+    <h2 class="act-title rise">Nobody has to<br>take your word.</h2>
+    <p class="lede rise">When a film leaves this house it carries a receipt. A stranger with no account, no key and no money can check it — on their own machine, with ours switched off.</p>
+    <div class="cards" id="proof-cards"></div>
+    <p class="fence rise"><b>And the limit, said out loud:</b> a receipt proves a statement was made about exact bytes at a moment. It never proves the film is true, or good, or that anyone authorised it. A seal is an audit trail, not a verdict.</p>
+  </section>
+
+  <!-- ACT V -->
+  <section class="act inner" id="act-names">
+    <div class="kicker">Act V · The names</div>
+    <h2 class="act-title rise">Click any one of them.</h2>
+    <p class="line rise">These go to the real upstream homes — the project's own site, or its source. Where we have not verified a home, the card says so instead of sending you somewhere we guessed.</p>
+    <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin:8px 0 4px">
+      <input id="q" type="search" placeholder="search the catalogue — subtitles, voice, upscale, comfyui" aria-label="Search the catalogue"
+        style="flex:1 1 320px;padding:13px 15px;background:rgba(10,8,15,.7);border:1px solid var(--line);color:var(--text);font:400 14px/1 var(--mono)">
+      <div class="chip" id="shown">—</div>
+      <span id="more"></span>
+    </div>
+    <div class="tools" id="tools"></div>
+    <p class="line faded rise" id="tools-note"></p>
+  </section>
+
+  <!-- ACT VI -->
+  <section class="act inner" id="act-close">
+    <div class="kicker">Act VI · What we will not say</div>
+    <h2 class="act-title rise">This house keeps<br>its own score honest.</h2>
+    <div class="cards" id="honesty"></div>
+    <nav class="deck" aria-label="Rest of the rail">
+      <a href="studio.html">Studio Home</a>
+      <a href="workflow.html">The rail in detail</a>
+      <a href="dailies.html">Dailies — what a run produced</a>
+      <a href="tools.html">Full catalogue</a>
+      <a href="rights.html">Rights & licensing</a>
+      <a href="verse.html">The verse map</a>
+      <a href="verify.html">Verify a receipt</a>
+      <a href="passport.html">Creator passport</a>
+      <a href="console.html">Operator console</a>
+      <span class="stamp" id="stamp"></span>
+    </nav>
+    <p class="stamp" id="live" style="margin-top:10px;text-align:right;width:100%">checking this build…</p>
+  </section>
+
+</main>
+
+<script type="module">
+import { createVerse } from "./verse3d.min.js";
+
+const V = window.V;
+const S = V.stats;
+const L = window.APEX_LINKS || {};
+const rows = V.data.rows || [];
+const conns = V.data.connections || [];
+const stages = V.data.stages || [];
+const bar = document.getElementById("curtain-bar");
+const sub = document.getElementById("curtain-sub");
+
+/**
+ * The bar reports work that has happened, in order, and never runs ahead of it. It used to open at
+ * 12% before anything was measured, which is theatre on a page whose whole argument is that nothing
+ * here is invented. Each milestone is real: the catalogue is a script that has already executed,
+ * the scene is the object createVerse returned, the frame is a frame the browser has composited.
+ */
+const MILESTONES = [
+  ["catalogue", "catalogue in memory"],
+  ["scene", "building the set"],
+  ["frame", "first frame on screen"],
+  ["open", "action"],
+];
+const seenMilestones = new Set();
+function mark(key) {
+  seenMilestones.add(key);
+  const idx = MILESTONES.findIndex((m) => m[0] === key);
+  const reached = MILESTONES.slice(0, idx + 1).filter((m) => seenMilestones.has(m[0])).length;
+  bar.style.width = Math.round((reached / MILESTONES.length) * 100) + "%";
+  const label = MILESTONES[idx];
+  if (label) sub.textContent = label[1];
+}
+mark("catalogue");
+
+/* ---- motion is a user choice, not a page decision ---- */
+const MOTION = {
+  key: "apex-motion",
+  prefersReduced: () => { try { return window.matchMedia("(prefers-reduced-motion: reduce)").matches; } catch (e) { return false; } },
+  read() {
+    let saved = null;
+    try { saved = localStorage.getItem(this.key); } catch (e) { /* private mode */ }
+    if (saved === "off") return false;
+    if (saved === "on") return true;
+    return !this.prefersReduced();
+  },
+  write(on) { try { localStorage.setItem(this.key, on ? "on" : "off"); } catch (e) { /* nowhere to remember */ } },
+};
+let motionOn = MOTION.read();
+function paintMotionCtl() {
+  const b = document.getElementById("motion");
+  b.setAttribute("aria-pressed", String(motionOn));
+  document.getElementById("motion-state").textContent = motionOn ? "ON" : "OFF";
+  document.documentElement.dataset.motion = motionOn ? "on" : "off";
+}
+paintMotionCtl();
+
+/* ---- language: registry vocabulary out, film vocabulary in ---- */
+const VOICE = {
+  drivable: "we run it",
+  "file-exchange": "we prep it, a human finishes",
+  "portal-only": "a person still clicks",
+  "not-yet": "not built",
+};
+const BEAT = {
+  storyboard:     ["The Board",   "Frames before a single camera exists."],
+  character_lock: ["The Face",    "One character, the same face, shot after shot."],
+  motion:         ["The Move",    "Stills learn to travel."],
+  dialogue:       ["The Voice",   "Lines spoken by a voice you chose."],
+  music:          ["The Score",   "Music that knows where the cuts land."],
+  sound:          ["The Mix",     "Every level sitting where a cinema expects it."],
+  subtitles:      ["The Words",   "Captions, timed to the frame."],
+  edit:           ["The Cut",     "The shape of the thing, decided."],
+  finish:         ["The Grade",   "Colour, loudness, delivery masters."],
+  publish:        ["The Release", "Out into the world, with its receipt."],
+};
+
+/* ---- Act II: the headcount ---- */
+function money(v) { return V.num(v); }
+const army = [
+  [money(S.rows), "tools found, named and written down", ""],
+  [money(S.runsAtZero), "of them cost nothing to run", "ok"],
+  [money(S.runsOnYourMachine), "live on your own machine, not someone else's bill", "ok"],
+  [money(conns.filter(c => c.depth === "drivable").length), "we can genuinely drive today", "warn"],
+  [money(S.clearedForClientWork), "licences a human has actually read", "bad"],
+  [V.data.coverage.wired + " / " + V.data.coverage.total, "beats with a tool behind them", "warn"],
+];
+document.getElementById("army-cards").innerHTML = army.map(a =>
+  `<article class="cel big rise"><div class="v">${a[0]}</div><div class="k">${a[1]}</div>${a[2] ? `<div style="margin-top:12px"><span class="chip ${a[2]}">${a[2] === "bad" ? "the honest wound" : a[2] === "ok" ? "in your favour" : "still ahead of us"}</span></div>` : ""}</article>`).join("");
+
+/* ---- Act III: the rail ---- */
+document.getElementById("rail").innerHTML = stages.map((st, i) => {
+  const b = BEAT[st.id] || [st.id, ""];
+  const depth = st.best || "not-yet";
+  const cls = depth === "drivable" ? "ok" : depth === "not-yet" ? "bad" : "warn";
+  const who = st.tools.length ? st.tools.join(" · ") : "nothing runs this yet";
+  return `<div class="beat rise" role="listitem"><span class="no">${String(i + 1).padStart(2, "0")} / ${stages.length}</span>
+    <h4>${b[0]}</h4><p>${b[1]}</p>
+    <div style="display:flex;gap:8px;flex-wrap:wrap"><span class="chip ${cls}">${VOICE[depth] || depth}</span></div>
+    <p class="faded" style="margin-top:10px;font-size:13px">${who}</p></div>`;
+}).join("");
+
+/* ---- Act IV: the proof ---- */
+const proof = [
+  ["These bytes", "The receipt names the exact file. Change one pixel and it stops matching."],
+  ["This moment", "A record that the work existed, dated, made in front of witnesses the platform does not own."],
+  ["Every hand that touched it", "Which tool ran each beat, and whether a person finished it instead."],
+  ["What went unchecked", "Stated, not buried. A receipt that hides its own gaps is an advert."],
+];
+document.getElementById("proof-cards").innerHTML = proof.map(p =>
+  `<article class="cel rise"><h3>${p[0]}</h3><p>${p[1]}</p></article>`).join("");
+
+/* ---- Act V: the names, with real links ---- */
+const withLink = rows.filter(r => L[r.n]);
+const pool = [...new Map([
+  ...conns.map(c => [c.name, { n: c.name, cap: c.does, home: L[c.name] || L[c.toolId] }]),
+  ...withLink.map(r => [r.n, { n: r.n, cap: r.cap, home: L[r.n] }]),
+]).values()];
+
+const PAGE = 60;
+let shown = PAGE, current = pool;
+
+function card(t) {
+  const cap = (t.cap || "").replace(/["]/g, "'").slice(0, 90);
+  if (t.home) {
+    const host = String(t.home).replace(/^https?:\/\//, "").split("/")[0];
+    return `<a class="tool" href="${t.home}" target="_blank" rel="noopener noreferrer" title="${cap}"><span>${t.n}</span><span class="u">${host} ↗</span></a>`;
+  }
+  return `<span class="tool" title="${cap}"><span>${t.n}</span><span class="u">home unverified</span></span>`;
+}
+
+function paint() {
+  const slice = current.slice(0, shown);
+  document.getElementById("tools").innerHTML = slice.map(card).join("");
+  const more = current.length - slice.length;
+  document.getElementById("shown").textContent =
+    slice.length + " of " + money(current.length) + (current === pool ? "" : " match") + " shown";
+  document.getElementById("more").innerHTML = more > 0
+    ? `<button class="chip" id="more-btn" type="button">show ${Math.min(PAGE, more)} more — ${more} behind</button>` : "";
+  const b = document.getElementById("more-btn");
+  if (b) b.addEventListener("click", () => { shown += PAGE; paint(); });
+}
+
+/**
+ * Ranked, not substringed: a name hit outranks a capability hit, and a whole-word hit outranks
+ * a fragment, so "upscale" surfaces the upscalers instead of the first row that contains the letters.
+ */
+function score(t, tokens) {
+  const n = t.n.toLowerCase(), cap = (t.cap || "").toLowerCase();
+  let s = 0;
+  for (const w of tokens) {
+    if (n === w) s += 12;
+    else if (n.startsWith(w)) s += 8;
+    else if (n.includes(w)) s += 5;
+    if (cap.includes(w)) s += 2;
+    if (!n.includes(w) && !cap.includes(w)) return -1;
+  }
+  return s;
+}
+
+paint();
+document.getElementById("tools-note").innerHTML =
+  `<b>${money(S.rows)}</b> tools are catalogued; <b>${money(Object.keys(L).length)}</b> have a home we verified by opening it. The rest stay unlinked on purpose — we would rather show you a gap than send you to a guess. Search above to look through the whole catalogue.`;
+
+const q = document.getElementById("q");
+q.addEventListener("input", () => {
+  const raw = q.value.trim().toLowerCase();
+  shown = PAGE;
+  if (!raw) { current = pool; return paint(); }
+  const tokens = raw.split(/\s+/).filter(Boolean);
+  const hits = rows.map(r => ({ r, s: score({ n: r.n, cap: r.cap }, tokens) }))
+    .filter(h => h.s > 0)
+    .sort((a, b) => b.s - a.s)
+    .slice(0, 240)
+    .map(h => ({ n: h.r.n, cap: h.r.cap, home: L[h.r.n] }));
+  current = hits.length ? hits : [{ n: "nothing in the catalogue matches “" + raw + "”", cap: "", home: null }];
+  paint();
+});
+
+/* ---- Act VI: honesty ---- */
+document.getElementById("honesty").innerHTML = [
+  ["No score out of ten", "Every claim here is a count or a pass/fail. Nothing on this page is rated."],
+  ["Free stays free", "Checking a receipt costs nothing, for anyone, forever. The only thing this house sells is anchoring a finished film."],
+  ["Nothing invented", "No number on this page was typed by hand. Each one is counted from the catalogue and the driver code the moment this file is generated."],
+].map(c => `<article class="cel rise"><h3>${c[0]}</h3><p>${c[1]}</p></article>`).join("");
+document.getElementById("stamp").textContent = V.generated();
+
+/* ---- the scene ---- */
+let verse = null;
+try {
+  verse = createVerse(document.getElementById("stage"), { count: S.rows || 1109, bloom: 0.95 });
+  window.__verse = verse;
+  mark("scene");
+  // The curtain lifts on a composited frame, not on a timer. Two rAFs is the smallest honest
+  // witness that the browser has actually put pixels on the screen.
+  requestAnimationFrame(() => requestAnimationFrame(() => { mark("frame"); openCurtain(); }));
+} catch (e) {
+  document.getElementById("stage").style.display = "none";
+  mark("scene");
+  mark("frame");
+  openCurtain();
+}
+
+/**
+ * Reveals. Where the browser owns the scroll timeline, CSS drives the fade; the observer marks
+ * each element as it arrives anyway, so a feature that misfires cannot leave a paragraph invisible.
+ */
+function reveal() {
+  const io = new IntersectionObserver((es) => {
+    es.forEach(e => { if (e.isIntersecting) { e.target.classList.add("on"); io.unobserve(e.target); } });
+  }, { threshold: 0.14 });
+  document.querySelectorAll(".rise").forEach((el, i) => { el.style.transitionDelay = (i % 4) * 70 + "ms"; io.observe(el); });
+}
+
+function wireGsap() {
+  gsap.registerPlugin(ScrollTrigger, SplitText);
+  const split = new SplitText("#mast", { type: "chars,lines", linesClass: "l" });
+  gsap.set(split.chars, { yPercent: 118, opacity: 0 });
+  gsap.to(split.chars, { yPercent: 0, opacity: 1, duration: 1.15, ease: "expo.out", stagger: { each: 0.028, from: "start" }, delay: 0.18 });
+  ScrollTrigger.create({
+    trigger: document.body, start: "top top", end: "bottom bottom", scrub: true,
+    onUpdate: (self) => verse.setScroll(self.progress),
+  });
+}
+
+let curtainOpen = false;
+function openCurtain() {
+  if (curtainOpen) return;
+  curtainOpen = true;
+  mark("open");
+  document.getElementById("curtain").classList.add("done");
+}
+// A visitor must never be stranded behind a set that is slow to build. If the first frame has not
+// been composited in five seconds the page opens anyway — the 3D is a flourish, the content is not.
+setTimeout(openCurtain, 5000);
+
+function applyMotion(on) {
+  motionOn = on;
+  MOTION.write(on);
+  paintMotionCtl();
+  if (!verse) return;
+  verse.setReduced(!on);
+  if (on) verse.start(); else verse.stop();
+  document.querySelectorAll(".rise").forEach(el => el.classList.add("on"));
+}
+
+document.getElementById("motion").addEventListener("click", () => applyMotion(!motionOn));
+
+if (verse) {
+  reveal();
+  document.querySelectorAll(".cel").forEach(el => {
+    el.addEventListener("pointermove", (e) => {
+      const r = el.getBoundingClientRect();
+      el.style.setProperty("--gx", ((e.clientX - r.left) / r.width * 100) + "%");
+      el.style.setProperty("--gy", ((e.clientY - r.top) / r.height * 100) + "%");
+    });
+  });
+
+  if (motionOn) { wireGsap(); verse.start(); } else { verse.setReduced(true); }
+
+  // The curtain is a flourish, not a gate: it lifts on the first frame, or at 900 ms, whichever is first.
+  const fonts = (document.fonts && document.fonts.ready) ? document.fonts.ready : Promise.resolve();
+  Promise.race([fonts.then(() => new Promise(r => setTimeout(r, 120))), new Promise(r => setTimeout(r, 900))]).then(openCurtain);
+}
+
+/* ---- live status: which build am I looking at, and when was it made ---- */
+fetch("status.json", { cache: "no-store" }).then(r => r.ok ? r.json() : null).then(j => {
+  if (!j) { document.getElementById("live").textContent = "status manifest not published"; return; }
+  const when = new Date(j.built_at);
+  const bytes = Object.values(j.files).reduce((a, f) => a + f.bytes, 0);
+  document.getElementById("live").textContent =
+    `build ${j.build} · assembled ${isNaN(when) ? j.built_at : when.toISOString().slice(0, 16).replace("T", " ")} UTC · ` +
+    `${Object.keys(j.files).length} fingerprinted files, ${(bytes / 1024).toFixed(0)} KB`;
+}).catch(() => { document.getElementById("live").textContent = "status manifest unreadable from here"; });
+</script>
+</body>
+</html>
