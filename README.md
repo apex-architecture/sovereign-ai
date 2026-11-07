@@ -54,7 +54,7 @@ src/lib/apex/
   proof.ts      the ledger chain: commit -> seal -> anchor -> verify
   schema.ts     the rule that a licence is only "cleared" after a human read it
 passport/       (same code, reachable as the spec surface — see src/lib/apex)
-tools/          registry.json, generated. 1,109 tools, each with a real link
+tools/          registry.json, generated — every catalogueued tool with its real link
 scripts/        the build, the registry generator, the cross-implementation proof, the QA sweep
 docs/           the website (GitHub Pages source)
 supabase/       schema and migrations for anyone who wants their own backend

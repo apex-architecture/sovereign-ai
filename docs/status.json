@@ -1,54 +1,54 @@
 {
- "built_at": "2026-11-06T22:39:46.824Z",
+ "built_at": "2026-11-07T09:30:45.945Z",
  "build": "local",
  "files": {
   "index.html": {
-   "bytes": 7345,
-   "sha256": "650d885ad3920a3e"
+   "bytes": 14424,
+   "sha256": "3009bd924ff0183b"
   },
   "cinema.html": {
-   "bytes": 20826,
-   "sha256": "49abfe026d4ed009"
+   "bytes": 21227,
+   "sha256": "f86ea39efb4a01c3"
   },
   "dailies.html": {
-   "bytes": 24721,
-   "sha256": "e5c2cac421b69dcf"
+   "bytes": 25075,
+   "sha256": "183f34fc4c6f06d2"
   },
   "engines.html": {
-   "bytes": 22596,
-   "sha256": "67b375a02b2ee090"
+   "bytes": 22987,
+   "sha256": "825aafe28303e7bb"
   },
   "mission.html": {
    "bytes": 26413,
    "sha256": "6fb8352fadff3268"
   },
   "styles.css": {
-   "bytes": 15488,
-   "sha256": "deedd5e8e68bd792"
+   "bytes": 15744,
+   "sha256": "34e1a4d4066f60e5"
   },
   "verse.css": {
-   "bytes": 12555,
-   "sha256": "2dbd4b8800a7262d"
+   "bytes": 12775,
+   "sha256": "7e3a7b8314cb41c1"
   },
   "studio.css": {
-   "bytes": 16788,
-   "sha256": "1a82332ff1a6deea"
+   "bytes": 17086,
+   "sha256": "b613d03efe80f7b8"
   },
   "verify.html": {
-   "bytes": 29044,
-   "sha256": "9cd4e5e81443f657"
+   "bytes": 29537,
+   "sha256": "9cbf7eb344988f1b"
   },
   "data.generated.min.js": {
-   "bytes": 315611,
-   "sha256": "3ad5fef51f3b3e9a"
+   "bytes": 319306,
+   "sha256": "817c6f8d79dec178"
   },
   "data.shell.min.js": {
    "bytes": 3307,
-   "sha256": "5c335ac8293b510a"
+   "sha256": "820a4974da688e8f"
   },
   "engines.min.js": {
-   "bytes": 243112,
-   "sha256": "78968216100a389c"
+   "bytes": 246201,
+   "sha256": "349b8801fa0b88ea"
   },
   "dailies.data.min.js": {
    "bytes": 6234,
@@ -67,28 +67,28 @@
    "sha256": "aeee8f2598aef1cf"
   },
   "shell.min.js": {
-   "bytes": 4406,
-   "sha256": "a947e94c700aca66"
+   "bytes": 4409,
+   "sha256": "6fe900051ace20d6"
   },
   "studio.min.js": {
    "bytes": 21598,
    "sha256": "1c70c31b4569c53f"
   },
   "verse3d.min.js": {
-   "bytes": 506134,
-   "sha256": "7ede964b578e8eda"
+   "bytes": 506142,
+   "sha256": "3400fda5a00ada36"
   },
   "availability.generated.min.js": {
    "bytes": 37508,
    "sha256": "694cd31d93d80f34"
   },
   "foreman.generated.js": {
-   "bytes": 5450,
-   "sha256": "856e37469225cb45"
+   "bytes": 5451,
+   "sha256": "9bb7a383f62a11ac"
   },
   "connect.generated.js": {
-   "bytes": 5960,
-   "sha256": "5b3715914082e124"
+   "bytes": 5961,
+   "sha256": "688a837cd3afdb3b"
   }
  }
 }

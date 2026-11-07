@@ -11,6 +11,7 @@
     "lint": "eslint .",
     "format": "prettier --write .",
     "passport:selftest": "node --experimental-strip-types scripts/psi-selftest.mjs",
+    "cloud:selftest": "node --experimental-strip-types scripts/cloud-video-selftest.mjs",
     "tools:registry": "node --experimental-strip-types scripts/tools-registry.mjs",
     "site:build": "node scripts/build-site.mjs",
     "studio:data": "node --experimental-strip-types scripts/studio-data.mjs",

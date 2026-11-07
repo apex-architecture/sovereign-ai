@@ -19,6 +19,7 @@ import { freeBusDriver } from "./free-bus.ts";
 import { scoreDriver } from "./score.ts";
 import { ardourDriver, kdenliveDriver, makePortalDriver, resolveDriver } from "./studio.ts";
 import { deliveryDriver } from "./delivery.ts";
+import { CLOUD_VIDEO_DRIVERS } from "./cloud-vendors.ts";
 
 export interface DriverConfig {
   /** Per-stage ComfyUI graphs, loaded from the project, not hard-coded here. */
@@ -32,7 +33,7 @@ export interface DriverConfig {
 
 export function buildDrivers(config: DriverConfig): ToolDriver[] {
   const youtube = makePortalDriver("youtube", "YouTube Studio", "https://studio.youtube.com", (input) => `https://studio.youtube.com/?project=${input.projectId}`);
-  return [ffmpegDriver, deliveryDriver, blenderDriver, whisperDriver, piperDriver, sapiDriver, agentDesktopDriver, routerDriver, freeBusDriver, scoreDriver, ollamaDriver, makeComfyDriver(config.comfyGraphs), makeReplicateDriver(config.replicate.modelFor, config.replicate.usdPerJob), kdenliveDriver, resolveDriver, ardourDriver, youtube];
+  return [ffmpegDriver, deliveryDriver, blenderDriver, whisperDriver, piperDriver, sapiDriver, agentDesktopDriver, routerDriver, freeBusDriver, scoreDriver, ollamaDriver, makeComfyDriver(config.comfyGraphs), makeReplicateDriver(config.replicate.modelFor, config.replicate.usdPerJob), kdenliveDriver, resolveDriver, ardourDriver, youtube, ...CLOUD_VIDEO_DRIVERS];
 }
 
 /** Preference order per film stage. Only stages with a real driver appear. */
@@ -51,8 +52,12 @@ export function stageRoutes(drivers: ToolDriver[]): Record<string, ToolDriver[]>
      * Hosted models first, then local generation, then the plate itself: a still pushed through
      * ffmpeg's move-and-grade still becomes a shot, which is the difference between a pipeline
      * that stalls when a provider is down and one that ships something you can watch.
+     *
+     * The seven rented bodies sit behind Replicate because each one needs the creator's own key.
+     * A vendor with no key fails its probe and the route falls through to the next one, so an
+     * uncredentialed account costs nothing and blocks nothing.
      */
-    motion: pick("replicate", "comfyui", "blender", "ffmpeg"),
+    motion: pick("replicate", "kling-api", "vidu-api", "ark-video", "dashscope-video", "runway-api", "luma-api", "fal-video", "comfyui", "blender", "ffmpeg"),
     /**
      * The voice runs on the creator's own CPU: no key, no account, and the line comes back as a wav
      * whose length is measured from the file, so dialogue can be cut to it rather than guessed at.

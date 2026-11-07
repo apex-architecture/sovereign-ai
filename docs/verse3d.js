@@ -142,7 +142,7 @@ const GRADE = {
 
 export function createVerse(canvas, opts) {
   const o = opts || {};
-  const count = Math.max(64, (o.count || 1109) | 0);
+  const count = Math.max(64, o.count | 0);
   const renderer = new THREE.WebGLRenderer({ canvas, antialias: false, alpha: false, powerPreference: "high-performance" });
   renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.75));
   renderer.setSize(window.innerWidth, window.innerHeight, false);

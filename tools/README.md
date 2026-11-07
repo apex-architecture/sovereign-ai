@@ -1,10 +1,10 @@
 # Tool registry
 
-1109 tools, every one with its own upstream link.
+1118 tools, every one with its own upstream link.
 
 - open-source with a real repository: **889**
-- with a driver wired in the studio: **12**
-- still `no-driver` (named honestly, not hidden): **1097**
+- with a driver wired in the studio: **23**
+- still `no-driver` (named honestly, not hidden): **1095**
 - licence read against the actual text by a human: **0**
 
 Regenerate with `npm run tools:registry`. Source of truth is `src/lib/apex/catalog/`; this file

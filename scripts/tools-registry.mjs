@@ -8,9 +8,10 @@
  *
  *   node --experimental-strip-types scripts/tools-registry.mjs
  */
-import { writeFileSync, mkdirSync } from "node:fs";
+import { writeFileSync, mkdirSync, existsSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
+import { siteDir } from "./site-dir.mjs";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 
@@ -23,12 +24,43 @@ const CATALOG = [
   ["platform-infra", "../src/lib/apex/catalog/platform-infra.ts", "PLATFORM_INFRA"],
 ];
 
-// Engines the studio can actually reach today. Anything else is "no-driver" until a PR adds one.
-const WIRED = new Set([
-  "FFmpeg", "Blender", "Whisper", "Ollama", "ComfyUI", "Replicate", "Kdenlive", "Piper", "SAPI",
-  "Wan 2.1", "LTX-Video", "Qwen", "DeepSeek", "Stable Diffusion", "Flux", "Sora", "Veo", "Kling",
-  "Seedance", "Vidu", "Runway", "Luma", "HunyuanVideo", "AnimateDiff", "ControlNet", "LoRA",
-]);
+// The driver table is the source of truth for "wired". A catalog row is wired when a driver
+// whose toolId exists in the built table can reach it. The map below says which driver reaches
+// which row; if a driver is deleted, the count falls by itself instead of lying.
+const { buildDrivers } = await import("../src/lib/apex/drivers/index.ts");
+const LIVE_TOOL_IDS = new Set(
+  buildDrivers({
+    comfyGraphs: async () => null,
+    replicate: { modelFor: () => "", usdPerJob: () => 0 },
+  }).map((d) => d.toolId),
+);
+
+/** Catalog name -> the driver toolId that reaches it. */
+const CATALOG_TO_DRIVER = {
+  "FFmpeg": "ffmpeg",
+  "Blender": "blender",
+  "Whisper": "whisper",
+  "Ollama": "ollama",
+  "ComfyUI": "comfyui",
+  "ComfyUI-video-workflows": "comfyui",
+  "Wan 2.x": "comfyui",
+  "LTX-Video": "comfyui",
+  "HunyuanVideo": "comfyui",
+  "AnimateDiff": "comfyui",
+  "Stable Diffusion": "comfyui",
+  "ControlNet": "comfyui",
+  "Replicate": "replicate",
+  "Kdenlive": "kdenlive",
+  "Piper": "piper",
+  "Windows SAPI": "windows_sapi",
+  "Kling 3.0 (Kuaishou)": "kling-api",
+  "Vidu Q3 Pro (Shengshu)": "vidu-api",
+  "Seedance 2.5 (Volcengine Ark)": "ark-video",
+  "Wan 3.0 (Alibaba Model Studio)": "dashscope-video",
+  "Runway Gen-4.5": "runway-api",
+  "Luma Ray 3.2": "luma-api",
+  "fal.ai video gateway": "fal-video",
+};
 
 const rows = [];
 for (const [group, spec, exportName] of CATALOG) {
@@ -57,7 +89,7 @@ for (const [group, spec, exportName] of CATALOG) {
       integration: rec.integrationMethod,
       capability: rec.capability,
       priority: rec.priority,
-      driver: WIRED.has(rec.name) ? "wired" : "no-driver",
+      driver: CATALOG_TO_DRIVER[rec.name] && LIVE_TOOL_IDS.has(CATALOG_TO_DRIVER[rec.name]) ? "wired" : "no-driver",
     });
   }
 }
@@ -84,8 +116,16 @@ const out = {
   tools: rows.sort((a, b) => a.group.localeCompare(b.group) || a.name.localeCompare(b.name)),
 };
 
+const json = JSON.stringify(out, null, 1) + "\n";
 mkdirSync(join(ROOT, "tools"), { recursive: true });
-writeFileSync(join(ROOT, "tools", "registry.json"), JSON.stringify(out, null, 1) + "\n");
+writeFileSync(join(ROOT, "tools", "registry.json"), json);
+
+// The welcome page reads its counters from the site copy at runtime, so the site copy has to
+// come from this same run. A hand-copied file drifts the moment a driver lands, and a drifted
+// counter is a lie the front page prints. The site directory is resolved, not assumed:
+// `docs/` in the open core, `verse-site/` in the app repo.
+const SITE = siteDir(ROOT);
+writeFileSync(join(SITE, "registry.json"), json);
 
 const readme = `# Tool registry
 
@@ -106,4 +146,4 @@ writeFileSync(join(ROOT, "tools", "README.md"), readme);
 
 console.log(`tools: ${out.counts.total} rows | open-source ${out.counts.openSource} | wired ${out.counts.wired} | no-driver ${out.counts.noDriver} | licence read ${out.counts.licenceRead}`);
 console.log("licences:", JSON.stringify(byLicence));
-console.log("written: tools/registry.json, tools/README.md");
+console.log("written: tools/registry.json, tools/README.md, " + SITE.replace(ROOT + "\\", "").replace(ROOT + "/", "") + "/registry.json");
