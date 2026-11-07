@@ -27,11 +27,16 @@ import {
   sha256HexOnDevice,
 } from "../src/lib/apex/seal.browser.ts";
 import { readFileSync } from "node:fs";
+import path from "node:path";
 import { runInThisContext } from "node:vm";
+import { siteDir } from "./site-dir.mjs";
 
 // The public verifier that ships on the static rail, loaded the way the browser loads it.
-const publicSource = readFileSync(new URL("../verse-site/psi-verify.js", import.meta.url), "utf8");
-runInThisContext(publicSource, { filename: "verse-site/psi-verify.js" });
+// The rail's own folder is resolved, not assumed: `verse-site/` in the app repo, `docs/` in the
+// open core. A hardcoded name breaks the moment somebody clones the open core and runs this.
+const VERIFIER = path.join(siteDir(), "psi-verify.js");
+const publicSource = readFileSync(VERIFIER, "utf8");
+runInThisContext(publicSource, { filename: VERIFIER });
 const PUBLIC = globalThis.APEX_PSI;
 
 const gates = [];
