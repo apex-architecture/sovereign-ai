@@ -82,7 +82,7 @@ mkdirSync(OUT, { recursive: true });
 
 const pages = process.env.APEX_LIVE_PAGES
   ? process.env.APEX_LIVE_PAGES.split(",")
-  : ["index.html"];
+  : ["studio.html"];
 
 for (const page of pages) {
   await send("Emulation.setDeviceMetricsOverride", { width: 1440, height: 900, deviceScaleFactor: 1, mobile: false });

@@ -30,7 +30,7 @@ import { readFileSync } from "node:fs";
 import { runInThisContext } from "node:vm";
 
 // The public verifier that ships on the static rail, loaded the way the browser loads it.
-const publicSource = readFileSync(new URL("../docs/psi-verify.js", import.meta.url), "utf8");
+const publicSource = readFileSync(new URL("../verse-site/psi-verify.js", import.meta.url), "utf8");
 runInThisContext(publicSource, { filename: "verse-site/psi-verify.js" });
 const PUBLIC = globalThis.APEX_PSI;
 

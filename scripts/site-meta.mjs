@@ -22,7 +22,7 @@ const END = "<!-- apex-meta:end -->";
 const SHARE = { file: "assets/dailies/frame-at-2s.jpg", w: 1280, h: 720 };
 
 const PAGES = {
-  "index.html": { title: "Sovereign AI Film Verse — a house of open-source tools, and films nobody has to believe", type: "website" },
+  "studio.html": { title: "Sovereign AI Film Verse — a house of open-source tools, and films nobody has to believe", type: "website" },
   "verse.html": { title: "The Verse Map — 44 Modules, Every Status From the Record | Sovereign AI Film Verse", type: "website" },
   "workflow.html": { title: "Production Rail — Ten Film Stages, Honestly Wired | Sovereign AI Film Verse", type: "website" },
   "dailies.html": { title: "Dailies — One Real Run of the Pipeline, With Its Measured Frames | Sovereign AI Film Verse", type: "article" },
@@ -54,7 +54,7 @@ for (const [page, meta] of Object.entries(PAGES)) {
   if (!existsSync(file)) { console.log(`SKIP ${page} — not on this disk`); continue; }
   let html = readFileSync(file, "utf8");
 
-  const url = `${ORIGIN}/${page === "index.html" ? "" : page}`;
+  const url = `${ORIGIN}/${page === "studio.html" ? "" : page}`;
   const desc = /<meta name="description" content="([^"]*)"/.exec(html)?.[1] ?? meta.title;
   const shortTitle = meta.title.split(/ — | \| /)[0];
 

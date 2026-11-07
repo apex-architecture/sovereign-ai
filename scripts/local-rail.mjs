@@ -575,9 +575,9 @@ const server = http.createServer(async (req, res) => {
   let rel = p === "/" ? "/index.html" : p;
   let file = path.join(SITE, rel);
   if (!file.startsWith(SITE)) return json(res, 403, { error: "no" });
-  if (existsSync(file) && statSync(file).isDirectory()) file = path.join(file, "index.html");
+  if (existsSync(file) && statSync(file).isDirectory()) file = path.join(file, "studio.html");
   if (!existsSync(file)) {
-    const html = path.join(SITE, "index.html");
+    const html = path.join(SITE, "studio.html");
     if (existsSync(html)) return serveFile(res, html, { req });
     return json(res, 404, { error: "not found" });
   }

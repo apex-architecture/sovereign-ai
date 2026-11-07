@@ -172,7 +172,7 @@ const MANIFEST = {
   files: {},
 };
 for (const rel of [
-  "index.html",
+  "studio.html",
   "cinema.html",
   "dailies.html",
   "engines.html",

@@ -28,7 +28,7 @@ export const LEAK_RULES = [
  * is 200. The probe uses the form the site actually links to, or the guard cries wolf.
  */
 export async function liveness() {
-  const urls = PAGES.map((p) => `${RAIL}/${p === "index" ? "index.html" : `${p}.html`}`);
+  const urls = PAGES.map((p) => `${RAIL}/${p === "index" ? "studio.html" : `${p}.html`}`);
   const assets = ["styles.css", "shell.js", "data.generated.js"].map((a) => `${RAIL}/${a}`);
   const results = await Promise.all([...urls, ...assets].map((u) => probe(u)));
   const dead = results.filter((r) => !r.ok);

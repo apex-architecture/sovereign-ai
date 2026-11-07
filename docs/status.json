@@ -1,10 +1,10 @@
 {
- "built_at": "2026-11-07T09:30:45.945Z",
+ "built_at": "2026-11-07T09:40:57.476Z",
  "build": "local",
  "files": {
-  "index.html": {
-   "bytes": 14424,
-   "sha256": "3009bd924ff0183b"
+  "studio.html": {
+   "bytes": 7487,
+   "sha256": "3c3547177d25f808"
   },
   "cinema.html": {
    "bytes": 21227,
@@ -40,11 +40,11 @@
   },
   "data.generated.min.js": {
    "bytes": 319306,
-   "sha256": "817c6f8d79dec178"
+   "sha256": "3beb0f0c889e31c1"
   },
   "data.shell.min.js": {
    "bytes": 3307,
-   "sha256": "820a4974da688e8f"
+   "sha256": "7cc65f92113b5f8a"
   },
   "engines.min.js": {
    "bytes": 246201,

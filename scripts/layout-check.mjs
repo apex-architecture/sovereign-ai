@@ -20,7 +20,7 @@ const CHROME =
   "C:/Program Files/Google/Chrome/Application/chrome.exe";
 const PORT = Number(process.env.APEX_CDP_PORT ?? 9333);
 const BASE = process.env.APEX_RAIL_URL ?? "http://127.0.0.1:8792";
-const PAGES = process.argv.slice(2).length ? process.argv.slice(2) : ["index.html"];
+const PAGES = process.argv.slice(2).length ? process.argv.slice(2) : ["studio.html"];
 const WIDTHS = [
   { w: 390, h: 844, label: "phone" },
   { w: 768, h: 1024, label: "tablet" },

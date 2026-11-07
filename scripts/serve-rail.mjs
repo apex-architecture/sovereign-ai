@@ -13,7 +13,7 @@ const port = Number(process.argv[2] || 8788);
 
 createServer(async (req, res) => {
   const url = decodeURIComponent(new URL(req.url, "http://x").pathname);
-  const file = path.join(ROOT, url === "/" ? "index.html" : url.replace(/^\/+/, ""));
+  const file = path.join(ROOT, url === "/" ? "studio.html" : url.replace(/^\/+/, ""));
   if (!file.startsWith(ROOT + path.sep) && file !== ROOT) { res.writeHead(403).end(); return; }
   try {
     const body = await readFile(file);

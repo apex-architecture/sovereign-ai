@@ -75,13 +75,19 @@ if (ahead !== "0") {
 
 step("fast-forwarding main so the site builds this code too", () => {
   if (DRY) return "dry run — would push";
-  const out = git(["push", "origin", "HEAD:main"], true);
-  if (!out) {
-    const state = git(["rev-list", "--count", "HEAD..origin/main"], true);
-    if (state === "0") return "main already contains this commit";
-    throw new Error(`main could not be fast-forwarded — Lovable has commits we do not have. Merge them by hand; no force-push was attempted.`);
+  // git writes its progress to stderr and says nothing on stdout, so an empty result is a
+  // successful push, not a failed one. The state after the attempt is what decides.
+  let pushed = false;
+  try {
+    git(["push", "origin", "HEAD:main"]);
+    pushed = true;
+  } catch {
+    /* the state check below decides whether this was a real refusal */
   }
-  return `main now at ${git(["rev-parse", "--short", "HEAD"])}`;
+  const behind = git(["rev-list", "--count", "HEAD..origin/main"], true);
+  if (behind === "0") return `main now at ${git(["rev-parse", "--short", "HEAD"])}`;
+  if (pushed) return `main now at ${git(["rev-parse", "--short", "HEAD"])}`;
+  throw new Error(`main could not be fast-forwarded — Lovable has commits we do not have. Merge them by hand; no force-push was attempted.`);
 });
 
 step("final state", () => {

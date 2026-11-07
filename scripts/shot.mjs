@@ -19,7 +19,7 @@ const PORT = Number(process.env.APEX_CDP_PORT ?? 9339);
 const BASE = process.env.APEX_RAIL_URL ?? "http://127.0.0.1:8792";
 const OUT = process.env.APEX_SHOT_DIR ?? "runs/shots";
 const args = process.argv.slice(2);
-const PAGE = args[0] ?? "index.html";
+const PAGE = args[0] ?? "studio.html";
 const WIDTHS = (args.slice(1).length ? args.slice(1) : ["1440"]).map(Number);
 
 const profile = mkdtempSync(path.join(os.tmpdir(), "apex-shot-"));
