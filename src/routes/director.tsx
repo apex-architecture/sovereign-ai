@@ -22,7 +22,7 @@ function buildWorkflow(prompt: string, motion: number) {
     "7": { class_type: "CLIPTextEncode", inputs: { text: "low quality, blurry, watermark", clip: ["4",1] } },
     "8": { class_type: "VAEDecode", inputs: { samples: ["3",0], vae: ["4",2] } },
     "9": { class_type: "SVD_img2vid_Conditioning", inputs: { motion_bucket_id: Math.round(motion), fps: 24, augmentation_level: 0 } },
-    "10": { class_type: "SaveAnimatedWEBP", inputs: { filename_prefix: "apex_dir", fps: 24, lossless: false, quality: 90, method: "default", images: ["8",0] } },
+    "10": { class_type: "SaveAnimatedWEBP", inputs: { filename_prefix: "filmverse_dir", fps: 24, lossless: false, quality: 90, method: "default", images: ["8",0] } },
   };
 }
 

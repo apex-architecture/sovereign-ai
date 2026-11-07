@@ -17,6 +17,8 @@ import { Route as ConnectRouteImport } from './routes/connect'
 import { Route as CostRouteImport } from './routes/cost'
 import { Route as CreateRouteImport } from './routes/create'
 import { Route as DirectorRouteImport } from './routes/director'
+import { Route as GuideRouteImport } from './routes/guide'
+import { Route as LegalRouteImport } from './routes/legal'
 import { Route as NominateRouteImport } from './routes/nominate'
 import { Route as OracleRouteImport } from './routes/oracle'
 import { Route as RegistryRouteImport } from './routes/registry'
@@ -64,6 +66,16 @@ const CreateRoute = CreateRouteImport.update({
 const DirectorRoute = DirectorRouteImport.update({
   id: '/director',
   path: '/director',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GuideRoute = GuideRouteImport.update({
+  id: '/guide',
+  path: '/guide',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LegalRoute = LegalRouteImport.update({
+  id: '/legal',
+  path: '/legal',
   getParentRoute: () => rootRouteImport,
 } as any)
 const NominateRoute = NominateRouteImport.update({
@@ -116,6 +128,8 @@ export interface FileRoutesByFullPath {
   '/cost': typeof CostRoute
   '/create': typeof CreateRoute
   '/director': typeof DirectorRoute
+  '/guide': typeof GuideRoute
+  '/legal': typeof LegalRoute
   '/nominate': typeof NominateRoute
   '/oracle': typeof OracleRoute
   '/registry': typeof RegistryRoute
@@ -134,6 +148,8 @@ export interface FileRoutesByTo {
   '/cost': typeof CostRoute
   '/create': typeof CreateRoute
   '/director': typeof DirectorRoute
+  '/guide': typeof GuideRoute
+  '/legal': typeof LegalRoute
   '/nominate': typeof NominateRoute
   '/oracle': typeof OracleRoute
   '/registry': typeof RegistryRoute
@@ -153,6 +169,8 @@ export interface FileRoutesById {
   '/cost': typeof CostRoute
   '/create': typeof CreateRoute
   '/director': typeof DirectorRoute
+  '/guide': typeof GuideRoute
+  '/legal': typeof LegalRoute
   '/nominate': typeof NominateRoute
   '/oracle': typeof OracleRoute
   '/registry': typeof RegistryRoute
@@ -173,6 +191,8 @@ export interface FileRouteTypes {
     | '/cost'
     | '/create'
     | '/director'
+    | '/guide'
+    | '/legal'
     | '/nominate'
     | '/oracle'
     | '/registry'
@@ -191,6 +211,8 @@ export interface FileRouteTypes {
     | '/cost'
     | '/create'
     | '/director'
+    | '/guide'
+    | '/legal'
     | '/nominate'
     | '/oracle'
     | '/registry'
@@ -209,6 +231,8 @@ export interface FileRouteTypes {
     | '/cost'
     | '/create'
     | '/director'
+    | '/guide'
+    | '/legal'
     | '/nominate'
     | '/oracle'
     | '/registry'
@@ -228,6 +252,8 @@ export interface RootRouteChildren {
   CostRoute: typeof CostRoute
   CreateRoute: typeof CreateRoute
   DirectorRoute: typeof DirectorRoute
+  GuideRoute: typeof GuideRoute
+  LegalRoute: typeof LegalRoute
   NominateRoute: typeof NominateRoute
   OracleRoute: typeof OracleRoute
   RegistryRoute: typeof RegistryRoute
@@ -294,6 +320,20 @@ declare module '@tanstack/react-router' {
       path: '/director'
       fullPath: '/director'
       preLoaderRoute: typeof DirectorRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/guide': {
+      id: '/guide'
+      path: '/guide'
+      fullPath: '/guide'
+      preLoaderRoute: typeof GuideRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/legal': {
+      id: '/legal'
+      path: '/legal'
+      fullPath: '/legal'
+      preLoaderRoute: typeof LegalRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/nominate': {
@@ -364,6 +404,8 @@ const rootRouteChildren: RootRouteChildren = {
   CostRoute: CostRoute,
   CreateRoute: CreateRoute,
   DirectorRoute: DirectorRoute,
+  GuideRoute: GuideRoute,
+  LegalRoute: LegalRoute,
   NominateRoute: NominateRoute,
   OracleRoute: OracleRoute,
   RegistryRoute: RegistryRoute,

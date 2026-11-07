@@ -1,6 +1,7 @@
 import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
 import { ArrowRight, Globe2, ShieldCheck, Clapperboard } from "lucide-react";
 import gatewaySky from "@/assets/gateway-projector-dream.jpg";
+import logoMark from "@/assets/logo-mark.webp";
 
 const KEY = "sovereign.entered";
 const Ctx = createContext<() => void>(() => {});
@@ -32,6 +33,8 @@ export function DreamGate({ children }: { children: ReactNode }) {
       <div className="pointer-events-none fixed inset-0 vignette" />
 
       <div className="relative mx-auto flex min-h-[100dvh] max-w-5xl flex-col px-6 pb-16 pt-[10vh] text-center">
+        <img src={logoMark} alt="Sovereign AI Filmverse logo" width={256} height={256}
+          className="mx-auto mb-6 h-20 w-20 rounded-2xl shadow-[0_0_60px_-8px_var(--primary)] animate-fade-up sm:h-24 sm:w-24" />
         <div className="hud text-[10px] tracking-[0.5em] animate-fade-up">A global open film platform</div>
         <h1 className="mt-6 font-display text-[40px] font-bold leading-[0.98] tracking-tight text-foreground sm:text-[76px] lg:text-[100px] animate-fade-up">
           Welcome to the <span className="text-primary text-glow">Sovereign</span><br />AI Filmverse
@@ -42,7 +45,7 @@ export function DreamGate({ children }: { children: ReactNode }) {
 
         <p className="mx-auto mt-8 max-w-2xl text-[17px] leading-relaxed text-foreground/85 sm:text-[20px]">
           One studio for everyone on the planet — from a kid with big dreams and no money,
-          to the biggest film companies in the world.
+          to the largest production houses in the world.
         </p>
         <p className="mx-auto mt-5 max-w-2xl text-[15px] leading-relaxed text-muted-foreground sm:text-[17px]">
           Filmmaking, content and art should have no barriers. If you have a vision, the willpower
@@ -87,9 +90,15 @@ export function DreamGate({ children }: { children: ReactNode }) {
             ))}
           </ol>
           <p className="mx-auto mt-10 max-w-2xl text-center font-display text-[18px] leading-snug text-foreground sm:text-[22px]">
-            A kid with a phone and a studio like the biggest in Hollywood use the same tools. Talent decides, not money.
+            A kid with a phone and a major studio use the same tools. Talent decides, not money.
           </p>
         </section>
+
+        <a href="https://www.ai-governance-standard.com/" target="_blank" rel="noreferrer" className="glass mx-auto mt-12 block max-w-3xl border border-primary/40 p-5 text-left">
+          <div className="hud text-[10px] tracking-[0.35em] text-primary">World first · Proof of Stateful Integrity</div>
+          <div className="mt-2 font-display text-[18px] font-semibold text-foreground sm:text-[22px]">Backed by PSI — the open protocol for verifiable records</div>
+          <p className="mt-2 text-[13px] leading-relaxed text-muted-foreground">Film receipts follow PSI (IETF Internet-Draft draft-singh-psi, ai-governance-standard.com): canonical JSON, SHA-256 Merkle proofs, Ed25519 signatures and Bitcoin timestamps. Anyone can check one free, offline. A receipt proves what existed and when — it never judges whether content is true.</p>
+        </a>
 
         <div className="mt-14 flex flex-col items-center gap-4">
           <button type="button" onClick={enter}
@@ -98,6 +107,7 @@ export function DreamGate({ children }: { children: ReactNode }) {
             <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
           </button>
           <div className="hud text-[9.5px] tracking-[0.35em]">Your ideas · your control · no limits</div>
+          <p className="max-w-xl text-[11px] leading-relaxed text-muted-foreground">Prototype creative tool, provided as is. Independent — not affiliated with any studio or trademark owner. All characters are original. You own and are responsible for what you create. <a href="/guide" className="text-primary">Guide</a> · <a href="/legal" className="text-primary">Legal &amp; disclaimers</a></p>
         </div>
       </div>
     </main>

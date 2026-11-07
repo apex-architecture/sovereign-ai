@@ -9,5 +9,5 @@ export function reportClientError(error: unknown, context: Record<string, unknow
     buf.push({ t: Date.now(), route: window.location.pathname, message: (error as any)?.message ?? String(error), context });
     sessionStorage.setItem(key, JSON.stringify(buf.slice(-25)));
   } catch { /* noop */ }
-  console.error("[APEX]", error, context);
+  console.error("[Filmverse]", error, context);
 }

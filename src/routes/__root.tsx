@@ -12,6 +12,7 @@ import { DreamGate, useShowIntro } from "@/components/DreamGate";
 import { toast } from "sonner";
 import { Clock, Pip } from "@/components/hud";
 import { stageCoverage } from "@/lib/apex/connection";
+import logoMark from "@/assets/logo-mark.webp";
 import {
   Archive, Cable, Clapperboard, Eye, Film, Gauge, Lock, Sparkles, MonitorPlay, Settings2, ShieldCheck, Wand2,
   type LucideIcon,
@@ -51,7 +52,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1, viewport-fit=cover" },
       { title: "Sovereign AI Film Verse" },
-      { name: "description", content: "Sovereign AI Film Verse — a private film studio deck: ten stages, every tool, one sealed record." },
+      { name: "description", content: "Sovereign AI Filmverse — the world studio, open to everyone. Make films with AI from any phone or browser." },
       { name: "theme-color", content: "#07070a" },
       { name: "apple-mobile-web-app-capable", content: "yes" },
       { name: "apple-mobile-web-app-status-bar-style", content: "black-translucent" },
@@ -60,8 +61,8 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "robots", content: "noindex,nofollow" },
       { property: "og:title", content: "Sovereign AI Film Verse" },
       { name: "twitter:title", content: "Sovereign AI Film Verse" },
-      { property: "og:description", content: "Sovereign AI Film Verse — a private film studio deck: ten stages, every tool, one sealed record." },
-      { name: "twitter:description", content: "Sovereign AI Film Verse — a private film studio deck: ten stages, every tool, one sealed record." },
+      { property: "og:description", content: "Sovereign AI Filmverse — the world studio, open to everyone. Make films with AI from any phone or browser." },
+      { name: "twitter:description", content: "Sovereign AI Filmverse — the world studio, open to everyone. Make films with AI from any phone or browser." },
       { name: "twitter:card", content: "summary_large_image" },
       { property: "og:type", content: "website" },
     ],
@@ -71,9 +72,8 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { rel: "stylesheet", href: "https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" },
       { rel: "stylesheet", href: appCss },
       { rel: "manifest", href: "/manifest.webmanifest" },
-      { rel: "apple-touch-icon", href: "/icon-192.png" },
-      // Explicit empty icon — no favicon, by design.
-      { rel: "icon", href: "data:," },
+      { rel: "apple-touch-icon", sizes: "180x180", href: "/apple-touch-icon.png" },
+      { rel: "icon", type: "image/png", href: "/favicon.png" },
     ],
   }),
   shellComponent: RootShell,
@@ -113,6 +113,8 @@ const SECONDARY: { to: string; label: string }[] = [
   { to: "/broadcast", label: "Broadcast" },
   { to: "/nominate", label: "Nominate" },
   { to: "/beta", label: "Beta" },
+  { to: "/guide", label: "Guide" },
+  { to: "/legal", label: "Legal" },
 ];
 
 const MOBILE_TABS: { to: string; label: string }[] = [
@@ -131,13 +133,17 @@ const MOBILE_TABS: { to: string; label: string }[] = [
 
 function Brand({ compact }: { compact?: boolean }) {
   return (
-    <Link to="/" className="group block min-w-0 leading-none">
-      <span className={"block font-display font-bold tracking-[0.04em] " + (compact ? "text-[26px]" : "text-[30px]")}>
-        <span className="text-primary text-glow">SOVEREIGN</span>
-        {!compact && <span className="text-foreground"> FILM VERSE</span>}
-      </span>
-      <span className="hud mt-1.5 block truncate text-[9px] tracking-[0.3em]">
-        {compact ? "AI Film Verse" : <>AI cinema for a <span className="text-foreground/80">braver</span> tomorrow</>}
+    <Link to="/" className="group flex min-w-0 items-center gap-3 leading-none">
+      <img src={logoMark} alt="Sovereign AI Filmverse logo" width={256} height={256}
+        className={"shrink-0 rounded-xl shadow-[0_0_24px_-6px_var(--primary)] " + (compact ? "h-10 w-10" : "h-12 w-12")} />
+      <span className="min-w-0">
+        <span className={"block font-display font-bold tracking-[0.04em] " + (compact ? "text-[24px]" : "text-[30px]")}>
+          <span className="text-primary text-glow">SOVEREIGN</span>
+          {!compact && <span className="text-foreground"> FILMVERSE</span>}
+        </span>
+        <span className="hud mt-1.5 block truncate text-[9px] tracking-[0.3em]">
+          {compact ? "AI Filmverse" : <>The world studio, <span className="text-foreground/80">open to everyone</span></>}
+        </span>
       </span>
     </Link>
   );
@@ -238,7 +244,7 @@ function StatusBar() {
       <div className="hud flex items-center gap-4 text-[9.5px]">
         <span className="flex items-center gap-2 text-ok"><Pip tone="ok" pulse /> Studio online</span>
         <span className="text-hairline">|</span>
-        <span>PSI receipts · <span className="text-foreground/80">aigovernancestandard.com</span></span>
+        <a href="/legal" className="hover:text-foreground">Legal &amp; disclaimers</a><span className="text-hairline">|</span><a href="https://www.ai-governance-standard.com/" target="_blank" rel="noreferrer" className="hover:text-foreground">PSI · ai-governance-standard.com</a>
         <span className="text-hairline">|</span>
         <Clock />
       </div>

@@ -1,4 +1,4 @@
-// The Replicate account is linked through the Lovable connector gateway, so the
+// The Replicate account is linked through the connector gateway, so the
 // stored key is a gateway connection key, not a raw Replicate token.
 export const REPLICATE_API = "https://connector-gateway.lovable.dev/replicate/v1";
 

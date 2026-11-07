@@ -114,7 +114,7 @@ export interface TechRecord {
   securityStatus: Status;
   dataPortability: string;
   integrationMethod: IntegrationMethod;
-  cost: "$0" | "per-job" | "subscription" | "self-host-hardware";
+  cost: "$0" | "per-job" | "subscription" | "self-host-hardware" | (string & {});
   /** What APEX runs instead if this disappears. Never empty. */
   replacementOptions: string[];
   capability: string;

@@ -23,7 +23,7 @@
 import { mkdirSync, writeFileSync, statSync, readFileSync } from "node:fs";
 import path from "node:path";
 import type { JobInput, JobResult, ToolDriver } from "./contract.ts";
-import { R } from "../schema.ts";
+import { R, type Category } from "../schema.ts";
 
 const OUT = process.env.APEX_OUT_DIR ?? ".apex-out";
 
@@ -205,7 +205,7 @@ async function fetchJson(url: string, init: RequestInit, timeoutMs: number): Pro
 export function makeCloudVideoDriver(vendor: CloudVideoVendor): ToolDriver {
   const record = R({
     name: vendor.name,
-    category: vendor.category,
+    category: vendor.category as Category,
     officialUrl: vendor.vendorUrl,
     sourceRepository: "proprietary service",
     license: "proprietary SaaS; the vendor's own API terms, not an open licence",

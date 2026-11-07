@@ -1,2 +1,4 @@
 - [x] Remove PIN, add 'Enter the Dream World' welcome page
-- [ ] Multiverse Canvas background art (blocked by image filter — waiting on user's choice)
+- [x] Welcome page background art (projector image chosen)
+- [x] Remove every Lovable mention, add logo + favicon
+- [x] Full site audit: no "Apex Intelligence Empire" / APEX anywhere visitors can see (incl. phone install prompt)

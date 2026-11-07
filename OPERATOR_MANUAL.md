@@ -16,8 +16,7 @@
 
 Two URLs, both point at the same app:
 
-- **Preview (dev builds):** `https://project--ac276ea0-2844-433f-8e86-08ac7330bc50-dev.lovable.app`
-- **Published (stable, use this for agents):** `https://lllppp.lovable.app`
+- **Published (stable, use this for agents):** `https://sovereignfilmverse.tech`
 
 Everything below assumes you're hitting the **published** URL.
 
@@ -25,7 +24,7 @@ Everything below assumes you're hitting the **published** URL.
 
 ## 1. First-time setup (do this once, on any device)
 
-1. Open `https://lllppp.lovable.app`.
+1. Open `https://sovereignfilmverse.tech`.
 2. Screen says **SEAL THE EMPIRE** → type a PIN (4–10 digits), confirm, submit.
 3. That PIN is now the only credential for the web UI. There is no email, no password reset, no recovery. If you forget it, use the **"Forgot PIN? Wipe & re-seal"** button on the unlock screen — it deletes the sovereign identity and lets you set a new PIN. Your render history stays.
 4. Install as an app (optional but recommended):
@@ -52,22 +51,22 @@ Everything below assumes you're hitting the **published** URL.
        (/, /create, …)  │    (/api/public/render)
                         ▼
         ┌─────────────────────────────────────────────────┐
-        │  APEX app  (TanStack Start on Cloudflare edge)  │
+        │  Film app  (TanStack Start on Cloudflare edge)  │
         │  • Server functions (createServerFn)            │
         │  • Public API routes (/api/public/*)            │
         └───────────────┬─────────────────────────────────┘
                         │
        ┌────────────────┼─────────────────────────┐
        ▼                ▼                         ▼
-   Supabase        Lovable Connector          Lovable AI
+   Supabase        Connector                  AI
    (DB + Auth)   Gateway → Replicate       Gateway (LLMs)
                  (GPU video render)          for /oracle
 ```
 
 Key facts:
 - The **database, auth, and secrets** all live in the built-in backend (Supabase under the hood, but you never touch it directly — use the app's Backend panel).
-- **Video renders** go out through the Lovable connector gateway to **Replicate**, so *you* never manage a GPU. RunPod / ComfyUI / SSH are no longer required.
-- **LLM calls** (Oracle) go through the Lovable AI gateway using `LOVABLE_API_KEY`.
+- **Video renders** go out through the connector gateway to **Replicate**, so *you* never manage a GPU. RunPod / ComfyUI / SSH are no longer required.
+- **LLM calls** (Oracle) go through the AI gateway using `LOVABLE_API_KEY`.
 - **Every render, whether from the UI or the API, writes a row to `render_jobs`** so the Vault/Theater always shows the full history.
 
 ---
@@ -78,7 +77,7 @@ Key facts:
 |---|---|
 | `/`         | Foundry — dashboard with live influencers, recent projects, quick links |
 | `/create`   | **Main workspace.** Type a prompt, pick tier, hit GENERATE FILM. Watches its own poll loop. |
-| `/oracle`   | LLM chat/prompt tools (Lovable AI Gateway) |
+| `/oracle`   | LLM chat/prompt tools (AI gateway) |
 | `/director` | Higher-level shot/scene composition |
 | `/theater`  | Playback of completed renders |
 | `/vault`    | All render_jobs rows, downloadable |
@@ -97,8 +96,8 @@ There is exactly **one** endpoint. It does two things: start a render, then poll
 ### 4.1 Endpoint
 
 ```
-POST  https://lllppp.lovable.app/api/public/render     ← start a render
-GET   https://lllppp.lovable.app/api/public/render?id=<predictionId>   ← check status
+POST  https://sovereignfilmverse.tech/api/public/render     ← start a render
+GET   https://sovereignfilmverse.tech/api/public/render?id=<predictionId>   ← check status
 OPTIONS same URL                                       ← CORS preflight (handled)
 ```
 
@@ -114,7 +113,7 @@ Missing/wrong token → `401 Unauthorized`. The compare is constant-time.
 
 ```http
 POST /api/public/render HTTP/1.1
-Host: lllppp.lovable.app
+Host: sovereignfilmverse.tech
 Authorization: Bearer <OPERATOR_API_TOKEN>
 Content-Type: application/json
 
@@ -168,7 +167,7 @@ Authorization: Bearer <OPERATOR_API_TOKEN>
 
 ```bash
 export APEX_TOKEN="paste-OPERATOR_API_TOKEN-here"
-export APEX_URL="https://lllppp.lovable.app/api/public/render"
+export APEX_URL="https://sovereignfilmverse.tech/api/public/render"
 
 # 1. Kick off
 PRED=$(curl -sS -X POST "$APEX_URL" \
@@ -193,7 +192,7 @@ done
 
 ```ts
 const APEX_TOKEN = process.env.APEX_TOKEN!;
-const APEX_URL   = "https://lllppp.lovable.app/api/public/render";
+const APEX_URL   = "https://sovereignfilmverse.tech/api/public/render";
 
 async function renderFilm(prompt: string, tier: "fast" | "quality" = "fast") {
   const start = await fetch(APEX_URL, {
@@ -228,7 +227,7 @@ console.log("mp4:", url);
 ```python
 import os, time, requests
 TOKEN = os.environ["APEX_TOKEN"]
-URL   = "https://lllppp.lovable.app/api/public/render"
+URL   = "https://sovereignfilmverse.tech/api/public/render"
 H     = {"Authorization": f"Bearer {TOKEN}"}
 
 def render(prompt, tier="fast", timeout_s=900):
@@ -258,7 +257,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - run: |
-          curl -sS -X POST https://lllppp.lovable.app/api/public/render \
+          curl -sS -X POST https://sovereignfilmverse.tech/api/public/render \
             -H "Authorization: Bearer ${{ secrets.APEX_TOKEN }}" \
             -H "Content-Type: application/json" \
             -d '{"prompt":"daily dispatch of the empire","tier":"fast"}'
@@ -306,7 +305,7 @@ All managed in Backend → Secrets. Never paste in code.
 
 | Secret | Purpose | Who sets it |
 |---|---|---|
-| `LOVABLE_API_KEY`         | Auth to Lovable AI + Connector Gateway | auto-provisioned |
+| `LOVABLE_API_KEY`         | Auth to the AI + connector gateway | auto-provisioned |
 | `REPLICATE_API_KEY`       | Connector key for Replicate gateway    | auto (connector) |
 | `OPERATOR_API_TOKEN`      | Your API bearer token                   | pre-generated, rotate on suspicion |
 | `SUPABASE_URL` / `SUPABASE_PUBLISHABLE_KEY` / `SUPABASE_SERVICE_ROLE_KEY` / `SUPABASE_DB_URL` | Backend plumbing | auto |

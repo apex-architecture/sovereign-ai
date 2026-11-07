@@ -2,6 +2,7 @@
 
 - Shared HUD primitives (Corners, Pip, Tag, PanelHead, Stat, timecode) live in `src/components/hud.tsx`; new pages compose these plus the `panel`/`rack`/`hud` utilities in `src/styles.css` so the whole studio keeps one visual language.
 - `src/lib/apex/**` is synced from the operator's laptop-side repo; UI rebrands legacy wording at display time instead of editing those data files, to avoid merge conflicts.
+- When a laptop sync breaks the typecheck, fix with the smallest edit (widen a schema type, drop an exact duplicate key) and never rewrite catalogue data, so the next sync still merges.
 - Tool/stage honesty comes only from `src/lib/apex/connection.ts` (`CONNECTIONS`, `STAGE_CONNECTION`); UI never invents a "run" action for a tool whose depth is not `drivable`.
 - The PIN gate's hidden operator email and localStorage keys keep their legacy `apex` names; renaming them would lock the operator out or lose saved favourites.
 - Bundled concept stills are exported from `src/lib/stills.ts`; empty screens may show them only with a visible "Showreel" label, and real renders always replace them, so decoration never passes as output.

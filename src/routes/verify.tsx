@@ -155,7 +155,7 @@ function Verify() {
                 <Globe className="h-12 w-12 text-foreground/40" strokeWidth={0.75} />
                 <div className="font-mono text-[11px] leading-relaxed tracking-[0.14em] text-muted-foreground">SIGNED BY THE CREATOR'S OWN KEY<br />CHECKED BY SOVEREIGN AI FILM VERSE</div>
               </div>
-              <div className="text-right font-mono text-[11px] tracking-[0.14em] text-muted-foreground">PSI · ED25519 · SHA-256<br /><span className="text-[9px]">aigovernancestandard.com</span></div>
+              <div className="text-right font-mono text-[11px] tracking-[0.14em] text-muted-foreground">PSI · ED25519 · SHA-256<br /><span className="text-[9px]">ai-governance-standard.com</span></div>
             </div>
           </div>
 
