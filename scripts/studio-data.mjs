@@ -15,8 +15,10 @@ import { existsSync, mkdirSync, readFileSync, rmSync, statSync, writeFileSync, c
 import path from "node:path";
 import { pathToFileURL } from "node:url";
 
+import { siteDir, hasRuns } from "./site-dir.mjs";
+
 const ROOT = path.resolve(import.meta.dirname, "..");
-const SITE = path.join(ROOT, "verse-site");
+const SITE = siteDir(ROOT);
 const ASSETS = path.join(SITE, "assets", "studio");
 const APEX = path.join(ROOT, "src", "lib", "apex");
 const url = (rel) => pathToFileURL(path.join(APEX, rel)).href;
@@ -126,6 +128,19 @@ const SHOWCASE = [
 ];
 
 /* ------------------------------------------------------------------ read in */
+
+/**
+ * A clone of the open core has no films on this machine, so there is nothing to measure.
+ * The published `studio.data.js` and its poster frames are the authoring machine's measurement,
+ * carried in the repo as a snapshot — overwriting them with an empty set would delete the
+ * record of films that really were made. So the script stops here rather than lie.
+ */
+if (!hasRuns(ROOT)) {
+  console.log("skip  studio.data.js — this checkout has no runs/ directory, so nothing on it was measured.");
+  console.log("      The published measurement in the repo is left untouched.");
+  console.log("      Make a film here, or run this on the machine that made them.");
+  process.exit(0);
+}
 
 mkdirSync(ASSETS, { recursive: true });
 // A frame left behind by an older run is a lie about the current one.

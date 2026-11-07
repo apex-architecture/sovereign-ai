@@ -5,8 +5,9 @@
 import { createServer } from "node:http";
 import { readFile } from "node:fs/promises";
 import path from "node:path";
+import { siteDir } from "./site-dir.mjs";
 
-const ROOT = path.resolve("verse-site");
+const ROOT = siteDir();
 const TYPES = { ".html": "text/html; charset=utf-8", ".css": "text/css", ".js": "text/javascript", ".mjs": "text/javascript", ".json": "application/json", ".jpg": "image/jpeg", ".jpeg": "image/jpeg", ".png": "image/png", ".webp": "image/webp", ".mp4": "video/mp4", ".woff2": "font/woff2", ".svg": "image/svg+xml", ".vtt": "text/vtt; charset=utf-8" };
 const port = Number(process.argv[2] || 8788);
 

@@ -47,3 +47,6 @@ runs/
 .tick.json
 .rail.log
 scripts/*.tmp.*
+
+# Headless-browser output from the live QA sweep.
+scripts/out/

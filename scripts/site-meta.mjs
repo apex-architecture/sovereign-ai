@@ -10,9 +10,10 @@
 
 import { readFileSync, writeFileSync, existsSync, readdirSync } from "node:fs";
 import path from "node:path";
+import { siteDir } from "./site-dir.mjs";
 
 const ROOT = path.resolve(import.meta.dirname, "..");
-const SITE = path.join(ROOT, "verse-site");
+const SITE = siteDir(ROOT);
 const ORIGIN = "https://filmverse-1mil8xwzv4y.qoder.website";
 const START = "<!-- apex-meta:start -->";
 const END = "<!-- apex-meta:end -->";

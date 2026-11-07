@@ -12,6 +12,7 @@
  */
 import { writeFileSync, existsSync } from "node:fs";
 import path from "node:path";
+import { siteDir } from "./site-dir.mjs";
 import { pathToFileURL } from "node:url";
 
 const { buildDrivers, stageRoutes } = await import(pathToFileURL(path.resolve("src/lib/apex/drivers/index.ts")).href);
@@ -51,7 +52,7 @@ for (const d of drivers) {
 }
 
 const body = { at: new Date().toISOString(), snapshot: true, drivers: rows };
-const out = path.resolve("verse-site/connect.generated.js");
+const out = path.join(siteDir(), "connect.generated.js");
 writeFileSync(out, `window.APEX_DRIVERS=${JSON.stringify(body)};\n`);
 
 const up = rows.filter((r) => r.ok).length;

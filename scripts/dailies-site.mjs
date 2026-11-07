@@ -9,9 +9,10 @@
 import { execFileSync } from "node:child_process";
 import { copyFileSync, existsSync, mkdirSync, readFileSync, readdirSync, rmSync, statSync, writeFileSync } from "node:fs";
 import path from "node:path";
+import { siteDir } from "./site-dir.mjs";
 
 const ROOT = path.resolve(import.meta.dirname, "..");
-const SITE = path.join(ROOT, "verse-site");
+const SITE = siteDir(ROOT);
 const ASSETS = path.join(SITE, "assets", "dailies");
 
 function newestRun() {

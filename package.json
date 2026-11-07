@@ -12,7 +12,10 @@
     "format": "prettier --write .",
     "passport:selftest": "node --experimental-strip-types scripts/psi-selftest.mjs",
     "tools:registry": "node --experimental-strip-types scripts/tools-registry.mjs",
-    "site:build": "node scripts/build-site.mjs"
+    "site:build": "node scripts/build-site.mjs",
+    "studio:data": "node --experimental-strip-types scripts/studio-data.mjs",
+    "site:check": "node scripts/live-open-core-check.mjs",
+    "site:verify": "node scripts/verify-links.mjs"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",
@@ -86,7 +89,8 @@
     "prettier": "^3.7.3",
     "typescript": "^5.8.3",
     "typescript-eslint": "^8.56.1",
-    "vite": "^8.0.16"
+    "vite": "^8.0.16",
+    "esbuild": "^0.25.0"
   },
   "version": "1.0.0",
   "description": "Sovereign AI Filmverse — the open studio: pipeline core, driver registry, and the PSI film passport.",

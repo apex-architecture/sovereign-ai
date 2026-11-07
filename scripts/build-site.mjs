@@ -7,16 +7,26 @@
  *
  *   node scripts/build-site.mjs
  */
-import { readFileSync, writeFileSync, statSync, existsSync, mkdirSync, readdirSync } from "node:fs";
+import { readFileSync, writeFileSync, statSync, existsSync, mkdirSync, readdirSync, rmSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { spawnSync } from "node:child_process";
 import { fileURLToPath } from "node:url";
 import { createHash } from "node:crypto";
-import { buildSync } from "esbuild";
+import { siteDir, runsDir } from "./site-dir.mjs";
 
 const ROOT = dirname(fileURLToPath(import.meta.url));
-const SITE = join(ROOT, "..", "verse-site");
+const SITE = siteDir(join(ROOT, ".."));
 const TARGET = "es2020";
+
+// esbuild is a build dependency, not a runtime one: a clone that has not installed it yet must
+// still be able to parse-check the pages and fingerprint the build.
+let buildSync = null;
+try {
+  ({ buildSync } = await import("esbuild"));
+} catch {
+  console.log("note  esbuild is not installed — minification is skipped, the parse-check still runs");
+  console.log("      run `npm install` to rebuild the .min.js files");
+}
 
 function kb(n) {
   return (n / 1024).toFixed(1) + " KB";
@@ -74,6 +84,7 @@ function minify(relIn, relOut, format, alias) {
   if (!existsSync(src)) return { relIn, relOut, skipped: "missing source" };
   const before = statSync(src).size;
   mkdirSync(dirname(dst), { recursive: true });
+  if (!buildSync) return { relIn, relOut, skipped: "esbuild not installed" };
   try {
     buildSync({
       entryPoints: [src],
@@ -107,8 +118,7 @@ function minify(relIn, relOut, format, alias) {
  */
 function checkInline() {
   const bad = [];
-  const tmpDir = join(ROOT, "..", "runs");
-  mkdirSync(tmpDir, { recursive: true });
+  const tmpDir = runsDir(join(ROOT, ".."));
   for (const f of readdirSync(SITE).filter((n) => n.endsWith(".html"))) {
     const html = readFileSync(join(SITE, f), "utf8");
     const re = /<script(?![^>]*src=)([^>]*)>([\s\S]*?)<\/script>/g;
@@ -125,7 +135,7 @@ function checkInline() {
         }
         continue;
       }
-      const tmp = join(ROOT, "..", "runs", `.inline-${f}-${i}.mjs`);
+      const tmp = join(tmpDir, `.inline-${f}-${i}.mjs`);
       writeFileSync(tmp, m[2]);
       const c = spawnSync(process.execPath, ["--check", tmp], { encoding: "utf8" });
       if (c.status !== 0)

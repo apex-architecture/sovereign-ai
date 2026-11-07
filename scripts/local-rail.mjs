@@ -19,6 +19,7 @@ import http from "node:http";
 import { spawn } from "node:child_process";
 import { readFileSync, existsSync, statSync, mkdirSync, readdirSync, createReadStream, copyFileSync } from "node:fs";
 import path from "node:path";
+import { siteDir } from "./site-dir.mjs";
 import { pathToFileURL } from "node:url";
 
 /**
@@ -28,7 +29,7 @@ import { pathToFileURL } from "node:url";
  * wrong room is how a run fails with "clip_name not in list".
  */
 function resolveComfyUrl() {
-  const file = path.resolve("verse-site/availability.generated.js");
+  const file = path.join(siteDir(), "availability.generated.js");
   if (existsSync(file)) {
     const raw = readFileSync(file, "utf8");
     const json = raw.slice(raw.indexOf("=") + 1).replace(/;\s*$/, "").trim();
@@ -45,7 +46,7 @@ const { buildDrivers, stageRoutes } = await import(pathToFileURL(path.resolve("s
 const { runStage } = await import(pathToFileURL(path.resolve("src/lib/apex/orchestrate.ts")).href);
 const { gateOnLicence } = await import(pathToFileURL(path.resolve("src/lib/apex/drivers/contract.ts")).href);
 
-const SITE = path.resolve("verse-site");
+const SITE = siteDir();
 const RUNS = path.resolve("runs");
 const PORT = Number(process.env.APEX_RAIL_PORT ?? 5188);
 const HOST = process.env.APEX_RAIL_HOST ?? "127.0.0.1";
