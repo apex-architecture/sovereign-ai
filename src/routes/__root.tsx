@@ -3,7 +3,7 @@ import {
   Outlet, Link, createRootRouteWithContext, useRouter,
   HeadContent, Scripts, type ErrorComponentProps,
 } from "@tanstack/react-router";
-import { useEffect, type ReactNode } from "react";
+import { Fragment, useEffect, type ReactNode } from "react";
 import appCss from "../styles.css?url";
 import { reportClientError } from "../lib/error-reporting";
 import { supabase } from "@/integrations/supabase/client";
@@ -12,6 +12,7 @@ import { DreamGate, useShowIntro } from "@/components/DreamGate";
 import { toast } from "sonner";
 import { Clock, Pip } from "@/components/hud";
 import { stageCoverage } from "@/lib/apex/connection";
+import { APP_PRIMARY, APP_SECONDARY, appNav, appNavAll } from "@/lib/apex/vocabulary";
 import logoMark from "@/assets/logo-mark.webp";
 import {
   Archive, Cable, Clapperboard, Eye, Film, Gauge, Lock, Sparkles, MonitorPlay, Settings2, ShieldCheck, Wand2,
@@ -51,16 +52,16 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1, viewport-fit=cover" },
-      { title: "Sovereign AI Film Verse" },
+      { title: "Sovereign AI Filmverse" },
       { name: "description", content: "Sovereign AI Filmverse — the world studio, open to everyone. Make films with AI from any phone or browser." },
       { name: "theme-color", content: "#07070a" },
       { name: "apple-mobile-web-app-capable", content: "yes" },
       { name: "apple-mobile-web-app-status-bar-style", content: "black-translucent" },
-      { name: "apple-mobile-web-app-title", content: "Film Verse" },
+      { name: "apple-mobile-web-app-title", content: "Filmverse" },
       { name: "mobile-web-app-capable", content: "yes" },
       { name: "robots", content: "noindex,nofollow" },
-      { property: "og:title", content: "Sovereign AI Film Verse" },
-      { name: "twitter:title", content: "Sovereign AI Film Verse" },
+      { property: "og:title", content: "Sovereign AI Filmverse" },
+      { name: "twitter:title", content: "Sovereign AI Filmverse" },
       { property: "og:description", content: "Sovereign AI Filmverse — the world studio, open to everyone. Make films with AI from any phone or browser." },
       { name: "twitter:description", content: "Sovereign AI Filmverse — the world studio, open to everyone. Make films with AI from any phone or browser." },
       { name: "twitter:card", content: "summary_large_image" },
@@ -92,44 +93,36 @@ function RootShell({ children }: { children: ReactNode }) {
 }
 
 
-type NavItem = { to: string; label: string; sub: string; icon: LucideIcon };
+type NavItem = { to: string; label: string; sub: string; group: string; icon: LucideIcon };
 
-const PRIMARY: NavItem[] = [
-  { to: "/", label: "Foundry", sub: "Ideas to pipeline", icon: Clapperboard },
-  { to: "/create", label: "Create", sub: "Generate media", icon: Wand2 },
-  { to: "/director", label: "Director", sub: "Scene control", icon: Film },
-  { to: "/oracle", label: "Oracle", sub: "Intelligence", icon: Eye },
-  { to: "/theater", label: "Theater", sub: "Preview & play", icon: MonitorPlay },
-  { to: "/vault", label: "Vault", sub: "Assets & versions", icon: Archive },
-  { to: "/connect", label: "Connect", sub: "Tools & machines", icon: Cable },
-  { to: "/verify", label: "Verify", sub: "Film passport", icon: ShieldCheck },
-  { to: "/cost", label: "Cost", sub: "Usage & budgets", icon: Gauge },
-  { to: "/admin", label: "Admin", sub: "Control room", icon: Settings2 },
-];
+/** One icon per room. The names come from the vocabulary, so the app and the rail agree. */
+const ICONS: Record<string, LucideIcon> = {
+  studio: Clapperboard,
+  create: Wand2,
+  director: Film,
+  oracle: Eye,
+  theater: MonitorPlay,
+  library: Archive,
+  connect: Cable,
+  verify: ShieldCheck,
+  cost: Gauge,
+  console: Settings2,
+};
 
-const SECONDARY: { to: string; label: string }[] = [
-  { to: "/registry", label: "Registry" },
-  { to: "/seal", label: "Seal" },
-  { to: "/broadcast", label: "Broadcast" },
-  { to: "/nominate", label: "Nominate" },
-  { to: "/beta", label: "Beta" },
-  { to: "/guide", label: "Guide" },
-  { to: "/legal", label: "Legal" },
-];
+const PRIMARY: NavItem[] = appNav(APP_PRIMARY).map((c) => ({
+  to: c.to,
+  label: c.label,
+  sub: c.purpose,
+  group: c.group,
+  icon: ICONS[c.id],
+}));
 
-const MOBILE_TABS: { to: string; label: string }[] = [
-  { to: "/create", label: "Create" },
-  { to: "/theater", label: "Theater" },
-  { to: "/vault", label: "Library" },
-  { to: "/", label: "Foundry" },
-  { to: "/director", label: "Director" },
-  { to: "/oracle", label: "Oracle" },
-  { to: "/connect", label: "Connect" },
-  { to: "/verify", label: "Verify" },
-  { to: "/cost", label: "Cost" },
-  { to: "/admin", label: "Admin" },
-  ...SECONDARY,
-];
+const SECONDARY: { to: string; label: string }[] = appNav(APP_SECONDARY).map((c) => ({
+  to: c.to,
+  label: c.label,
+}));
+
+const MOBILE_TABS = appNavAll();
 
 function Brand({ compact }: { compact?: boolean }) {
   return (
@@ -185,13 +178,18 @@ function TopBar() {
         </div>
       </div>
       {/* Mobile tab strip */}
-      <nav className="no-scrollbar flex gap-1 overflow-x-auto border-t border-hairline px-2 lg:hidden">
-        {MOBILE_TABS.map((t) => (
-          <Link key={t.to + t.label} to={t.to} activeOptions={{ exact: t.to === "/" }}
-            className="relative shrink-0 px-3 py-3 text-[11px] font-medium uppercase tracking-[0.16em] text-muted-foreground"
-            activeProps={{ className: "!text-primary after:absolute after:inset-x-3 after:bottom-0 after:h-0.5 after:bg-primary after:shadow-[0_0_10px_var(--primary)]" }}>
-            {t.label}
-          </Link>
+      <nav className="no-scrollbar flex items-stretch gap-1 overflow-x-auto border-t border-hairline px-2 lg:hidden">
+        {MOBILE_TABS.map((t, i) => (
+          <Fragment key={t.to + t.label}>
+            {i > 0 && MOBILE_TABS[i - 1].group !== t.group && (
+              <span aria-hidden className="my-2.5 w-px shrink-0 self-stretch bg-hairline" />
+            )}
+            <Link to={t.to} activeOptions={{ exact: t.to === "/" }}
+              className="relative shrink-0 px-3 py-3 text-[11px] font-medium uppercase tracking-[0.16em] text-muted-foreground"
+              activeProps={{ className: "!text-primary after:absolute after:inset-x-3 after:bottom-0 after:h-0.5 after:bg-primary after:shadow-[0_0_10px_var(--primary)]" }}>
+              {t.label}
+            </Link>
+          </Fragment>
         ))}
       </nav>
     </header>
@@ -202,18 +200,23 @@ function SideRail() {
   return (
     <aside className="sticky top-[85px] hidden h-[calc(100vh-85px-33px)] w-[240px] shrink-0 flex-col border-r border-border bg-chassis/60 lg:flex">
       <nav className="no-scrollbar flex-1 overflow-y-auto py-3">
-        {PRIMARY.map((it) => {
+        {PRIMARY.map((it, i) => {
           const I = it.icon;
           return (
-            <Link key={it.to} to={it.to} activeOptions={{ exact: it.to === "/" }}
-              className="group relative flex items-center gap-4 px-6 py-3.5 text-muted-foreground transition-colors hover:bg-rack/60 hover:text-foreground"
-              activeProps={{ className: "!text-primary bg-primary/[0.08] before:absolute before:inset-y-0 before:left-0 before:w-[3px] before:bg-primary before:shadow-[0_0_12px_var(--primary)]" }}>
-              <I className="h-6 w-6 shrink-0" strokeWidth={1.25} />
-              <span className="min-w-0">
-                <span className="block font-display text-[17px] font-medium uppercase tracking-[0.06em] text-current">{it.label}</span>
-                <span className="hud block truncate text-[9px] tracking-[0.18em]">{it.sub}</span>
-              </span>
-            </Link>
+            <Fragment key={it.to}>
+              {i > 0 && PRIMARY[i - 1].group !== it.group && (
+                <div className="hud px-6 pb-1 pt-4 text-[9px] tracking-[0.28em] text-muted-foreground/70">{it.group}</div>
+              )}
+              <Link to={it.to} activeOptions={{ exact: it.to === "/" }}
+                className="group relative flex items-center gap-4 px-6 py-3.5 text-muted-foreground transition-colors hover:bg-rack/60 hover:text-foreground"
+                activeProps={{ className: "!text-primary bg-primary/[0.08] before:absolute before:inset-y-0 before:left-0 before:w-[3px] before:bg-primary before:shadow-[0_0_12px_var(--primary)]" }}>
+                <I className="h-6 w-6 shrink-0" strokeWidth={1.25} />
+                <span className="min-w-0">
+                  <span className="block font-display text-[17px] font-medium uppercase tracking-[0.06em] text-current">{it.label}</span>
+                  <span className="hud block truncate text-[9px] tracking-[0.18em]">{it.sub}</span>
+                </span>
+              </Link>
+            </Fragment>
           );
         })}
         <div className="mx-6 mt-3 flex flex-wrap gap-x-3 gap-y-1.5 border-t border-hairline pt-4">
@@ -236,7 +239,7 @@ function StatusBar() {
   return (
     <footer className="fixed inset-x-0 bottom-0 z-40 hidden h-[33px] items-center justify-between gap-6 border-t border-border bg-chassis/95 px-6 backdrop-blur lg:flex">
       <div className="hud flex items-center gap-4 text-[9.5px]">
-        <span>Studio <span className="text-foreground/80">Sovereign AI Film Verse</span></span>
+        <span>Studio <span className="text-foreground/80">Sovereign AI Filmverse</span></span>
         <span className="text-hairline">|</span><span>24 fps</span>
         <span className="text-hairline">|</span><span>2.39:1</span>
         <span className="text-hairline">|</span><span>Stages wired <span className="text-foreground/80">{c.wired}/{c.total}</span></span>

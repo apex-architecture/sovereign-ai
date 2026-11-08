@@ -5,7 +5,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 
 export const Route = createFileRoute("/admin")({
-  head: () => ({ meta: [{ title: "Control — Sovereign AI Film Verse" }] }),
+  head: () => ({ meta: [{ title: "Control — Sovereign AI Filmverse" }] }),
   component: AdminPage,
 });
 

@@ -9,9 +9,9 @@ import { cn } from "@/lib/utils";
 export const Route = createFileRoute("/theater")({
   head: () => ({
     meta: [
-      { title: "Theater — Sovereign AI Film Verse" },
+      { title: "Theater — Sovereign AI Filmverse" },
       { name: "description", content: "Your private cinema: every finished reel, full screen, back to back." },
-      { property: "og:title", content: "Theater — Sovereign AI Film Verse" },
+      { property: "og:title", content: "Theater — Sovereign AI Filmverse" },
       { property: "og:description", content: "Your private cinema: every finished reel, full screen, back to back." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },

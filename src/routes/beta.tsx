@@ -7,7 +7,7 @@ import { z } from "zod";
 export const Route = createFileRoute("/beta")({
   head: () => ({
     meta: [
-      { title: "Beta — Sovereign AI Film Verse" },
+      { title: "Beta — Sovereign AI Filmverse" },
       { name: "description", content: "Closed-testing recruitment. Pick your platform: Android, iOS, or PWA." },
     ],
   }),

@@ -6,7 +6,7 @@ import { OwnerWall } from "@/components/OwnerWall";
 import { toast } from "sonner";
 
 export const Route = createFileRoute("/director")({
-  head: () => ({ meta: [{ title: "Director — Sovereign AI Film Verse" }, { name: "description", content: "Multi-shot storyboard sequencer. Chain prompts into films." }]}),
+  head: () => ({ meta: [{ title: "Director — Sovereign AI Filmverse" }, { name: "description", content: "Multi-shot storyboard sequencer. Chain prompts into films." }]}),
   component: Director,
 });
 

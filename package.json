@@ -14,6 +14,9 @@
     "cloud:selftest": "node --experimental-strip-types scripts/cloud-video-selftest.mjs",
     "tools:registry": "node --experimental-strip-types scripts/tools-registry.mjs",
     "site:build": "node scripts/build-site.mjs",
+    "vocab": "node --experimental-strip-types scripts/verse-vocab.mjs",
+    "vocab:check": "node --experimental-strip-types scripts/verse-vocab.mjs --check",
+    "live:sweep": "node scripts/live-route-sweep.mjs",
     "studio:data": "node --experimental-strip-types scripts/studio-data.mjs",
     "site:check": "node scripts/live-open-core-check.mjs",
     "site:verify": "node scripts/verify-links.mjs"

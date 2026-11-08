@@ -1,4 +1,4 @@
-name: passport and lint
+name: passport, vocabulary and lint
 on:
   push:
     branches: [main]
@@ -12,6 +12,14 @@ jobs:
         with: { node-version: "22" }
       - name: Cross-implementation proof (browser signer vs server verifier)
         run: node --experimental-strip-types scripts/psi-selftest.mjs
+  vocabulary:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: "22" }
+      - name: One name per room (app nav, rail nav and the contract agree)
+        run: node --experimental-strip-types scripts/verse-vocab.mjs --check
   lint:
     runs-on: ubuntu-latest
     steps:

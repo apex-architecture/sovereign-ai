@@ -8,7 +8,7 @@ import { z } from "zod";
 export const Route = createFileRoute("/nominate")({
   head: () => ({
     meta: [
-      { title: "Nominate — Sovereign AI Film Verse" },
+      { title: "Nominate — Sovereign AI Filmverse" },
       { name: "description", content: "Nominate AI film creators. Auto-promotion to Live at 1,000 votes." },
     ],
   }),

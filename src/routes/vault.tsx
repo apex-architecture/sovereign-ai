@@ -6,7 +6,7 @@ import { OwnerWall } from "@/components/OwnerWall";
 import { toast } from "sonner";
 
 export const Route = createFileRoute("/vault")({
-  head: () => ({ meta: [{ title: "Vault — Sovereign AI Film Verse" }, { name: "description", content: "Searchable archive of every film you've forged." }]}),
+  head: () => ({ meta: [{ title: "Vault — Sovereign AI Filmverse" }, { name: "description", content: "Searchable archive of every film you've forged." }]}),
   component: Vault,
 });
 

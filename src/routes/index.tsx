@@ -14,13 +14,21 @@ import { cn } from "@/lib/utils";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "The Foundry — Sovereign AI Film Verse" },
-      { name: "description", content: "The command deck: ten-stage film spine, master monitor, multi-track timeline, tool rail and render fleet." },
-      { property: "og:title", content: "The Foundry — Sovereign AI Film Verse" },
-      { property: "og:description", content: "The command deck: ten-stage film spine, master monitor, multi-track timeline, tool rail and render fleet." },
+      { title: "Sovereign AI Filmverse — The World Studio, Open to Everyone" },
+      { name: "description", content: "A global open film studio for everyone. From a kid with a big dream to major productions — art has no barriers. Make films with AI from any phone or browser." },
+      { property: "og:title", content: "Sovereign AI Filmverse — The World Studio, Open to Everyone" },
+      { property: "og:description", content: "A global open film studio for everyone. From a kid with a big dream to major productions — art has no barriers." },
+      { name: "twitter:title", content: "Sovereign AI Filmverse — The World Studio, Open to Everyone" },
+      { name: "twitter:description", content: "A global open film studio for everyone. From a kid with a big dream to major productions — art has no barriers." },
+      { property: "og:url", content: "https://sovereignfilmverse.tech/" },
       { property: "og:type", content: "website" },
+      { property: "og:image", content: "https://sovereignfilmverse.tech/og-image.jpg" },
+      { property: "og:image:width", content: "1200" },
+      { property: "og:image:height", content: "630" },
       { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:image", content: "https://sovereignfilmverse.tech/og-image.jpg" },
     ],
+    links: [{ rel: "canonical", href: "https://sovereignfilmverse.tech/" }],
   }),
   component: Foundry,
 });
@@ -100,6 +108,15 @@ function Foundry() {
 
   return (
     <main className="space-y-3 px-3 py-3 md:px-5 md:py-4">
+      <header className="panel relative overflow-hidden bg-grid px-5 py-4 md:px-7 md:py-5">
+        <p className="hud text-primary">Studio / make</p>
+        <h1 className="mt-2 text-3xl leading-[0.95] md:text-5xl">The <span className="text-primary text-glow">Studio</span></h1>
+        <p className="mt-2 max-w-3xl text-[13px] leading-relaxed text-muted-foreground">
+          Your desk: ideas, renders and the pipeline. Start at the top — the ten stages run left to right —
+          or drop straight into Create and shoot one shot.
+        </p>
+      </header>
+
       <Spine inFlight={inFlight} />
 
       <section className="grid gap-3 2xl:grid-cols-[minmax(0,1fr)_400px] xl:grid-cols-[minmax(0,1fr)_340px]">

@@ -5,7 +5,7 @@ import { enhancePrompt } from "@/lib/oracle.functions";
 import { toast } from "sonner";
 
 export const Route = createFileRoute("/oracle")({
-  head: () => ({ meta: [{ title: "Oracle — Sovereign AI Film Verse" }, { name: "description", content: "AI prompt enhancer. Rough idea in, cinematic prompt out." }]}),
+  head: () => ({ meta: [{ title: "Oracle — Sovereign AI Filmverse" }, { name: "description", content: "AI prompt enhancer. Rough idea in, cinematic prompt out." }]}),
   component: Oracle,
 });
 

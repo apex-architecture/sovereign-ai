@@ -6,7 +6,7 @@ import { OwnerWall } from "@/components/OwnerWall";
 import { toast } from "sonner";
 
 export const Route = createFileRoute("/broadcast")({
-  head: () => ({ meta: [{ title: "Broadcast — Sovereign AI Film Verse" }, { name: "description", content: "Share, embed, and broadcast your films." }]}),
+  head: () => ({ meta: [{ title: "Broadcast — Sovereign AI Filmverse" }, { name: "description", content: "Share, embed, and broadcast your films." }]}),
   component: Broadcast,
 });
 
@@ -34,7 +34,7 @@ function Broadcast() {
   const copy = (text: string, label: string) => { navigator.clipboard.writeText(text); toast.success(`${label} copied`); };
 
   if (!userId) return <OwnerWall title="Broadcast" note="Sharing and exporting finished films is for the films' owner. Open Theater to see the showreel." />;const embed = url ? `<video src="${url}" controls style="width:100%;max-width:720px"></video>` : "";
-  const shareText = `${prompt}\n\n— made in Sovereign AI Film Verse`;
+  const shareText = `${prompt}\n\n— made in Sovereign AI Filmverse`;
   const twitter = url ? `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(url)}` : "#";
   const reddit = url ? `https://www.reddit.com/submit?url=${encodeURIComponent(url)}&title=${encodeURIComponent(prompt.slice(0,120))}` : "#";
   const fb = url ? `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}` : "#";

@@ -15,9 +15,9 @@ import { toast } from "sonner";
 export const Route = createFileRoute("/create")({
   head: () => ({
     meta: [
-      { title: "Create — Sovereign AI Film Verse" },
+      { title: "Create — Sovereign AI Filmverse" },
       { name: "description", content: "Describe your vision, pick a look, and roll camera on the built-in cloud GPU." },
-      { property: "og:title", content: "Create — Sovereign AI Film Verse" },
+      { property: "og:title", content: "Create — Sovereign AI Filmverse" },
       { property: "og:description", content: "Describe your vision, pick a look, and roll camera on the built-in cloud GPU." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },

@@ -192,6 +192,7 @@ if (stale.length) {
 
 const REGEN = [
   [["--experimental-strip-types", "scripts/tools-registry.mjs"], "rebuild the tool registry"],
+  [["--experimental-strip-types", "scripts/verse-vocab.mjs"], "regenerate the shared vocabulary"],
   [["scripts/build-site.mjs"], "rebuild the site"],
 ];
 for (const [args, label] of REGEN) {

@@ -2,3 +2,4 @@
 - [x] Welcome page background art (projector image chosen)
 - [x] Remove every Lovable mention, add logo + favicon
 - [x] Full site audit: no "Apex Intelligence Empire" / APEX anywhere visitors can see (incl. phone install prompt)
+- [x] Four-tab welcome gate: Architects, Vision, What it does, How to use

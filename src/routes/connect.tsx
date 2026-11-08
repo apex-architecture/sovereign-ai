@@ -12,9 +12,9 @@ import { cn } from "@/lib/utils";
 export const Route = createFileRoute("/connect")({
   head: () => ({
     meta: [
-      { title: "Connect — The One Door · Sovereign AI Film Verse" },
+      { title: "Connect — The One Door · Sovereign AI Filmverse" },
       { name: "description", content: "Every tool the studio knows, the honest depth of each connection, and where to plug in your own machines." },
-      { property: "og:title", content: "Connect — The One Door · Sovereign AI Film Verse" },
+      { property: "og:title", content: "Connect — The One Door · Sovereign AI Filmverse" },
       { property: "og:description", content: "Every tool the studio knows, the honest depth of each connection, and where to plug in your own machines." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },

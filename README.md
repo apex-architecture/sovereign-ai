@@ -26,7 +26,7 @@ npm run dev                # the studio on your own machine
 | --- | --- | --- |
 | **The open core** (this repo) | Studio, pipeline, driver contract, passport, registry, website | Free, Apache-2.0, forever |
 | **The public rail** — [filmverse-1mil8xwzv4y.qoder.website](https://filmverse-1mil8xwzv4y.qoder.website) | Read, compare and verify any passport | Free, and it stays free |
-| **The sovereign cloud** — [lllppp.lovable.app](https://lllppp.lovable.app) | Hosted GPU rendering, teams, distribution, anchoring | Paid. This is the business |
+| **The sovereign cloud** — [sovereignfilmverse.tech](https://sovereignfilmverse.tech) | Hosted GPU rendering, teams, distribution, anchoring | Paid. This is the business |
 
 The code is free. Compute and trust are the business. Nobody may put a price on checking a
 passport — that rule is written into the code, not just the docs.

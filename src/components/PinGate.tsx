@@ -106,7 +106,7 @@ export function PinGate({ children }: { children: ReactNode }) {
 
       <div className="relative mx-auto flex min-h-[100dvh] max-w-sm flex-col items-center px-6 pb-10 pt-[12vh]">
         <h1 className="font-display text-[54px] font-bold leading-none tracking-[0.12em] text-primary text-glow">SOVEREIGN</h1>
-        <div className="hud mt-2 text-[10px] tracking-[0.5em]">AI Film Verse</div>
+        <div className="hud mt-2 text-[10px] tracking-[0.5em]">AI Filmverse</div>
 
         <div className="mt-10 text-center">
           <div className="text-[13px] uppercase tracking-[0.3em] text-foreground/90">Private studio</div>

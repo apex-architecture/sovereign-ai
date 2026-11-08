@@ -9,3 +9,4 @@
 - The app shell (top bar, desktop side rail, mobile tab strip, status bar) lives only in `src/routes/__root.tsx`; pages render content only, so navigation stays in one place.
 - App-side Replicate calls go through `src/lib/replicate-gateway.ts` (Lovable connector gateway); the linked key is a gateway connection key and fails against api.replicate.com directly.
 - Visitors browse every page signed out; pages holding the owner's films use `OwnerWall`, and Generate opens the owner keypad, because each render spends the owner's money.
+- The welcome gate (`src/components/DreamGate.tsx`) owns the four-tab intro (Architects, Vision, What it does, How to use); each tab's content lives in `src/components/gate/*Tab.tsx` and leaves the gate only through `useGate().go(route)`, so the gate never reappears after a link.

@@ -17,7 +17,7 @@ const DEPTH_TAG: Record<string, { tone: Tone; label: string }> = {
 export const Route = createFileRoute("/registry")({
   head: () => ({
     meta: [
-      { title: "Registry — Global Technology Map · Sovereign AI Film Verse" },
+      { title: "Registry — Global Technology Map · Sovereign AI Filmverse" },
       { name: "description", content: "Every tool the studio knows, its licence state, and the written exit if it disappears." },
     ],
   }),

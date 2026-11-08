@@ -9,9 +9,9 @@ import { toast } from "sonner";
 export const Route = createFileRoute("/verify")({
   head: () => ({
     meta: [
-      { title: "Verify — Film Passport · Sovereign AI Film Verse" },
+      { title: "Verify — Film Passport · Sovereign AI Filmverse" },
       { name: "description", content: "Paste a sealed receipt and check the film's chain of title. Free forever, no login." },
-      { property: "og:title", content: "Verify — Film Passport · Sovereign AI Film Verse" },
+      { property: "og:title", content: "Verify — Film Passport · Sovereign AI Filmverse" },
       { property: "og:description", content: "Paste a sealed receipt and check the film's chain of title. Free forever, no login." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
