@@ -1,5 +1,6 @@
 # AGENTS.md
 
+- **Read `docs/BUILD_SPLIT.md` first.** It is the two-end contract: the platform is a switchboard on the internet that owns no GPU and runs no model; creators plug their own compute in through four paths (BYOK cloud key, their own rig endpoint, webhook, or browser-native). Nothing is installed on the operator's laptop. That file names which paths each end owns, what Lovable builds, and the honesty rules binding on both. Do not edit `src/lib/apex/**`, `verse-site/**`, `scripts/**`, `agent/**` or `docs/**` — those sync from the operator's GitHub end. Cross-boundary needs go in the request table at the bottom of that file, not into the shared contracts.
 - Shared HUD primitives (Corners, Pip, Tag, PanelHead, Stat, timecode) live in `src/components/hud.tsx`; new pages compose these plus the `panel`/`rack`/`hud` utilities in `src/styles.css` so the whole studio keeps one visual language.
 - `src/lib/apex/**` is synced from the operator's laptop-side repo; UI rebrands legacy wording at display time instead of editing those data files, to avoid merge conflicts.
 - When a laptop sync breaks the typecheck, fix with the smallest edit (widen a schema type, drop an exact duplicate key) and never rewrite catalogue data, so the next sync still merges.
