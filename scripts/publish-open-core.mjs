@@ -39,6 +39,7 @@ const TREE = ["src", "scripts", "supabase", "workflows", "agent", "public", "dem
 const FILES = [
   "package.json", "package-lock.json", "bun.lock", "bunfig.toml", "vite.config.ts", "tsconfig.json",
   "eslint.config.js", "components.json", "AGENTS.md", "OPERATOR_MANUAL.md", "roadmap.md",
+  "FOUNDER_CHARTER.md",
 ];
 /**
  * The open core owns these. The sync never overwrites them and never deletes them, so the public
