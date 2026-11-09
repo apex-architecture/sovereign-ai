@@ -48,14 +48,20 @@ console.log(`  live: ${zero.join(", ")}`);
 console.log(`  empty: ${none.empty.join(", ")}\n`);
 
 check(
-  "only the seal works with nothing plugged in — the other browser contracts are not built",
-  zero.length === 1 && zero[0] === "seal",
+  "the prompt compiler and the seal work with nothing plugged in",
+  zero.length === 2 && zero.includes("prompt") && zero.includes("seal"),
   zero.join(", "),
 );
 check(
-  "the prompt stage admits it is not built rather than offering a run",
-  resolveStage(STAGE_BY_ID.prompt, {}).says.includes("not built yet"),
+  "the prompt stage runs on the device through the browser plug",
+  resolveStage(STAGE_BY_ID.prompt, {}).chosen?.provider === "Prompt Compiler" &&
+    resolveStage(STAGE_BY_ID.prompt, {}).chosen?.reach === "device",
   resolveStage(STAGE_BY_ID.prompt, {}).says,
+);
+check(
+  "the browser edit and grade contracts are still admitted as gaps",
+  resolveStage(STAGE_BY_ID.timeline, {}).chosen?.provider !== "Browser NLE" &&
+    resolveStage(STAGE_BY_ID.color, {}).chosen?.provider !== "Browser Grade",
 );
 check("no rig stage is claimed live with nothing plugged in", !zero.includes("generation"));
 check("the script stage is not claimed live with nothing plugged in", !zero.includes("script"));
@@ -114,8 +120,8 @@ const all = pipelineCoverage({ rig: "x", bridge: "http://127.0.0.1:8787", cloud:
 console.log(`rig + bridge + key: ${all.connected}/${all.total} stages connected`);
 console.log(`  empty: ${all.empty.join(", ") || "none"}\n`);
 check("the bridge connects the audio stage", !all.empty.includes("audio"));
-check("every built stage connects with all three plugs", all.connected === 9, `${all.connected}/10`);
-check("the prompt stage is the one admitted gap", all.empty.join(", ") === "prompt", all.empty.join(", "));
+check("every stage connects with all three plugs", all.connected === 10, `${all.connected}/10`);
+check("nothing is empty with everything plugged in", all.empty.length === 0, all.empty.join(", "));
 const unbuiltChosen = resolveAll({ rig: "x", bridge: "y", cloud: true }).filter(
   (s) => s.chosen && !CONNECTOR_BY_PROVIDER[s.chosen.provider].built,
 );

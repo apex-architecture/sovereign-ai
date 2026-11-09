@@ -37,7 +37,7 @@ export const PLUGS: PlugSpec[] = [
   {
     id: "browser",
     name: "In the visitor's browser",
-    what: "The PSI seal runs inside the browser already open on the visitor's own device. The edit, grade and prompt-compiler engines are declared contracts, not built yet — the stage table below says which is which.",
+    what: "The PSI seal and the prompt compiler run inside the browser already open on the visitor's own device — a brief becomes a shot matrix and a node graph with no server, no key and no model called. The edit and grade engines are declared contracts, not built yet — the stage table below says which is which.",
     whoComputes: "The visitor's device — phone, laptop, anything with a browser",
     whoPays: "Nobody. No server is involved and no meter runs.",
     needs: "Nothing. It is already there.",

@@ -410,9 +410,9 @@ export const CONNECTORS: Connector[] = [
     hosting: "browser",
     securityStatus: "checked",
     replacementProvider: ["hand-written ComfyUI graphs", "InvokeAI's graph format"],
-    built: false,
+    built: true,
     connectorVersion: "1.0.0",
-    lastTested: null,
+    lastTested: "2026-11-09",
   },
   {
     provider: "Piper",

@@ -8,6 +8,8 @@
  */
 import { ENGINES, escapeRoutes, quoteFor, rankEngines, rankLines } from "../src/lib/apex/engines.ts";
 import { SPINE, contextFor, dictionaryShape, handoffFor, missionFromIdea, nextAction, planMission } from "../src/lib/apex/spine.ts";
+import { compileMatrix, describeMatrix, toPromptPayload } from "../src/lib/apex/prompt-compiler.ts";
 
 window.APEX_ENGINES = { ENGINES, rankEngines, escapeRoutes, quoteFor, rankLines };
 window.APEX_SPINE = { SPINE, contextFor, dictionaryShape, handoffFor, missionFromIdea, nextAction, planMission };
+window.APEX_PROMPT = { compileMatrix, describeMatrix, toPromptPayload };

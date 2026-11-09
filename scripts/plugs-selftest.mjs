@@ -118,6 +118,10 @@ check(
   unbuiltLive.length === 0,
   unbuiltLive.map((p) => p.connector.provider).join(", "),
 );
+check(
+  "the prompt compiler is counted as live from Pages — it needs nothing",
+  liveOnPages().some((p) => p.connector.provider === "Prompt Compiler"),
+);
 
 /* ---------------------------------------------------------------- the exits and licences are not invented */
 

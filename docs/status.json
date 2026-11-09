@@ -1,5 +1,5 @@
 {
- "built_at": "2026-11-09T01:13:52.592Z",
+ "built_at": "2026-11-09T01:29:58.189Z",
  "build": "local",
  "files": {
   "studio.html": {
@@ -15,8 +15,8 @@
    "sha256": "0f2a91b7c99f5220"
   },
   "engines.html": {
-   "bytes": 32308,
-   "sha256": "a653e367eeeee5d8"
+   "bytes": 37125,
+   "sha256": "2f34f5952b1f722b"
   },
   "mission.html": {
    "bytes": 25989,
@@ -47,8 +47,8 @@
    "sha256": "7cc65f92113b5f8a"
   },
   "engines.min.js": {
-   "bytes": 245643,
-   "sha256": "8c3b50b296c93ad2"
+   "bytes": 252264,
+   "sha256": "2af9d3526f48b0c8"
   },
   "dailies.data.min.js": {
    "bytes": 6234,
