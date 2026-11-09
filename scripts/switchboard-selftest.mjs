@@ -17,6 +17,7 @@ import {
   zeroPlugStages,
   undeclaredRoutes,
 } from "../src/lib/apex/switchboard.ts";
+import { CONNECTOR_BY_PROVIDER } from "../src/lib/apex/connectors.ts";
 
 let failed = 0;
 function check(label, ok, detail = "") {
@@ -47,9 +48,14 @@ console.log(`  live: ${zero.join(", ")}`);
 console.log(`  empty: ${none.empty.join(", ")}\n`);
 
 check(
-  "the four device stages work with nothing plugged in",
-  ["prompt", "timeline", "color", "seal"].every((id) => zero.includes(id)),
+  "only the seal works with nothing plugged in — the other browser contracts are not built",
+  zero.length === 1 && zero[0] === "seal",
   zero.join(", "),
+);
+check(
+  "the prompt stage admits it is not built rather than offering a run",
+  resolveStage(STAGE_BY_ID.prompt, {}).says.includes("not built yet"),
+  resolveStage(STAGE_BY_ID.prompt, {}).says,
 );
 check("no rig stage is claimed live with nothing plugged in", !zero.includes("generation"));
 check("the script stage is not claimed live with nothing plugged in", !zero.includes("script"));
@@ -76,6 +82,11 @@ check(
   rig.empty.includes("audio"),
   "a process is not an endpoint",
 );
+check(
+  "timeline and colour stay empty with a rig alone — FFmpeg is a process and the browser contracts are unbuilt",
+  rig.empty.includes("timeline") && rig.empty.includes("color"),
+  rig.empty.join(", "),
+);
 
 /* ---------------------------------------------------------------- a cloud key plugged in */
 
@@ -91,6 +102,11 @@ check(
   "a cloud-only creator is never told to put a model on a rig they do not have",
   !resolveStage(STAGE_BY_ID.generation, { cloud: true }).says.includes("rig"),
 );
+check(
+  "script is not claimed live on a cloud key alone — the direct DeepSeek and Qwen contracts are unbuilt",
+  !resolveStage(STAGE_BY_ID.script, { cloud: true }).connected,
+  resolveStage(STAGE_BY_ID.script, { cloud: true }).says,
+);
 
 /* ---------------------------------------------------------------- the bridge plugged in */
 
@@ -98,7 +114,12 @@ const all = pipelineCoverage({ rig: "x", bridge: "http://127.0.0.1:8787", cloud:
 console.log(`rig + bridge + key: ${all.connected}/${all.total} stages connected`);
 console.log(`  empty: ${all.empty.join(", ") || "none"}\n`);
 check("the bridge connects the audio stage", !all.empty.includes("audio"));
-check("every stage connects with all three plugs", all.connected === 10, `${all.connected}/10`);
+check("every built stage connects with all three plugs", all.connected === 9, `${all.connected}/10`);
+check("the prompt stage is the one admitted gap", all.empty.join(", ") === "prompt", all.empty.join(", "));
+const unbuiltChosen = resolveAll({ rig: "x", bridge: "y", cloud: true }).filter(
+  (s) => s.chosen && !CONNECTOR_BY_PROVIDER[s.chosen.provider].built,
+);
+check("no unbuilt contract is ever the chosen route", unbuiltChosen.length === 0, unbuiltChosen.map((s) => s.stage.id).join(", "));
 
 /* ---------------------------------------------------------------- the server path is never claimed live */
 

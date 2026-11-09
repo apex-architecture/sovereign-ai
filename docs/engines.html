@@ -94,7 +94,8 @@
         <p class="note" style="max-width:76ch">
           No connector enters this platform without a named exit — if a provider vanishes or
           reprices, the row already says what runs instead. A licence nobody has read is printed as
-          unverified, never as cleared.
+          unverified, never as cleared. A row marked <span class="mono">not built yet</span> is a
+          declared contract with no implementation: the switchboard above never counts it as connected.
         </p>
         <div id="sb-connectors" style="overflow-x:auto"></div>
       </section>
@@ -342,7 +343,7 @@
     S.connectors
       .map(
         (c) => `<tr>
-          <td><b>${esc(c.provider)}</b><br><span class="note">${esc(c.product)}</span><br><a href="${esc(c.docsUrl)}" target="_blank" rel="noopener noreferrer">docs ↗</a></td>
+          <td><b>${esc(c.provider)}</b><br><span class="note">${esc(c.product)}</span>${c.built ? "" : `<br>${chip("warn", "contract declared — not built yet")}`}<br><a href="${esc(c.docsUrl)}" target="_blank" rel="noopener noreferrer">docs ↗</a></td>
           <td>${chip("", c.plug)}</td>
           <td>${chip(REACH_CLS[c.reach], REACH_LABEL[c.reach])}<br><span class="note mono">${esc(c.apiBaseUrl)}</span></td>
           <td style="max-width:26ch">${esc(c.usageCharge)}</td>

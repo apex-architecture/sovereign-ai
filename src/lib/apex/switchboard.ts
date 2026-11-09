@@ -31,7 +31,7 @@ export const STAGES: Stage[] = [
   { n: 3, id: "prompt", name: "Prompt Matrix", does: "Director language compiled to a node graph, weights and seeds", routes: ["Prompt Compiler"] },
   { n: 4, id: "generation", name: "Generation", does: "The shot itself, on the creator's rig or their own cloud key", routes: ["ComfyUI", "Replicate", "RunPod"], requires: "a video model on the rig" },
   { n: 5, id: "interpolation", name: "Interpolation", does: "Sparse keyframes stitched to fluid motion", routes: ["ComfyUI", "Replicate"], requires: "the RIFE or FILM node installed on the rig" },
-  { n: 6, id: "timeline", name: "Timeline", does: "Trim, cut, reorder, crossfade and export — in the browser", routes: ["Browser NLE", "FFmpeg"] },
+  { n: 6, id: "timeline", name: "Timeline", does: "Trim, cut, reorder, crossfade and export", routes: ["Browser NLE", "FFmpeg"] },
   { n: 7, id: "audio", name: "Audio & Speech", does: "Dialogue, transcription and sound beds", routes: ["Piper", "Whisper"], requires: "a voice model whose licence has been read" },
   { n: 8, id: "color", name: "Colour", does: "One grade across disparate generations, LUT and grain", routes: ["Browser Grade", "FFmpeg"] },
   { n: 9, id: "upscale", name: "Upscale", does: "Latent output to exhibition master", routes: ["ComfyUI", "Replicate"], requires: "an upscaler model on the rig" },
@@ -99,7 +99,10 @@ export function resolveStage(stage: Stage, p: Plugged): ResolvedStage {
     const c = CONNECTOR_BY_PROVIDER[provider];
     if (!c) return [];
     const { plug, reach } = classify(c);
-    const { available, needs } = reachAvailable(reach, plug, p);
+    // A declared contract with no implementation is never a route, whatever is plugged in.
+    const { available, needs } = c.built
+      ? reachAvailable(reach, plug, p)
+      : { available: false, needs: `${provider} is a declared contract, not built yet — no implementation ships` };
     return [{ provider, plug, reach, available, needs }];
   });
   const chosen = routes.find((r) => r.available) ?? null;
@@ -107,7 +110,10 @@ export function resolveStage(stage: Stage, p: Plugged): ResolvedStage {
   // model itself, so telling a cloud-only creator to put a checkpoint on a rig they do not have is a lie.
   const about = chosen ?? routes[0] ?? null;
   const extra = stage.requires && about?.plug === "remote-rig" ? ` Your rig also needs ${stage.requires}.` : "";
-  const need = routes[0]?.needs ?? "No route is declared for this stage.";
+  // When nothing connects, lead with the first built route's ask — that is the thing the creator
+  // can actually bring. Only when no route is built at all does the sentence admit the gap.
+  const firstBuilt = routes.find((r) => CONNECTOR_BY_PROVIDER[r.provider]?.built);
+  const need = (firstBuilt ?? routes[0])?.needs ?? "No route is declared for this stage.";
   return {
     stage,
     routes,
@@ -134,9 +140,10 @@ export function pipelineCoverage(p: Plugged): { connected: number; total: number
 }
 
 /**
- * What the open rail can do with nothing plugged in at all. These stages are pure device work,
- * so a visitor on a phone can compile a prompt, cut a timeline, grade it and seal it without an
- * account, a key, a rig or a server.
+ * What the open rail can do with nothing plugged in at all. Today that is the PSI seal alone:
+ * the browser edit, grade and prompt-compiler contracts are declared but not built, so they are
+ * reported as gaps rather than counted as live. The day an implementation ships and its flag
+ * turns true, the stage joins this list without any other change.
  */
 export function zeroPlugStages(): Stage[] {
   return STAGES.filter((s) => resolveStage(s, {}).connected);

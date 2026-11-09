@@ -37,7 +37,7 @@ export const PLUGS: PlugSpec[] = [
   {
     id: "browser",
     name: "In the visitor's browser",
-    what: "Edit, colour grade, grain and the PSI seal run inside the browser already open on the visitor's own device.",
+    what: "The PSI seal runs inside the browser already open on the visitor's own device. The edit, grade and prompt-compiler engines are declared contracts, not built yet — the stage table below says which is which.",
     whoComputes: "The visitor's device — phone, laptop, anything with a browser",
     whoPays: "Nobody. No server is involved and no meter runs.",
     needs: "Nothing. It is already there.",
@@ -147,12 +147,12 @@ export function reachCount(): Record<Reach, number> {
 }
 
 /**
- * What can actually do work from the static rail with no server and no bridge: the device stages
- * and the creator endpoints that can be CORS-enabled. Everything else is reported as needing
- * something, never shown as live because the code for it exists.
+ * What can actually do work from the static rail with no server and no bridge: the built device
+ * stages and the creator endpoints that can be CORS-enabled. A declared-but-unbuilt contract is
+ * never counted here, and nothing is shown as live because the code for it exists.
  */
 export function liveOnPages(): PluggedConnector[] {
-  return pluggedConnectors().filter((p) => p.reach === "device" || p.reach === "direct");
+  return pluggedConnectors().filter((p) => p.connector.built && (p.reach === "device" || p.reach === "direct"));
 }
 
 export function plugsLiveOnPages(): Plug[] {

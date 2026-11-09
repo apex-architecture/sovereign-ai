@@ -16,7 +16,7 @@ const CHROME =
   process.env.APEX_CHROME_BIN ??
   "C:/Program Files/Google/Chrome/Application/chrome.exe";
 const PORT = Number(process.env.APEX_CDP_PORT ?? 9339);
-const BASE = process.env.APEX_RAIL_URL ?? "http://127.0.0.1:8792";
+const BASE = process.env.APEX_RAIL_URL ?? "http://127.0.0.1:8788";
 const OUT = process.env.APEX_SHOT_DIR ?? "runs/shots";
 const args = process.argv.slice(2);
 const PAGE = args[0] ?? "studio.html";
@@ -82,10 +82,16 @@ mkdirSync(OUT, { recursive: true });
 for (const w of WIDTHS) {
   const h = w < 800 ? 844 : 1000;
   await send("Emulation.setDeviceMetricsOverride", { width: w, height: h, deviceScaleFactor: 1, mobile: w < 800 });
-  await send("Page.navigate", { url: `${BASE}/${PAGE}` });
+  const nav = await send("Page.navigate", { url: `${BASE}/${PAGE}` });
+  // A refused connection renders Chrome's own error page: no console errors, no commas, no
+  // overflow — every other gate passes on a page that never loaded. The navigation answer is
+  // the only place that failure is visible, so it is a fault like any other.
+  if (nav.errorText) faults.push(`${w}px: navigation failed — ${nav.errorText} (${BASE}/${PAGE})`);
   events.length = 0;
   for (let i = 0; i < 80 && !events.includes("Page.loadEventFired"); i += 1) await sleep(100);
   await sleep(1600);
+  const { result: loc } = await send("Runtime.evaluate", { expression: "location.href", returnByValue: true });
+  if (String(loc.value).startsWith("chrome-error://")) faults.push(`${w}px: browser error page, not the rail — ${loc.value}`);
   // Force every lazy thing to lay out before the capture.
   await send("Runtime.evaluate", {
     expression: `document.querySelectorAll('img').forEach(i=>{i.loading='eager';i.decoding='sync'});window.scrollTo(0,0);`,

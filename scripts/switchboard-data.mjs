@@ -48,6 +48,7 @@ const data = {
     family: p.connector.family,
     plug: p.plug,
     reach: p.reach,
+    built: p.connector.built,
     docsUrl: p.connector.docsUrl,
     apiBaseUrl: p.connector.apiBaseUrl,
     usageCharge: p.connector.usageCharge,

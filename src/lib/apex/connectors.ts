@@ -44,6 +44,12 @@ export interface Connector {
   dataRetention: string;
   hosting: "local" | "self-hosted" | "edge" | "provider-cloud" | "browser";
   securityStatus: "checked" | "unverified";
+  /**
+   * Whether the platform ships code that drives this connector end to end. A declared contract
+   * with no implementation is built:false, and the switchboard must never report it as connected.
+   * True means a driver or module exists in src/lib/apex and is exercised by a selftest or the app.
+   */
+  built: boolean;
   /** Never empty: if this provider vanishes or reprices, what runs instead. */
   replacementProvider: string[];
   connectorVersion: string;
@@ -68,6 +74,7 @@ export const CONNECTORS: Connector[] = [
     hosting: "local",
     securityStatus: "checked",
     replacementProvider: ["InvokeAI", "Diffusers", "self-hosted ComfyUI on a rented GPU"],
+    built: true,
     connectorVersion: "1.0.0",
     lastTested: null,
   },
@@ -88,6 +95,7 @@ export const CONNECTORS: Connector[] = [
     hosting: "local",
     securityStatus: "checked",
     replacementProvider: ["llama.cpp", "LocalAI", "vLLM"],
+    built: true,
     connectorVersion: "1.0.0",
     lastTested: null,
   },
@@ -108,6 +116,7 @@ export const CONNECTORS: Connector[] = [
     hosting: "provider-cloud",
     securityStatus: "unverified",
     replacementProvider: ["RunPod", "Modal", "self-owned GPU running the same open weights"],
+    built: true,
     connectorVersion: "1.0.0",
     lastTested: "2026-11-01",
   },
@@ -128,6 +137,7 @@ export const CONNECTORS: Connector[] = [
     hosting: "provider-cloud",
     securityStatus: "unverified",
     replacementProvider: ["Replicate", "Lambda", "a GPU the studio owns"],
+    built: false,
     connectorVersion: "1.0.0",
     lastTested: null,
   },
@@ -148,6 +158,7 @@ export const CONNECTORS: Connector[] = [
     hosting: "local",
     securityStatus: "checked",
     replacementProvider: ["GStreamer"],
+    built: true,
     connectorVersion: "1.0.0",
     lastTested: null,
   },
@@ -168,6 +179,7 @@ export const CONNECTORS: Connector[] = [
     hosting: "local",
     securityStatus: "checked",
     replacementProvider: ["Godot for real-time sets", "LuxCoreRender"],
+    built: true,
     connectorVersion: "1.0.0",
     lastTested: null,
   },
@@ -188,6 +200,7 @@ export const CONNECTORS: Connector[] = [
     hosting: "local",
     securityStatus: "checked",
     replacementProvider: ["whisper.cpp", "Vosk"],
+    built: true,
     connectorVersion: "1.0.0",
     lastTested: null,
   },
@@ -208,6 +221,7 @@ export const CONNECTORS: Connector[] = [
     hosting: "self-hosted",
     securityStatus: "checked",
     replacementProvider: ["Arweave", "Stacks", "an RFC 6962 transparency log APEX runs"],
+    built: false,
     connectorVersion: "1.0.0",
     lastTested: null,
   },
@@ -228,6 +242,7 @@ export const CONNECTORS: Connector[] = [
     hosting: "provider-cloud",
     securityStatus: "unverified",
     replacementProvider: ["self-hosted Postgres", "PocketBase", "Cloudflare D1"],
+    built: true,
     connectorVersion: "1.0.0",
     lastTested: null,
   },
@@ -248,6 +263,7 @@ export const CONNECTORS: Connector[] = [
     hosting: "self-hosted",
     securityStatus: "unverified",
     replacementProvider: ["Owncast", "an S3 bucket behind a signed URL"],
+    built: false,
     connectorVersion: "1.0.0",
     lastTested: null,
   },
@@ -268,6 +284,7 @@ export const CONNECTORS: Connector[] = [
     hosting: "provider-cloud",
     securityStatus: "unverified",
     replacementProvider: ["Lago", "Kill Bill", "Adyen", "Invoice Ninja"],
+    built: false,
     connectorVersion: "1.0.0",
     lastTested: null,
   },
@@ -288,6 +305,7 @@ export const CONNECTORS: Connector[] = [
     hosting: "browser",
     securityStatus: "checked",
     replacementProvider: ["a server-side FFmpeg transcode", "Kdenlive on the creator's rig"],
+    built: false,
     connectorVersion: "1.0.0",
     lastTested: null,
   },
@@ -308,6 +326,7 @@ export const CONNECTORS: Connector[] = [
     hosting: "browser",
     securityStatus: "checked",
     replacementProvider: ["DaVinci Resolve on the creator's rig", "an FFmpeg lut3d pass"],
+    built: false,
     connectorVersion: "1.0.0",
     lastTested: null,
   },
@@ -328,6 +347,7 @@ export const CONNECTORS: Connector[] = [
     hosting: "browser",
     securityStatus: "checked",
     replacementProvider: ["the apex-psi-verifier npm package", "the psi-verifier PyPI package", "any Ed25519 implementation"],
+    built: true,
     connectorVersion: "1.0.0",
     lastTested: null,
   },
@@ -348,6 +368,7 @@ export const CONNECTORS: Connector[] = [
     hosting: "provider-cloud",
     securityStatus: "unverified",
     replacementProvider: ["Qwen", "Ollama on the creator's own rig", "llama.cpp"],
+    built: false,
     connectorVersion: "1.0.0",
     lastTested: null,
   },
@@ -368,6 +389,7 @@ export const CONNECTORS: Connector[] = [
     hosting: "local",
     securityStatus: "unverified",
     replacementProvider: ["Ollama", "llama.cpp", "DeepSeek"],
+    built: false,
     connectorVersion: "1.0.0",
     lastTested: null,
   },
@@ -388,6 +410,7 @@ export const CONNECTORS: Connector[] = [
     hosting: "browser",
     securityStatus: "checked",
     replacementProvider: ["hand-written ComfyUI graphs", "InvokeAI's graph format"],
+    built: false,
     connectorVersion: "1.0.0",
     lastTested: null,
   },
@@ -408,6 +431,7 @@ export const CONNECTORS: Connector[] = [
     hosting: "local",
     securityStatus: "unverified",
     replacementProvider: ["Coqui XTTS", "Fish Speech", "a hosted TTS on the creator's key"],
+    built: true,
     connectorVersion: "1.0.0",
     lastTested: null,
   },

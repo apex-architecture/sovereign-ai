@@ -108,6 +108,16 @@ check(
   "every browser connector is device-reachable",
   browserRows.every((c) => connectorsByReach("device").includes(c)),
 );
+check(
+  "every connector declares whether it is built",
+  CONNECTORS.every((c) => typeof c.built === "boolean"),
+);
+const unbuiltLive = liveOnPages().filter((p) => !p.connector.built);
+check(
+  "no unbuilt contract is claimed live on Pages",
+  unbuiltLive.length === 0,
+  unbuiltLive.map((p) => p.connector.provider).join(", "),
+);
 
 /* ---------------------------------------------------------------- the exits and licences are not invented */
 
