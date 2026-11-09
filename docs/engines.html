@@ -59,6 +59,15 @@
           an endpoint that permits it, and no amount of frontend code removes that.
         </p>
         <div id="sb-plugs"></div>
+        <p class="note" style="max-width:76ch;margin-top:12px">
+          Two of these plugs need a small process on <b>your</b> machine, because a browser cannot spawn
+          ffmpeg and most inference APIs send no CORS headers. That process is the
+          <a href="https://github.com/apex-architecture/sovereign-ai/blob/main/bridge/apex-bridge.mjs" target="_blank" rel="noopener noreferrer">creator bridge ↗</a>
+          — one dependency-free Node file you download and run yourself. It listens on loopback only,
+          answers only this site's origin, spawns only its whitelisted tools with literal arguments, and
+          proxies only to the listed provider hosts on a key you hand it and it never stores. The platform
+          never installs it, never runs it, and never sees your key.
+        </p>
       </section>
 
       <section class="section">

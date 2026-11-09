@@ -34,7 +34,7 @@ const OPEN_CORE = path.resolve(process.env.APEX_OPEN_CORE_DIR ?? path.join(ROOT,
 const SOURCE_REF = process.env.APEX_SOURCE_REF ?? "origin/main";
 
 /** Directories that are copied across wholesale. */
-const TREE = ["src", "scripts", "supabase", "workflows", "agent", "public", "demo-plates", "docs"];
+const TREE = ["src", "scripts", "supabase", "workflows", "agent", "public", "demo-plates", "docs", "bridge"];
 /** Single root files that are copied across. */
 const FILES = [
   "package.json", "package-lock.json", "bun.lock", "bunfig.toml", "vite.config.ts", "tsconfig.json",

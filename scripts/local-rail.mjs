@@ -425,6 +425,26 @@ function allowedOrigin(res) {
   return ALLOWED_ORIGINS.has(o) ? o : null;
 }
 
+/**
+ * CORS on the preflight alone is not a gate: a cross-origin "simple request" (text/plain, or no
+ * body at all) is sent by the browser without any preflight, so the side effect lands even though
+ * the attacker cannot read the reply. Every state-changing POST therefore checks Origin itself,
+ * and any POST that reads a body additionally demands application/json — a content type a simple
+ * request cannot carry, so an accepted body must have preflighted through the allowlist first.
+ * A caller with no Origin header is a shell, not a browser, and cannot be a CSRF vector.
+ */
+function guardPost(req, res, { json = false } = {}) {
+  const origin = req.headers.origin;
+  const badOrigin = origin !== undefined && !ALLOWED_ORIGINS.has(String(origin));
+  const badType = json && !String(req.headers["content-type"] ?? "").toLowerCase().startsWith("application/json");
+  if (badOrigin || badType) {
+    res.writeHead(403, { "content-type": "application/json; charset=utf-8", "cache-control": "no-store" });
+    res.end(JSON.stringify({ error: badOrigin ? "this origin may not drive the engine room" : "state-changing posts must be application/json" }));
+    return false;
+  }
+  return true;
+}
+
 function json(res, code, body) {
   const text = JSON.stringify(body);
   const origin = allowedOrigin(res);
@@ -557,12 +577,12 @@ const server = http.createServer(async (req, res) => {
   }
 
   if (p === "/api/status") return json(res, 200, await status());
-  if (p === "/api/run" && req.method === "POST") return run(req, res);
+  if (p === "/api/run" && req.method === "POST") return guardPost(req, res, { json: true }) ? run(req, res) : undefined;
   if (p === "/api/running") return json(res, 200, { running });
   if (p === "/api/agent" && req.method === "GET") return json(res, 200, agentState());
   if (p === "/api/drivers" && req.method === "GET") return json(res, 200, { at: new Date().toISOString(), drivers: await driverTable() });
-  if (p === "/api/connect" && req.method === "POST") return connect(req, res);
-  if (p === "/api/agent/tick" && req.method === "POST") return agentTick(res);
+  if (p === "/api/connect" && req.method === "POST") return guardPost(req, res, { json: true }) ? connect(req, res) : undefined;
+  if (p === "/api/agent/tick" && req.method === "POST") return guardPost(req, res) ? agentTick(res) : undefined;
 
   if (p.startsWith("/media/")) {
     const rel = p.slice("/media/".length);

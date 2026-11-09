@@ -1,5 +1,5 @@
 {
- "built_at": "2026-11-09T00:15:07.287Z",
+ "built_at": "2026-11-09T00:27:48.884Z",
  "build": "local",
  "files": {
   "studio.html": {
@@ -15,8 +15,8 @@
    "sha256": "0f2a91b7c99f5220"
   },
   "engines.html": {
-   "bytes": 31250,
-   "sha256": "c6a6739416ff7a2c"
+   "bytes": 32068,
+   "sha256": "e3cb454a61de188a"
   },
   "mission.html": {
    "bytes": 25989,

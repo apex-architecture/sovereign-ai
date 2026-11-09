@@ -15,6 +15,8 @@
     "plugs:selftest": "node --experimental-strip-types scripts/plugs-selftest.mjs",
     "switchboard:selftest": "node --experimental-strip-types scripts/switchboard-selftest.mjs",
     "switchboard:data": "node --experimental-strip-types scripts/switchboard-data.mjs",
+    "engine-room:csrf": "node scripts/engine-room-csrf-selftest.mjs",
+    "bridge:selftest": "node scripts/bridge-selftest.mjs",
     "tools:registry": "node --experimental-strip-types scripts/tools-registry.mjs",
     "site:build": "node scripts/build-site.mjs",
     "vocab": "node --experimental-strip-types scripts/verse-vocab.mjs",
