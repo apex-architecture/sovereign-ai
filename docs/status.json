@@ -1,5 +1,5 @@
 {
- "built_at": "2026-11-09T01:29:58.189Z",
+ "built_at": "2026-11-09T01:46:12.952Z",
  "build": "local",
  "files": {
   "studio.html": {
@@ -71,20 +71,20 @@
    "sha256": "746d944cccfec8e5"
   },
   "studio.min.js": {
-   "bytes": 21598,
-   "sha256": "1c70c31b4569c53f"
+   "bytes": 22338,
+   "sha256": "1eab96fc9bdb8a7f"
   },
   "verse3d.min.js": {
    "bytes": 506142,
    "sha256": "3400fda5a00ada36"
   },
   "availability.generated.min.js": {
-   "bytes": 37508,
-   "sha256": "694cd31d93d80f34"
+   "bytes": 37817,
+   "sha256": "e1111872299bd639"
   },
   "foreman.generated.js": {
-   "bytes": 5451,
-   "sha256": "9bb7a383f62a11ac"
+   "bytes": 7151,
+   "sha256": "aefe60a741d3bbce"
   },
   "connect.generated.js": {
    "bytes": 5961,

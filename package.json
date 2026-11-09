@@ -14,6 +14,8 @@
     "cloud:selftest": "node --experimental-strip-types scripts/cloud-video-selftest.mjs",
     "plugs:selftest": "node --experimental-strip-types scripts/plugs-selftest.mjs",
     "prompt:selftest": "node --experimental-strip-types scripts/prompt-compiler-selftest.mjs",
+    "foreman:audit": "node --experimental-strip-types scripts/foreman.mjs audit",
+    "foreman:tick": "node --experimental-strip-types scripts/foreman.mjs tick && node scripts/foreman-snapshot.mjs",
     "switchboard:selftest": "node --experimental-strip-types scripts/switchboard-selftest.mjs",
     "switchboard:data": "node --experimental-strip-types scripts/switchboard-data.mjs",
     "engine-room:csrf": "node scripts/engine-room-csrf-selftest.mjs",

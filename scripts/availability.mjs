@@ -25,6 +25,7 @@ import { siteDir } from "./site-dir.mjs";
 import { pathToFileURL } from "node:url";
 
 const APEX = path.resolve("src/lib/apex");
+const SITE = siteDir();
 const { ENGINES } = await import(pathToFileURL(path.join(APEX, "engines.ts")).href);
 const { rankEngines } = await import(pathToFileURL(path.join(APEX, "engines.ts")).href);
 

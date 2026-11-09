@@ -54,7 +54,7 @@ if (mode === "audit") {
   const a = await audit(drivers, routes, intent);
   for (const r of a.rows) {
     const reach = r.state === "reachable" ? "RUNS      " : r.state === "licence-gated" ? "GATED     " : "DEAD      ";
-    console.log(`${reach} ${r.stage.padEnd(14)} up=[${r.up.join(", ")}] gated=[${r.gated.map((g) => g.toolId).join(", ")}] down=[${r.down.map((d) => d.toolId).join(", ")}]`);
+    console.log(`${reach} ${r.stage.padEnd(14)} up=[${r.up.map((u) => u.toolId).join(", ")}] gated=[${r.gated.map((g) => g.toolId).join(", ")}] down=[${r.down.map((d) => d.toolId).join(", ")}]`);
   }
   console.log(`\n${a.reachable.length}/${a.rows.length} stages run for ${intent} use · not running: ${a.dead.join(", ") || "none"}`);
   console.log(`misdeclared drivers: ${a.misdeclared.join(", ") || "none"}`);

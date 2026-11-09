@@ -24,8 +24,8 @@ import { misdeclaredDrivers } from "./orchestrate.ts";
 
 export interface StageAuditRow {
   stage: string;
-  /** Answers the probe AND clears the licence gate for the stated intent. */
-  up: string[];
+  /** Answers the probe AND clears the licence gate for the stated intent — with the evidence. */
+  up: { toolId: string; why: string }[];
   /** Answers the probe but is stopped by the licence gate — reachable is not the same as admitted. */
   gated: { toolId: string; why: string }[];
   down: { toolId: string; why: string }[];
@@ -65,7 +65,7 @@ const SPINE_ORDER = ["story", "script", "shotlist", "storyboard", "character_loc
 export async function audit(drivers: ToolDriver[], routes: Record<string, ToolDriver[]>, intent: "personal" | "client-work" | "redistribute" = "personal"): Promise<Audit> {
   const rows: StageAuditRow[] = [];
   for (const stage of SPINE_ORDER) {
-    const up: string[] = [];
+    const up: { toolId: string; why: string }[] = [];
     const gated: { toolId: string; why: string }[] = [];
     const down: { toolId: string; why: string }[] = [];
     for (const driver of routes[stage] ?? []) {
@@ -76,7 +76,7 @@ export async function audit(drivers: ToolDriver[], routes: Record<string, ToolDr
       }
       const block = gateOnLicence(driver, intent);
       if (block) gated.push({ toolId: driver.toolId, why: block.log });
-      else up.push(driver.toolId);
+      else up.push({ toolId: driver.toolId, why: r.why });
     }
     const state = up.length > 0 ? "reachable" : gated.length > 0 ? "licence-gated" : "dead-ended";
     rows.push({ stage, up, gated, down, state });

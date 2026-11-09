@@ -20,10 +20,21 @@ if (!existsSync(journal)) {
 }
 
 const data = JSON.parse(readFileSync(journal, "utf8"));
+
+/**
+ * A journal is a measurement of a machine that has since moved. The page is told how old it is so
+ * it can label itself, because a frozen number printed in the present tense is a lie.
+ */
+const ageMs = Date.now() - Date.parse(data.at);
+const stale = !(ageMs >= 0) || ageMs > 60 * 60 * 1000;
+const ageHours = Math.round(ageMs / 3600000);
+
 const payload = {
   at: data.at,
   frozen: new Date().toISOString(),
   snapshot: true,
+  stale,
+  ageHours,
   briefing: data.briefing,
   next: data.next,
   acted: data.acted ?? [],
@@ -31,4 +42,11 @@ const payload = {
 };
 
 writeFileSync(out, `window.APEX_FOREMAN=${JSON.stringify(payload)};\n`, "utf8");
-console.log(`ok    foreman.generated.js          ${out} · ${data.audit.reachable.length}/${data.audit.rows.length} stages · frozen ${payload.frozen}`);
+console.log(
+  `ok    foreman.generated.js          ${out} · ${data.audit.reachable.length}/${data.audit.rows.length} stages · measured ${data.at}${stale ? ` · STALE (${ageHours}h old) — run the tick before publishing` : " · fresh"}`,
+);
+if (stale) {
+  console.warn(
+    `note  the journal is ${ageHours} hour(s) old. The page will say so, but a published snapshot of a machine that has moved is not a measurement.`,
+  );
+}

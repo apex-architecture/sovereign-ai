@@ -423,8 +423,21 @@
    * The agent that builds this platform, speaking in its own measured words.
    * Nothing here is asserted by the page: it renders the Foreman's journal, and the button
    * asks the rail to run another audit-repair-verify pass and print what changed.
+   *
+   * A journal older than the tick interval is a measurement of a machine that has since moved,
+   * so it is labelled as frozen rather than read as live.
    */
-  const STATE_WORD = { reachable: "runs", "licence-gated": "gated", "dead-ended": "dead" };
+  const STALE_AFTER_MS = 60 * 60 * 1000;
+
+  function ago(ms) {
+    const m = Math.floor(ms / 60000);
+    if (m < 1) return "moments ago";
+    if (m < 60) return `${m} minute${m === 1 ? "" : "s"} ago`;
+    const h = Math.floor(m / 60);
+    if (h < 48) return `${h} hour${h === 1 ? "" : "s"} ago`;
+    const d = Math.floor(h / 24);
+    return `${d} day${d === 1 ? "" : "s"} ago`;
+  }
 
   function renderForeman(a) {
     const rows = id("foreman-rows");
@@ -434,16 +447,34 @@
       id("foreman-brief").innerHTML = `<span class="fw-why">${esc(a && a.why ? a.why : "the Foreman has not written a journal on this machine")}</span>`;
       return;
     }
-    id("foreman-note").textContent = `last pass ${when(a.at)} · ${a.audit.reachable.length} of ${a.audit.rows.length} stages run`;
-    id("foreman-brief").textContent = a.briefing;
+    // A frozen journal is a measurement, not a live answer. Past the tick interval the panel says
+    // "ran", never "runs", so nobody reads yesterday's probe as today's answer.
+    const ageMs = Date.now() - Date.parse(a.at);
+    const stale = !(ageMs >= 0) || ageMs > STALE_AFTER_MS;
+    const age = ageMs >= 0 ? ago(ageMs) : "an unknown time ago";
+    id("foreman-note").textContent = stale
+      ? `measured ${age} — a frozen snapshot, not a live answer`
+      : `measured ${age} · ${a.audit.reachable.length} of ${a.audit.rows.length} stages run`;
+    // The briefing is written in the present tense at tick time, so a stale journal needs its
+    // tense corrected — otherwise a three-day-old measurement reads as today's answer.
+    id("foreman-brief").textContent = stale
+      ? `As measured ${age} — ${a.briefing.replace(/\brun today\b/g, "ran then")}`
+      : a.briefing;
+    const word = stale
+      ? { reachable: "ran", "licence-gated": "gated", "dead-ended": "dead" }
+      : { reachable: "runs", "licence-gated": "gated", "dead-ended": "dead" };
     rows.innerHTML = a.audit.rows.map((r) => {
-      const live = [...(r.up || []), ...(r.gated || []).map((g) => g.toolId)].join(", ");
-      const downWhy = (r.down || []).map((d) => `${d.toolId}: ${d.why}`).join(" · ");
-      const note = downWhy || ((r.gated || []).length ? "a human must read its licence before the stage is admitted" : "");
+      const live = [...(r.up || []).map((u) => u.toolId), ...(r.gated || []).map((g) => g.toolId)].join(", ");
+      const upWhy = (r.up || []).map((u) => `${u.toolId}: ${u.why}`).join(" · ");
+      const downs = r.down || [];
+      const downWhy = downs.length
+        ? downs.slice(0, 3).map((d) => `${d.toolId}: ${d.why}`).join(" · ") + (downs.length > 3 ? ` · +${downs.length - 3} more not answering` : "")
+        : "";
+      const note = [upWhy, downWhy].filter(Boolean).join(" — ") || ((r.gated || []).length ? "a human must read its licence before the stage is admitted" : "");
       return `<div class="fw-row">
         <span class="fw-stage">${esc(r.stage)}</span>
         <span class="fw-engines">${esc(live || "nothing")}<div class="fw-why">${esc(note)}</div></span>
-        <span class="fw-state ${esc(STATE_WORD[r.state] || "dead")}">${esc(STATE_WORD[r.state] || "gap")}</span>
+        <span class="fw-state ${esc(word[r.state] || "dead")}">${esc(word[r.state] || "gap")}</span>
       </div>`;
     }).join("");
     const acted = Array.isArray(a.acted) ? a.acted : [];
