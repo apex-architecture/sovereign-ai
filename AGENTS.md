@@ -11,3 +11,5 @@
 - App-side Replicate calls go through `src/lib/replicate-gateway.ts` (Lovable connector gateway); the linked key is a gateway connection key and fails against api.replicate.com directly.
 - Visitors browse every page signed out; pages holding the owner's films use `OwnerWall`, and Generate opens the owner keypad, because each render spends the owner's money.
 - The welcome gate (`src/components/DreamGate.tsx`) owns the four-tab intro (Architects, Vision, What it does, How to use); each tab's content lives in `src/components/gate/*Tab.tsx` and leaves the gate only through `useGate().go(route)`, so the gate never reappears after a link.
+- Film-making happens on one screen, `/create` (the Monolith: step rail, canvas, inspector, timeline; parts in `src/components/monolith/`), so newcomers never hunt across rooms; the film draft lives in the visitor's browser.
+- Free pre-production (script + storyboard) runs through `src/lib/preproduction.functions.ts` with a server-side daily allowance (`src/lib/free-quota.ts`, DB `claim_free_quota`) that refunds failed attempts; video render stays owner-only because it spends the owner's money.

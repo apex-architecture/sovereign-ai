@@ -1,26 +1,26 @@
 {
- "built_at": "2026-11-08T23:49:53.798Z",
+ "built_at": "2026-11-09T00:15:07.287Z",
  "build": "local",
  "files": {
   "studio.html": {
-   "bytes": 7329,
-   "sha256": "8be71c2cd2d20783"
+   "bytes": 7451,
+   "sha256": "33aba2a1ad56b0cb"
   },
   "cinema.html": {
-   "bytes": 20807,
-   "sha256": "30caef4e9c98b0c7"
+   "bytes": 21111,
+   "sha256": "af7d910bb3c13b02"
   },
   "dailies.html": {
-   "bytes": 24710,
-   "sha256": "a353da936e6533e6"
+   "bytes": 24713,
+   "sha256": "0f2a91b7c99f5220"
   },
   "engines.html": {
-   "bytes": 22593,
-   "sha256": "704c15d16c8a9b6c"
+   "bytes": 31250,
+   "sha256": "c6a6739416ff7a2c"
   },
   "mission.html": {
-   "bytes": 25986,
-   "sha256": "e93879e8a6a03ead"
+   "bytes": 25989,
+   "sha256": "90b0713f97290993"
   },
   "styles.css": {
    "bytes": 15487,
@@ -35,8 +35,8 @@
    "sha256": "b613d03efe80f7b8"
   },
   "verify.html": {
-   "bytes": 29032,
-   "sha256": "8f322cc049553f08"
+   "bytes": 29035,
+   "sha256": "4eef5ef12876a1e4"
   },
   "data.generated.min.js": {
    "bytes": 319306,
@@ -67,8 +67,8 @@
    "sha256": "aeee8f2598aef1cf"
   },
   "shell.min.js": {
-   "bytes": 4441,
-   "sha256": "2822dda4166da32b"
+   "bytes": 4412,
+   "sha256": "746d944cccfec8e5"
   },
   "studio.min.js": {
    "bytes": 21598,

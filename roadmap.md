@@ -3,3 +3,6 @@
 - [x] Remove every Lovable mention, add logo + favicon
 - [x] Full site audit: no "Apex Intelligence Empire" / APEX anywhere visitors can see (incl. phone install prompt)
 - [x] Four-tab welcome gate: Architects, Vision, What it does, How to use
+- [x] Door C: free script + storyboard for everyone, video stays owner-only
+- [x] One-screen film maker (Script → Board → Render → Cut) on Create
+- [ ] Top up the cloud engine account so free drafts and renders run (waiting on owner)

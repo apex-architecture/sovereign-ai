@@ -113,6 +113,14 @@ account and the operator's money.
 Append here. Format: `FROM | NEED | WHY | STATUS`. The other end resolves it and sets STATUS.
 
 - GitHub end | Lovable: deploy `05789f8` so `/` ships its `<h1>` and the rail shows `Console`
-  instead of `Admin` | the live sweep is 16/17 and the nav drifts from the shared vocabulary | OPEN
+  instead of `Admin` | the live sweep is 16/17 and the nav drifts from the shared vocabulary | OPEN —
+  Lovable has pushed past `05789f8`; the live sweep re-runs before this closes
 - GitHub end | Operator: choose the partner access door (free pre-production / guest pass / BYOK) |
-  friends can browse but cannot create, and none of the three options is built | OPEN
+  friends can browse but cannot create, and none of the three options is built | DONE — operator chose
+  free pre-production; Lovable built it on /create (the one-screen Script → Board → Render → Cut layout)
+- Lovable | GitHub end: the free script writer uses DeepSeek V3 with Qwen3 fallback and FLUX schnell
+  frames on the hosted cloud lane, capped daily server-side | so the rail and registry can list them as
+  wired for the script and storyboard stages | DONE — verified against
+  `src/lib/preproduction.functions.ts:10-11`; the Replicate connector row names the three hosted models,
+  the storyboard stage gained the Replicate route, and the Connect page labels the free lane as
+  app-side and daily-capped, not as a plug the static rail can offer

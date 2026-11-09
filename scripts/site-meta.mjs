@@ -23,10 +23,11 @@ const SHARE = { file: "assets/dailies/frame-at-2s.jpg", w: 1280, h: 720 };
 
 const PAGES = {
   "studio.html": { title: "Sovereign AI Film Verse — a house of open-source tools, and films nobody has to believe", type: "website" },
+  "cinema.html": { title: "The Cinema — a live 3D constellation of every catalogued tool | Sovereign AI Film Verse", type: "website" },
   "verse.html": { title: "The Verse Map — 44 Modules, Every Status From the Record | Sovereign AI Film Verse", type: "website" },
   "workflow.html": { title: "Production Rail — Ten Film Stages, Honestly Wired | Sovereign AI Film Verse", type: "website" },
   "dailies.html": { title: "Dailies — One Real Run of the Pipeline, With Its Measured Frames | Sovereign AI Film Verse", type: "article" },
-  "engines.html": { title: "The Engine Road — every open and paid tool, ranked for your shot | Sovereign AI Film Verse", type: "website" },
+  "engines.html": { title: "Connect — four plugs, ten stages, and every engine ranked for your shot | Sovereign AI Film Verse", type: "website" },
   "mission.html": { title: "Start a Mission — one idea walked from story to master | Sovereign AI Film Verse", type: "website" },
   "tools.html": { title: "Open Source Power — the tool map | Sovereign AI Film Verse", type: "website" },
   "rights.html": { title: "Rights & Licensing — the honest ledger | Sovereign AI Film Verse", type: "website" },

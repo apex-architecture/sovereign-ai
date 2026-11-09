@@ -38,6 +38,27 @@ export type Database = {
         }
         Relationships: []
       }
+      free_quota: {
+        Row: {
+          bucket: string
+          day: string
+          kind: string
+          used: number
+        }
+        Insert: {
+          bucket: string
+          day?: string
+          kind: string
+          used?: number
+        }
+        Update: {
+          bucket?: string
+          day?: string
+          kind?: string
+          used?: number
+        }
+        Relationships: []
+      }
       gpu_endpoints: {
         Row: {
           api_url: string
@@ -249,12 +270,29 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      claim_free_quota: {
+        Args: {
+          _bucket: string
+          _global_limit: number
+          _kind: string
+          _limit: number
+        }
+        Returns: number
+      }
+      free_quota_used: {
+        Args: { _bucket: string; _kind: string }
+        Returns: number
+      }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]
           _user_id: string
         }
         Returns: boolean
+      }
+      refund_free_quota: {
+        Args: { _bucket: string; _kind: string }
+        Returns: undefined
       }
     }
     Enums: {

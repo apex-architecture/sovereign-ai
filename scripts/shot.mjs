@@ -51,12 +51,22 @@ await new Promise((r) => ws.addEventListener("open", r, { once: true }));
 let nextId = 0;
 const waiting = new Map();
 const events = [];
+const faults = [];
 ws.addEventListener("message", (e) => {
   const msg = JSON.parse(e.data);
   if (msg.id && waiting.has(msg.id)) {
     waiting.get(msg.id)(msg);
     waiting.delete(msg.id);
-  } else if (msg.method) events.push(msg.method);
+  } else if (msg.method) {
+    events.push(msg.method);
+    if (msg.method === "Runtime.exceptionThrown") {
+      const d = msg.params.exceptionDetails;
+      faults.push(`uncaught: ${d.exception?.description ?? d.text}`);
+    }
+    if (msg.method === "Runtime.consoleAPICalled" && ["error", "warning", "assert"].includes(msg.params.type)) {
+      faults.push(`console.${msg.params.type}: ${msg.params.args.map((a) => a.value ?? a.description ?? a.type).join(" ")}`);
+    }
+  }
 });
 const send = (method, params = {}) =>
   new Promise((resolve, reject) => {
@@ -66,6 +76,7 @@ const send = (method, params = {}) =>
   });
 
 await send("Page.enable");
+await send("Runtime.enable");
 mkdirSync(OUT, { recursive: true });
 
 for (const w of WIDTHS) {
@@ -93,7 +104,32 @@ for (const w of WIDTHS) {
   const out = path.join(OUT, `${PAGE.replace(/\.html$/, "")}-${w}-full.png`);
   writeFileSync(out, Buffer.from(shot.data, "base64"));
   console.log(`ok    ${out}  ${sw}x${sh}`);
+
+  // A missing .join("") on an array of row templates prints as a run of commas above the table.
+  // It is invisible in a build log and obvious in pixels, so it is checked in the DOM, not the source.
+  const { result: scan } = await send("Runtime.evaluate", {
+    expression: `(() => {
+      const bad = [];
+      const walk = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+      let n; while ((n = walk.nextNode())) {
+        const t = n.nodeValue.trim();
+        if (/,{3,}/.test(t)) bad.push(t.slice(0, 60));
+      }
+      return JSON.stringify(bad);
+    })()`,
+    returnByValue: true,
+  });
+  for (const t of JSON.parse(scan.value)) faults.push(`${w}px: stray comma run — a .map() is missing .join(""): "${t}"`);
+  if (sw > w) faults.push(`${w}px: page is ${sw}px wide, ${sw - w}px of horizontal overflow`);
 }
 
 ws.close();
 chrome.kill();
+
+const unique = [...new Set(faults)];
+if (unique.length) {
+  console.log(`\n${unique.length} RENDER FAULT(S) on ${PAGE}:`);
+  for (const f of unique) console.log(`  ${f}`);
+  process.exit(1);
+}
+console.log(`\nPIXELS CLEAN — ${PAGE} at ${WIDTHS.join(", ")}px, no console errors, no stray artifacts, no overflow.`);

@@ -43,6 +43,7 @@ const TO_MINIFY = [
   ["engines.bundle.js", "engines.min.js", "iife", null],
   ["dailies.data.js", "dailies.data.min.js", "iife", null],
   ["studio.data.js", "studio.data.min.js", "iife", null],
+  ["switchboard.data.js", "switchboard.data.min.js", "iife", null],
   ["availability.generated.js", "availability.generated.min.js", "iife", null],
   ["tool-links.js", "tool-links.min.js", "iife", null],
   ["psi-verify.js", "psi-verify.min.js", "iife", null],

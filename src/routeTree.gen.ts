@@ -27,6 +27,7 @@ import { Route as TheaterRouteImport } from './routes/theater'
 import { Route as VaultRouteImport } from './routes/vault'
 import { Route as VerifyRouteImport } from './routes/verify'
 import { Route as ApiPublicRenderRouteImport } from './routes/api/public/render'
+import { Route as ApiPublicFrameIdRouteImport } from './routes/api/public/frame.$id'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -118,6 +119,11 @@ const ApiPublicRenderRoute = ApiPublicRenderRouteImport.update({
   path: '/api/public/render',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiPublicFrameIdRoute = ApiPublicFrameIdRouteImport.update({
+  id: '/api/public/frame/$id',
+  path: '/api/public/frame/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -138,6 +144,7 @@ export interface FileRoutesByFullPath {
   '/vault': typeof VaultRoute
   '/verify': typeof VerifyRoute
   '/api/public/render': typeof ApiPublicRenderRoute
+  '/api/public/frame/$id': typeof ApiPublicFrameIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -158,6 +165,7 @@ export interface FileRoutesByTo {
   '/vault': typeof VaultRoute
   '/verify': typeof VerifyRoute
   '/api/public/render': typeof ApiPublicRenderRoute
+  '/api/public/frame/$id': typeof ApiPublicFrameIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -179,6 +187,7 @@ export interface FileRoutesById {
   '/vault': typeof VaultRoute
   '/verify': typeof VerifyRoute
   '/api/public/render': typeof ApiPublicRenderRoute
+  '/api/public/frame/$id': typeof ApiPublicFrameIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -201,6 +210,7 @@ export interface FileRouteTypes {
     | '/vault'
     | '/verify'
     | '/api/public/render'
+    | '/api/public/frame/$id'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -221,6 +231,7 @@ export interface FileRouteTypes {
     | '/vault'
     | '/verify'
     | '/api/public/render'
+    | '/api/public/frame/$id'
   id:
     | '__root__'
     | '/'
@@ -241,6 +252,7 @@ export interface FileRouteTypes {
     | '/vault'
     | '/verify'
     | '/api/public/render'
+    | '/api/public/frame/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -262,6 +274,7 @@ export interface RootRouteChildren {
   VaultRoute: typeof VaultRoute
   VerifyRoute: typeof VerifyRoute
   ApiPublicRenderRoute: typeof ApiPublicRenderRoute
+  ApiPublicFrameIdRoute: typeof ApiPublicFrameIdRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -392,6 +405,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiPublicRenderRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/public/frame/$id': {
+      id: '/api/public/frame/$id'
+      path: '/api/public/frame/$id'
+      fullPath: '/api/public/frame/$id'
+      preLoaderRoute: typeof ApiPublicFrameIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -414,6 +434,7 @@ const rootRouteChildren: RootRouteChildren = {
   VaultRoute: VaultRoute,
   VerifyRoute: VerifyRoute,
   ApiPublicRenderRoute: ApiPublicRenderRoute,
+  ApiPublicFrameIdRoute: ApiPublicFrameIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>The Cinema — a house of open-source tools, and films nobody has to believe | Sovereign AI Filmverse</title>
+<title>The Cinema — a live 3D constellation of every catalogued tool | Sovereign AI Film Verse</title>
 <meta name="description" content="A live 3D constellation of every catalogued tool, and the ones we actually drive. The cinematic front door to Sovereign AI Filmverse — and a working preview of the studio behind it.">
 <meta name="theme-color" content="#06050a">
 <meta name="color-scheme" content="dark">
@@ -26,12 +26,13 @@
 
 
 
+
 <!-- apex-meta:start -->
 <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
 <link rel="canonical" href="https://filmverse-1mil8xwzv4y.qoder.website/cinema.html">
 <meta property="og:type" content="website">
-<meta property="og:site_name" content="Sovereign AI Filmverse">
-<meta property="og:title" content="The Cinema — Sovereign AI Filmverse">
+<meta property="og:site_name" content="Sovereign AI Film Verse">
+<meta property="og:title" content="The Cinema">
 <meta property="og:description" content="A live 3D constellation of every catalogued tool, and the ones we actually drive. The cinematic front door to Sovereign AI Filmverse — and a working preview of the studio behind it.">
 <meta property="og:url" content="https://filmverse-1mil8xwzv4y.qoder.website/cinema.html">
 <meta property="og:image" content="https://filmverse-1mil8xwzv4y.qoder.website/assets/dailies/frame-at-2s.jpg">
@@ -39,8 +40,8 @@
 <meta property="og:image:height" content="720">
 <meta property="og:image:alt" content="One frame from the pipeline's own master, extracted at two seconds.">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="The Cinema — Sovereign AI Filmverse">
-<meta name="twitter:description" content="A live 3D constellation of every catalogued tool, and the ones we actually drive.">
+<meta name="twitter:title" content="The Cinema">
+<meta name="twitter:description" content="A live 3D constellation of every catalogued tool, and the ones we actually drive. The cinematic front door to Sovereign AI Filmverse — and a working preview of the studio behind it.">
 <meta name="twitter:image" content="https://filmverse-1mil8xwzv4y.qoder.website/assets/dailies/frame-at-2s.jpg">
 <!-- apex-meta:end -->
 </head>
@@ -349,8 +350,11 @@ function reveal() {
   document.querySelectorAll(".rise").forEach((el, i) => { el.style.transitionDelay = (i % 4) * 70 + "ms"; io.observe(el); });
 }
 
-function wireGsap() {
+async function wireGsap() {
   gsap.registerPlugin(ScrollTrigger, SplitText);
+  // SplitText measures glyph boxes. Measuring before the display font lands splits the fallback
+  // font, so the reveal animates lines that are not the ones the visitor finally reads.
+  if (document.fonts && document.fonts.ready) await document.fonts.ready;
   const split = new SplitText("#mast", { type: "chars,lines", linesClass: "l" });
   gsap.set(split.chars, { yPercent: 118, opacity: 0 });
   gsap.to(split.chars, { yPercent: 0, opacity: 1, duration: 1.15, ease: "expo.out", stagger: { each: 0.028, from: "start" }, delay: 0.18 });

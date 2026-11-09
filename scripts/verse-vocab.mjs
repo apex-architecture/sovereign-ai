@@ -109,7 +109,7 @@ const navBlock = [
     const items = navItems(g);
     if (!items.length) return null;
     return [`    { group: "${g}", items: [`, ...items, "    ]},"];
-  }).filter(Boolean),
+  }).filter(Boolean).flat(),
   "  ];",
   END,
 ].join("\n");

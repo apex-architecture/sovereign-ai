@@ -1,6 +1,6 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import {
-  Outlet, Link, createRootRouteWithContext, useRouter,
+  Outlet, Link, createRootRouteWithContext, useRouter, useRouterState,
   HeadContent, Scripts, type ErrorComponentProps,
 } from "@tanstack/react-router";
 import { Fragment, useEffect, type ReactNode } from "react";
@@ -196,7 +196,29 @@ function TopBar() {
   );
 }
 
+/** On the film-making screen the room list folds to icons, so the film gets the width. */
+function CompactRail() {
+  return (
+    <aside className="sticky top-[85px] hidden h-[calc(100vh-85px-33px)] w-[68px] shrink-0 flex-col border-r border-border bg-chassis/60 lg:flex">
+      <nav className="no-scrollbar flex-1 overflow-y-auto py-3">
+        {PRIMARY.map((it) => {
+          const I = it.icon;
+          return (
+            <Link key={it.to} to={it.to} activeOptions={{ exact: it.to === "/" }} title={it.label} aria-label={it.label}
+              className="relative flex h-12 items-center justify-center text-muted-foreground transition-colors hover:bg-rack/60 hover:text-foreground"
+              activeProps={{ className: "!text-primary bg-primary/[0.08] before:absolute before:inset-y-0 before:left-0 before:w-[3px] before:bg-primary before:shadow-[0_0_12px_var(--primary)]" }}>
+              <I className="h-5 w-5" strokeWidth={1.4} />
+            </Link>
+          );
+        })}
+      </nav>
+    </aside>
+  );
+}
+
 function SideRail() {
+  const path = useRouterState({ select: (s) => s.location.pathname });
+  if (path === "/create") return <CompactRail />;
   return (
     <aside className="sticky top-[85px] hidden h-[calc(100vh-85px-33px)] w-[240px] shrink-0 flex-col border-r border-border bg-chassis/60 lg:flex">
       <nav className="no-scrollbar flex-1 overflow-y-auto py-3">

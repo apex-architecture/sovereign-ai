@@ -3,10 +3,11 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>The Engine Road — every open and paid tool, ranked for your shot | Sovereign AI Filmverse</title>
-<meta name="description" content="Describe the shot and the road ranks every engine that could make it: open weights or paid API, ranked by measured quality, release date and price per second, then refused out loud when its licence, your territory, your hardware or your budget says no.">
+<title>Connect — four plugs, ten stages, and every engine ranked for your shot | Sovereign AI Film Verse</title>
+<meta name="description" content="The platform is a switchboard on the internet: it owns no GPU and runs no model. Plug in your own rig, your own cloud key, a webhook, or nothing at all and let the browser do the work. Four plugs, ten stages, eighteen connectors — and below them every engine ranked for your shot, refused out loud when its licence, your territory, your hardware or your budget says no.">
 <meta name="color-scheme" content="dark">
 <link rel="stylesheet" href="styles.css">
+
 
 
 
@@ -14,17 +15,17 @@
 <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
 <link rel="canonical" href="https://filmverse-1mil8xwzv4y.qoder.website/engines.html">
 <meta property="og:type" content="website">
-<meta property="og:site_name" content="Sovereign AI Filmverse">
-<meta property="og:title" content="The Engine Road">
-<meta property="og:description" content="Describe the shot and the road ranks every engine that could make it: open weights or paid API, ranked by measured quality, release date and price per second, then refused out loud when its licence, your territory, your hardware or your budget says no.">
+<meta property="og:site_name" content="Sovereign AI Film Verse">
+<meta property="og:title" content="Connect">
+<meta property="og:description" content="The platform is a switchboard on the internet: it owns no GPU and runs no model. Plug in your own rig, your own cloud key, a webhook, or nothing at all and let the browser do the work. Four plugs, ten stages, eighteen connectors — and below them every engine ranked for your shot, refused out loud when its licence, your territory, your hardware or your budget says no.">
 <meta property="og:url" content="https://filmverse-1mil8xwzv4y.qoder.website/engines.html">
 <meta property="og:image" content="https://filmverse-1mil8xwzv4y.qoder.website/assets/dailies/frame-at-2s.jpg">
 <meta property="og:image:width" content="1280">
 <meta property="og:image:height" content="720">
 <meta property="og:image:alt" content="One frame from the pipeline's own master, extracted at two seconds.">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="The Engine Road">
-<meta name="twitter:description" content="Describe the shot and the road ranks every engine that could make it: open weights or paid API, ranked by measured quality, release date and price per second, then refused out loud when its licence, your territory, your hardware or your budget says no.">
+<meta name="twitter:title" content="Connect">
+<meta name="twitter:description" content="The platform is a switchboard on the internet: it owns no GPU and runs no model. Plug in your own rig, your own cloud key, a webhook, or nothing at all and let the browser do the work. Four plugs, ten stages, eighteen connectors — and below them every engine ranked for your shot, refused out loud when its licence, your territory, your hardware or your budget says no.">
 <meta name="twitter:image" content="https://filmverse-1mil8xwzv4y.qoder.website/assets/dailies/frame-at-2s.jpg">
 <!-- apex-meta:end -->
 </head>
@@ -34,24 +35,63 @@
     <main class="page">
 
       <header class="section" style="margin-top:0">
-        <h1>The Engine Road</h1>
+        <h1>Connect</h1>
         <p class="note" style="max-width:76ch;margin-top:10px">
-          We do not own the models and we do not own the compute. We own the road between a creator's
-          idea and the tool that can actually shot it. Describe the shot below. The ranking is not a
-          brochure: every engine that cannot take the job is printed with the gate that refused it —
-          its licence, your territory, the GPU you have, the price, or the fact that it no longer
-          exists. And when nothing on your machine can do it, the road names the body that can and
-          what it costs on <b>your own key</b>.
+          This platform is a switchboard on the internet. It owns no GPU, runs no model and stores no
+          footage. Everything connects <b>to</b> it through one of four plugs, and the creator's own
+          machine or the creator's own key does the work. Nothing is installed on the operator's
+          laptop, and no render is ever billed to the platform by default.
         </p>
         <p class="note" style="max-width:76ch">
-          This page runs <span class="mono">src/lib/apex/engines.ts</span> in your browser — the same
-          file <span class="mono">scripts/film-run.mjs</span> used to choose the engine for the render
-          on the Dailies page. If the two ever disagree, the page is wrong.
+          Below the switchboard is the engine road: describe a shot and it ranks every engine that
+          could take it, printing the gate that refused each one it cannot. The switchboard says what
+          is plugged in; the road says which engine to use. Both run
+          <span class="mono">src/lib/apex</span> in your browser, so if this page and the repository
+          ever disagree, the page is wrong.
         </p>
       </header>
 
       <section class="section">
-        <h2>1 · Describe the shot</h2>
+        <h2>1 · The four plugs</h2>
+        <p class="note" style="max-width:76ch">
+          Every engine reaches this platform through exactly one of these. There is no fifth path.
+          The cross-origin column is the browser's rule, not a platform policy: a page may only call
+          an endpoint that permits it, and no amount of frontend code removes that.
+        </p>
+        <div id="sb-plugs"></div>
+      </section>
+
+      <section class="section">
+        <h2>2 · The ten stages, and what is behind each</h2>
+        <p class="note" style="max-width:76ch">
+          Pick what you have plugged in. The pipeline resolves each stage to a real route or reports
+          <span class="mono">not connected</span> with the one thing you would have to bring. A stage
+          is never shown as runnable because the code for it exists.
+        </p>
+        <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(200px,1fr));margin-bottom:14px" id="sb-scenarios"></div>
+        <p class="note" id="sb-count" aria-live="polite"></p>
+        <div id="sb-stages" style="overflow-x:auto"></div>
+        <p class="note" style="max-width:76ch;margin-top:12px">
+          Separately from the four plugs, the hosted app runs <b>script and storyboard for free</b> on a
+          daily-capped server allowance: DeepSeek V3 with Qwen3 as the open-weights fallback, frames by
+          FLUX schnell, all on Replicate (<span class="mono">src/lib/preproduction.functions.ts</span>).
+          That lane lives on the app's server and spends the house's capped allowance, so it is not a
+          plug this static page can offer — video render there stays behind the owner keypad.
+        </p>
+      </section>
+
+      <section class="section">
+        <h2>3 · Every connector, its plug and its exit</h2>
+        <p class="note" style="max-width:76ch">
+          No connector enters this platform without a named exit — if a provider vanishes or
+          reprices, the row already says what runs instead. A licence nobody has read is printed as
+          unverified, never as cleared.
+        </p>
+        <div id="sb-connectors" style="overflow-x:auto"></div>
+      </section>
+
+      <section class="section">
+        <h2>4 · Describe the shot</h2>
         <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(190px,1fr))">
           <div>
             <label class="f" for="q-stage">Pipeline stage</label>
@@ -137,13 +177,13 @@
       </section>
 
       <section class="section">
-        <h2>2 · The road's answer</h2>
+        <h2>5 · The road's answer</h2>
         <p class="note" id="e-count" aria-live="polite"></p>
         <div id="e-offer"></div>
       </section>
 
       <section class="section">
-        <h2>3 · Refused, and why</h2>
+        <h2>6 · Refused, and why</h2>
         <p class="note" style="max-width:74ch">
           A shortlist without its refusals is advertising. These engines were met and turned away, and
           the gate that stopped each one is printed in its own words.
@@ -152,7 +192,7 @@
       </section>
 
       <section class="section">
-        <h2>4 · The escape route</h2>
+        <h2>7 · The escape route</h2>
         <p class="note" style="max-width:74ch">
           Your hardware is never the ceiling of this platform. When the ask is bigger than the body you
           have, the road names the body that fits and the one thing you must bring. The vendor bills
@@ -162,7 +202,7 @@
       </section>
 
       <section class="section">
-        <h2>5 · The dictionary</h2>
+        <h2>8 · The dictionary</h2>
         <p class="note" style="max-width:76ch">
           Everything the index knows for this stage, measured on the date printed under it. A blank is
           an honest blank: it means nobody on this platform has verified that number, and an engine with
@@ -173,7 +213,7 @@
       </section>
 
       <section class="section">
-        <h2>6 · What this index is not yet</h2>
+        <h2>9 · What this index is not yet</h2>
         <p class="note" style="max-width:76ch" id="e-gaps"></p>
         <div id="e-fence"></div>
       </section>
@@ -191,10 +231,127 @@
 </div>
 
 <script src="data.shell.min.js"></script>
+<script src="switchboard.data.min.js"></script>
 <script src="availability.generated.min.js"></script>
 <script src="tool-links.min.js"></script>
 <script src="engines.min.js"></script>
 <script src="shell.min.js"></script>
+<script>
+(function () {
+  const S = window.APEX_SWITCHBOARD;
+  const box = (id) => document.getElementById(id);
+  if (!S) {
+    box("sb-plugs").innerHTML =
+      '<p class="note bad">The switchboard data did not load, so this page cannot say what is connected. Run <span class="mono">npm run switchboard:data &amp;&amp; npm run site:build</span> and reload.</p>';
+    return;
+  }
+  const esc = (s) => String(s ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+  const chip = (cls, text) => `<span class="chip ${cls}">${esc(text)}</span>`;
+  const REACH_CLS = { device: "ok", direct: "drive", bridge: "warn", server: "bad" };
+  const REACH_LABEL = {
+    device: "In your browser",
+    direct: "Your endpoint, CORS on",
+    bridge: "Needs the creator bridge",
+    server: "Needs the hosted platform",
+  };
+
+  /* ---------------------------------------------------------- the four plugs */
+
+  box("sb-plugs").innerHTML =
+    `<div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(260px,1fr))">` +
+    S.plugs
+      .map((p) => {
+        const n = S.plugCount[p.id] ?? 0;
+        return `<div class="card" style="padding:16px">
+          <div style="display:flex;align-items:baseline;justify-content:space-between;gap:10px">
+            <b style="font-size:15px">${esc(p.name)}</b>
+            ${chip(p.worksOnPages ? "ok" : "warn", p.worksOnPages ? "works here" : "needs a server")}
+          </div>
+          <p class="note" style="margin:10px 0">${esc(p.what)}</p>
+          <p class="note"><b>Computes:</b> ${esc(p.whoComputes)}<br><b>Pays:</b> ${esc(p.whoPays)}<br><b>You bring:</b> ${esc(p.needs)}</p>
+          <p class="note" style="border-top:1px solid var(--line);padding-top:8px;margin-top:8px">${esc(p.cors)}</p>
+          <p class="note mono" style="margin-top:8px">${n} connector${n === 1 ? "" : "s"} on this plug</p>
+        </div>`;
+      })
+      .join("") +
+    `</div>` +
+    `<p class="note" style="margin-top:12px">${S.liveOnPages.length} of ${S.connectorCount} connectors are reachable from this static page with no server: <b>${esc(S.liveOnPages.join(", "))}</b>. The rest say what they need instead of pretending to be live.</p>`;
+
+  /* ---------------------------------------------------------- the ten stages */
+
+  let scenario = S.scenarios[0].id;
+  box("sb-scenarios").innerHTML = S.scenarios
+    .map(
+      (s) =>
+        `<button type="button" class="chip gold" data-sb="${esc(s.id)}" style="padding:9px 12px;cursor:pointer">${esc(s.label)} — ${s.coverage.connected}/${s.coverage.total}</button>`,
+    )
+    .join("");
+
+  function drawStages() {
+    const sc = S.scenarios.find((x) => x.id === scenario) ?? S.scenarios[0];
+    for (const b of document.querySelectorAll("[data-sb]")) {
+      b.classList.toggle("gold", b.dataset.sb === scenario);
+      b.setAttribute("aria-pressed", String(b.dataset.sb === scenario));
+    }
+    box("sb-count").innerHTML =
+      `<b>${sc.coverage.connected} of ${sc.coverage.total} stages connected</b> with ${esc(sc.label.toLowerCase())}.` +
+      (sc.coverage.empty.length ? ` Not connected: <span class="mono">${esc(sc.coverage.empty.join(", "))}</span>.` : " Nothing is empty.");
+
+    box("sb-stages").innerHTML =
+      `<table class="t"><thead><tr><th scope="col">#</th><th scope="col">Stage</th><th scope="col">What it does</th>` +
+      `<th scope="col">Runs on</th><th scope="col">Plug</th><th scope="col">The honest answer</th></tr></thead><tbody>` +
+      sc.resolved
+        .map((r) => {
+          const st = S.stages.find((x) => x.id === r.id);
+          const route = r.routes.find((x) => x.provider === r.chosen);
+          return `<tr>
+            <td class="mono">${st.n}</td>
+            <td><b>${esc(st.name)}</b></td>
+            <td style="max-width:30ch">${esc(st.does)}</td>
+            <td>${r.chosen ? `<b>${esc(r.chosen)}</b>` : chip("bad", "not connected")}</td>
+            <td>${route ? chip(REACH_CLS[route.reach], route.plug) : "—"}</td>
+            <td style="max-width:46ch">${esc(r.says)}</td>
+          </tr>`;
+        })
+        .join("") +
+      `</tbody></table>`;
+  }
+
+  for (const b of document.querySelectorAll("[data-sb]")) {
+    b.addEventListener("click", () => {
+      scenario = b.dataset.sb;
+      drawStages();
+    });
+  }
+  drawStages();
+
+  /* ---------------------------------------------------------- the connector table */
+
+  box("sb-connectors").innerHTML =
+    `<table class="t"><thead><tr><th scope="col">Connector</th><th scope="col">Plug</th><th scope="col">Reach</th>` +
+    `<th scope="col">Who pays</th><th scope="col">Licence</th><th scope="col">The exit</th><th scope="col">Last tested</th></tr></thead><tbody>` +
+    S.connectors
+      .map(
+        (c) => `<tr>
+          <td><b>${esc(c.provider)}</b><br><span class="note">${esc(c.product)}</span><br><a href="${esc(c.docsUrl)}" target="_blank" rel="noopener noreferrer">docs ↗</a></td>
+          <td>${chip("", c.plug)}</td>
+          <td>${chip(REACH_CLS[c.reach], REACH_LABEL[c.reach])}<br><span class="note mono">${esc(c.apiBaseUrl)}</span></td>
+          <td style="max-width:26ch">${esc(c.usageCharge)}</td>
+          <td style="max-width:30ch">${esc(c.licenceTerms)}${c.securityStatus === "unverified" ? `<br>${chip("warn", "security unverified")}` : ""}</td>
+          <td style="max-width:26ch">${esc(c.exit.join(" · "))}</td>
+          <td class="mono">${c.lastTested ? esc(c.lastTested) : chip("warn", "never")}</td>
+        </tr>`,
+      )
+      .join("") +
+    `</tbody></table>` +
+    `<p class="note" style="margin-top:12px">${esc(S.unverifiedLicences.length)} connectors carry a licence statement that still needs reading. Unverified is a valid answer; an invented permission is not.</p>` +
+    V.fence(
+      "A switchboard that cannot reach a thing must say so. No stage on this page is shown as connected unless the resolver found a reachable route for it in this build, and no connector is shown as live because its code exists.",
+    );
+
+  box("gen").textContent = V.generated();
+})();
+</script>
 <script>
 (function () {
   const E = window.APEX_ENGINES;
@@ -341,7 +498,8 @@
             (x) =>
               `<tr><td><b>${esc(x.engine.name)}</b><br><span class="note">${esc(x.engine.fits.split(".")[0])}.</span></td>` +
               `<td><b>${money(x.quoteUsd)}</b><br><span class="note">${esc(x.quoteBasis)}</span></td><td>${esc(x.precondition)}</td></tr>`,
-          ) +
+          )
+          .join("") +
         `</tbody></table>`
       : `<p class="note">No escape needed: the answer is already on the body you declared.</p>`;
 
