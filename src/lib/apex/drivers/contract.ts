@@ -25,6 +25,12 @@ export interface JobInput {
   inputs: string[];
   /** Model/weights/voice/preset this particular attempt should use. */
   variant?: string;
+  /**
+   * The delivery shape, by camera-deck id ("scope", "flat", "vertical"…). Absent or unknown
+   * means 16:9, which is every raster this driver hard-coded before the deck existed — so a
+   * job that never chose a shape cannot render differently than it did last week.
+   */
+  aspect?: string;
   /** Wall-clock ceiling. A hung job must not hold the pipeline. */
   timeoutSeconds: number;
   /** Spend cap for a paid call; 0 means local-only. */

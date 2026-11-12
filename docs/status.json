@@ -1,5 +1,5 @@
 {
- "built_at": "2026-11-09T01:46:12.952Z",
+ "built_at": "2026-11-12T20:20:04.505Z",
  "build": "local",
  "files": {
   "studio.html": {
@@ -13,6 +13,10 @@
   "dailies.html": {
    "bytes": 24713,
    "sha256": "0f2a91b7c99f5220"
+  },
+  "deck.html": {
+   "bytes": 17950,
+   "sha256": "56a22ca63a06c934"
   },
   "engines.html": {
    "bytes": 37125,
@@ -31,8 +35,8 @@
    "sha256": "7e3a7b8314cb41c1"
   },
   "studio.css": {
-   "bytes": 17086,
-   "sha256": "b613d03efe80f7b8"
+   "bytes": 16802,
+   "sha256": "ac01315dd3f5a7b4"
   },
   "verify.html": {
    "bytes": 29035,
@@ -47,12 +51,16 @@
    "sha256": "7cc65f92113b5f8a"
   },
   "engines.min.js": {
-   "bytes": 252264,
-   "sha256": "2af9d3526f48b0c8"
+   "bytes": 255890,
+   "sha256": "64fdd15da2c41c74"
   },
   "dailies.data.min.js": {
    "bytes": 6234,
    "sha256": "84aa7e717b8e6a4d"
+  },
+  "deck.data.min.js": {
+   "bytes": 13052,
+   "sha256": "ea160d35c697c2cd"
   },
   "studio.data.min.js": {
    "bytes": 10294,
@@ -67,8 +75,8 @@
    "sha256": "aeee8f2598aef1cf"
   },
   "shell.min.js": {
-   "bytes": 4412,
-   "sha256": "746d944cccfec8e5"
+   "bytes": 4474,
+   "sha256": "e2350970deb40ebd"
   },
   "studio.min.js": {
    "bytes": 22338,
@@ -79,8 +87,8 @@
    "sha256": "3400fda5a00ada36"
   },
   "availability.generated.min.js": {
-   "bytes": 37817,
-   "sha256": "e1111872299bd639"
+   "bytes": 37808,
+   "sha256": "7c30aaf33c6eef11"
   },
   "foreman.generated.js": {
    "bytes": 7151,

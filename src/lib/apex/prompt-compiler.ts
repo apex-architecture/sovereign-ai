@@ -17,6 +17,8 @@
  * on the rig, and a failure the creator cannot read is worse than an honest absence.
  */
 
+import { aspectById, latentRaster, stopById } from "./camera-deck.ts";
+
 export interface WeightedTerm {
   text: string;
   weight: number;
@@ -41,6 +43,15 @@ export interface CompileOptions {
   height?: number;
   steps?: number;
   cfg?: number;
+  /**
+   * The camera deck's shape, by id. It sets `width`/`height` when those are not given
+   * explicitly, because a generator can only be asked for a size a VAE can actually produce,
+   * and it adds the framing language the shape implies. Absent means the 832x480 the compiler
+   * used before the deck existed.
+   */
+  aspect?: string;
+  /** The aperture. Adds depth-of-field language; it cannot change a lens that is not there. */
+  stop?: string;
   /** The graph family. One ships; more are one profile function each. */
   profile?: string;
 }
@@ -65,6 +76,9 @@ export interface CompiledShot {
   terms: WeightedTerm[];
   /** Locked for this shot. The same brief and salt always produce it. */
   seed: number;
+  /** The size the generator is asked for. The delivery raster is the encoder's answer, not this. */
+  width: number;
+  height: number;
   graph: ComfyGraph;
 }
 
@@ -350,6 +364,11 @@ export function compileMatrix(brief: string, opts: CompileOptions = {}): Compile
   const salt = opts.seed ?? 0;
   const matrixSeed = fnv1a(clean, salt);
   const profile = profileById(opts.profile ?? "sd") ?? SD_PROFILE;
+  // The deck is read before the shots, because the shape decides the latent size every shot is
+  // generated at and the aperture decides how a subject separates from its background.
+  const aspect = aspectById(opts.aspect);
+  const stop = stopById(opts.stop);
+  const latent = latentRaster(opts.aspect);
 
   const want = Math.max(1, Math.min(10, opts.shots ?? FRAMINGS.length));
   const covered = recognised.framing.length
@@ -359,6 +378,8 @@ export function compileMatrix(brief: string, opts: CompileOptions = {}): Compile
     : [];
   const shotPlan = [...covered, ...FRAMINGS.filter((f) => !recognised.framing.includes(f.id))].slice(0, want);
   if (want > FRAMINGS.length) warnings.push(`only ${FRAMINGS.length} framings are defined; ${want} were asked for`);
+  if (opts.aspect && !aspect) warnings.push(`"${opts.aspect}" is not a shape on the deck — the matrix compiled at 16:9`);
+  if (opts.stop && !stop) warnings.push(`f/${opts.stop} is not a stop on the deck — no aperture language was added`);
 
   const core = residual(clean, [
     ...recognised.light, ...recognised.motion, ...recognised.mood, ...recognised.style,
@@ -388,6 +409,10 @@ export function compileMatrix(brief: string, opts: CompileOptions = {}): Compile
     if (motion) terms.push({ text: motion, weight: 1.1 });
     if (mood) terms.push({ text: mood, weight: 1.05 });
     if (style) terms.push({ text: style, weight: 1.1 });
+    // The deck outranks the generic quality words but loses to the director's own light: a shape
+    // is a container, not a mood. An unknown choice adds nothing rather than guessing.
+    if (aspect) terms.push({ text: aspect.term, weight: 1.1 });
+    if (stop) terms.push({ text: stop.term, weight: 1.15 });
     terms.push(...QUALITY_TERMS);
 
     const positive = formatWeighted(terms);
@@ -400,8 +425,8 @@ export function compileMatrix(brief: string, opts: CompileOptions = {}): Compile
       seed,
       steps: opts.steps ?? 30,
       cfg: opts.cfg ?? 7.5,
-      width: opts.width ?? 832,
-      height: opts.height ?? 480,
+      width: opts.width ?? latent.width,
+      height: opts.height ?? latent.height,
       filenamePrefix: `APEX/${plan.id}`,
     });
     const problems = graphProblems(graph);
@@ -417,6 +442,8 @@ export function compileMatrix(brief: string, opts: CompileOptions = {}): Compile
       negative,
       terms,
       seed,
+      width: opts.width ?? latent.width,
+      height: opts.height ?? latent.height,
       graph,
     };
   });

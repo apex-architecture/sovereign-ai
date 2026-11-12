@@ -66,7 +66,7 @@ export function EngineTab() {
         {[
           { i: Cloud, t: "Cloud GPUs", tag: <Tag tone="ok">Live</Tag>, d: "Video shots render on powerful cloud graphics machines through Replicate. Working today." },
           { i: Server, t: "Your own machine", tag: <Tag tone="signal">Connect</Tag>, d: "Link a ComfyUI computer or a rented GPU on Connect, and the studio sends work to it." },
-          { i: Network, t: "Community grid", tag: <Tag tone="warn">Planned</Tag>, d: "Idle gaming and studio GPUs pooled into one render grid, to push the cost of a feature film toward zero." },
+          { i: Network, t: "Render grid", tag: <Tag tone="signal">Studio nodes</Tag>, d: "GPU machines run a small worker that picks shots off one shared queue. Public sign-up for idle gaming and studio GPUs opens next." },
         ].map(({ i: I, t, tag, d }) => (
           <div key={t} className="glass p-6">
             <div className="flex items-center justify-between"><I className="h-6 w-6 text-primary" strokeWidth={1.4} />{tag}</div>
@@ -128,7 +128,7 @@ export function EngineTab() {
           { i: Users, t: "Creators", d: "Make a film from a phone, keep the credit." },
           { i: Building2, t: "Studios", d: "Run whole productions with proof built in." },
           { i: Code, t: "Developers", d: "Connect new tools and improve the studio." },
-          { i: Cpu, t: "Compute providers", d: "Lend spare GPUs to the render grid (planned)." },
+          { i: Cpu, t: "Compute providers", d: "Run the node worker and lend spare GPUs to the render grid." },
         ].map(({ i: I, t, d }) => (
           <div key={t} className="glass p-4">
             <I className="h-5 w-5 text-primary" strokeWidth={1.4} />

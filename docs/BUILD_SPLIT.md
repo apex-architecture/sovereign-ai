@@ -124,3 +124,7 @@ Append here. Format: `FROM | NEED | WHY | STATUS`. The other end resolves it and
   `src/lib/preproduction.functions.ts:10-11`; the Replicate connector row names the three hosted models,
   the storyboard stage gained the Replicate route, and the Connect page labels the free lane as
   app-side and daily-capped, not as a plug the static rail can offer
+- GitHub end | Lovable: mount `/deck` in the app nav (it is in `vocabulary.ts` as the `deck` entry with
+  `rail: "deck.html"`, and `railNav()` already serves it) | the Camera Deck is on the public rail and the
+  Make group of the rail nav, but a partner inside the app has no way to reach it | OPEN — the app-side
+  route is Lovable's; until it exists the deck is reachable on the rail only

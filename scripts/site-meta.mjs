@@ -30,6 +30,7 @@ const PAGES = {
   "engines.html": { title: "Connect — four plugs, ten stages, and every engine ranked for your shot | Sovereign AI Film Verse", type: "website" },
   "mission.html": { title: "Start a Mission — one idea walked from story to master | Sovereign AI Film Verse", type: "website" },
   "tools.html": { title: "Open Source Power — the tool map | Sovereign AI Film Verse", type: "website" },
+  "deck.html": { title: "Camera Deck — the shape, the glass, and the pixels each commits to | Sovereign AI Film Verse", type: "website" },
   "rights.html": { title: "Rights & Licensing — the honest ledger | Sovereign AI Film Verse", type: "website" },
   "verify.html": { title: "Verify a Receipt — free, no account | Sovereign AI Film Verse", type: "website" },
   "passport.html": { title: "Creator Passport — A Portable Record of a Work | Sovereign AI Film Verse", type: "website" },

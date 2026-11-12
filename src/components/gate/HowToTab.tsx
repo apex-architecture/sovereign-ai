@@ -20,7 +20,7 @@ const PATHS: Path[] = [
       { t: "Open Create", d: <>Tap Enter below, then <GoLink to="/create">Create</GoLink>.</> },
       { t: "Describe your film", d: "Type the idea in plain words. The story assistant turns it into a sharp cinematic shot." },
       { t: "Pick a look", d: "Cinematic, anime, noir, documentary, cyberpunk or dream. One tap." },
-      { t: "Generate", d: "The shot renders on cloud GPUs in a few minutes. During testing only the owner can render, because every shot costs real money." },
+      { t: "Generate", d: "Script and storyboard are free for everyone, every day. Video renders on cloud GPUs in a few minutes, opened by the studio." },
       { t: "Watch & keep", d: <>Play it in the <GoLink to="/theater">Theater</GoLink> and keep it in your <GoLink to="/vault">Vault</GoLink>.</> },
       { t: "Build & prove", d: <>Plan the whole film in <GoLink to="/director">Director</GoLink>, then check its passport on <GoLink to="/verify">Verify</GoLink>.</> },
     ],
@@ -28,14 +28,14 @@ const PATHS: Path[] = [
   },
   {
     id: "studio", letter: "B", icon: Building2, who: "Co-production studio", tagline: "Bring a feature. Build it together.",
-    status: { tone: "warn", label: "Coming soon" },
+    status: { tone: "signal", label: "By application" },
     steps: [
       { t: "Read the guide", d: <>See every step of the studio in the <GoLink to="/guide">Platform Guide</GoLink>.</> },
       { t: "Plan your scenes", d: <>Lay out the story and shot list in <GoLink to="/director">Director</GoLink>.</> },
-      { t: "Join the beta", d: <>Put your name down on <GoLink to="/beta">Beta</GoLink> to pitch a project.</> },
-      { t: "Co-produce", d: "Studio-backed compute, talent and promotion with a shared split. Planned, not live yet." },
+      { t: "Apply", d: <>Pitch your project on the <GoLink to="/beta">application page</GoLink>.</> },
+      { t: "Co-produce", d: "Studio-backed compute, talent and promotion with a shared split, agreed project by project." },
     ],
-    cta: { to: "/beta", label: "Join the beta" },
+    cta: { to: "/beta", label: "Apply to co-produce" },
   },
   {
     id: "developer", letter: "C", icon: Code, who: "Open-source developer", tagline: "Plug in. Improve it. Make it yours.",
@@ -44,17 +44,17 @@ const PATHS: Path[] = [
       { t: "Explore the tool map", d: <>See every tool and its honest status on the <GoLink to="/registry">Registry</GoLink>.</> },
       { t: "Connect your machine", d: <>Point the studio at your ComfyUI or GPU server on <GoLink to="/connect">Connect</GoLink>.</> },
       { t: "Drive it by API", d: <>Send and track renders with <span className="font-mono text-signal">POST /api/public/render</span> using an owner-issued token.</> },
-      { t: "Build on the code", d: "The open-source release on GitHub is being prepared. The public repository link is coming soon." },
+      { t: "Build on the code", d: <>Clone the open core from GitHub (<span className="font-mono text-signal">apex-architecture/sovereign-ai</span>) and follow the handover guide to run the whole studio your way.</> },
     ],
     cta: { to: "/connect", label: "Open Connect" },
   },
   {
     id: "node", letter: "D", icon: Cpu, who: "Compute provider", tagline: "Your idle GPU can power someone's film.",
-    status: { tone: "warn", label: "Planned" },
+    status: { tone: "signal", label: "Studio nodes live" },
     steps: [
-      { t: "Register a machine", d: <>Add your graphics machine on <GoLink to="/connect">Connect</GoLink> today.</> },
-      { t: "Join the grid", d: "Scheduling across many machines is planned. Your machine will pick up shots when it opens." },
-      { t: "Earn for renders", d: "Payment for rendered minutes is planned, not live. Nothing is paid out today." },
+      { t: "Run the node worker", d: "One small free program sits next to your ComfyUI, picks up shots from the studio queue and sends the finished file back." },
+      { t: "Rent a GPU on Akash", d: "A ready-made Akash setup is included, so a rented GPU can join the grid by the hour." },
+      { t: "Earn for renders", d: "Paid rendered minutes open with public node sign-up, the next release of the grid." },
     ],
     cta: { to: "/connect", label: "Register a machine" },
   },
@@ -115,7 +115,7 @@ export function HowToTab() {
 
       <div className="glass mt-4 flex flex-col gap-3 p-5 text-left sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <div className="hud text-[9px] text-primary">Fastest demo</div>
+          <div className="hud text-[9px] text-primary">Fastest first look</div>
           <div className="mt-1 text-[14px] text-foreground">Want to see it in thirty seconds? Open the Theater and press play.</div>
         </div>
         <GoButton to="/theater" ghost>Open Theater</GoButton>

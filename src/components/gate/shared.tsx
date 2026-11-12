@@ -14,22 +14,28 @@ type GateApi = { go: (to?: GateTo) => void; showTab: (t: TabId) => void };
 export const GateCtx = createContext<GateApi>({ go: () => {}, showTab: () => {} });
 export const useGate = () => useContext(GateCtx);
 
-/** Widescreen concept-art banner that opens every tab. Labelled as concept art so it never passes as a render. */
+/**
+ * Widescreen key-art banner that opens every tab. Labelled "Key art" so it never passes as a render.
+ * The art is a background layer and the words flow in normal layout, so the banner grows with its
+ * text and the headline can never ride over the label or spill out of the frame on any screen.
+ */
 export function Banner({ img, kicker, title, sub }: { img: string; kicker: string; title: ReactNode; sub: string }) {
   return (
-    <figure className="relative overflow-hidden border border-border bg-screen shadow-[var(--shadow-deck)] vignette grain">
+    <figure className="relative isolate flex min-h-[340px] flex-col overflow-hidden border border-border bg-screen shadow-[var(--shadow-deck)] vignette grain sm:min-h-[400px] lg:min-h-[460px]">
       <img src={img} alt="" aria-hidden loading="lazy" width={1600} height={693}
-        className="aspect-[4/3] w-full animate-kenburns object-cover sm:aspect-[2.39/1]" />
-      <div className="absolute inset-0 z-[3] bg-gradient-to-t from-screen via-screen/40 to-transparent" />
+        className="absolute inset-0 -z-10 h-full w-full animate-kenburns object-cover" />
+      <div className="absolute inset-0 -z-10 bg-gradient-to-t from-screen via-screen/70 to-screen/10" />
       <Corners className="z-[4] m-3" />
-      <div className="absolute left-4 top-4 z-[4] flex items-center gap-2 sm:left-6 sm:top-5">
-        <span className="h-1.5 w-1.5 animate-pulse-dot rounded-full bg-primary" />
-        <span className="hud text-[9px] tracking-[0.35em] text-foreground/80">{kicker}</span>
+      <div className="relative z-[4] flex items-center justify-between gap-3 px-5 pt-5 sm:px-8 sm:pt-6">
+        <span className="flex min-w-0 items-center gap-2">
+          <span className="h-1.5 w-1.5 shrink-0 animate-pulse-dot rounded-full bg-primary" />
+          <span className="hud truncate text-[9px] tracking-[0.35em] text-foreground/80">{kicker}</span>
+        </span>
+        <span className="hud shrink-0 border border-border bg-screen/60 px-1.5 py-0.5 text-[8px]">Key art</span>
       </div>
-      <span className="hud absolute right-4 top-4 z-[4] border border-border bg-screen/60 px-1.5 py-0.5 text-[8px] sm:right-6 sm:top-5">Concept art</span>
-      <figcaption className="absolute inset-x-0 bottom-0 z-[4] p-5 text-left sm:p-8">
-        <h2 className="font-display text-[30px] font-bold leading-[0.95] text-foreground sm:text-[54px]">{title}</h2>
-        <p className="mt-3 max-w-xl text-[14px] leading-relaxed text-foreground/80 sm:text-[17px]">{sub}</p>
+      <figcaption className="relative z-[4] mt-auto px-5 pb-6 pt-24 text-left sm:px-8 sm:pb-8 sm:pt-32">
+        <h2 className="font-display text-[30px] font-bold leading-[0.98] text-foreground sm:text-[46px] lg:text-[56px]">{title}</h2>
+        <p className="mt-3 max-w-xl text-[14px] leading-relaxed text-foreground/85 sm:text-[17px]">{sub}</p>
       </figcaption>
     </figure>
   );

@@ -7,11 +7,12 @@
  * crosses the right edge. It fails when a page can be scrolled sideways, which on a phone is the
  * difference between a rail and a broken page.
  *
- *   node scripts/layout-check.mjs [page.html ...]
+ *   node scripts/serve-rail.mjs 8788   # first, or this script says the rail is not serving
+ *   node scripts/layout-check.mjs [page.html ...]   # default: every page in verse-site/
  */
 
 import { spawn } from "node:child_process";
-import { mkdirSync, mkdtempSync, writeFileSync } from "node:fs";
+import { mkdirSync, mkdtempSync, readdirSync, writeFileSync } from "node:fs";
 import os from "node:os";
 import path from "node:path";
 
@@ -19,16 +20,41 @@ const CHROME =
   process.env.APEX_CHROME_BIN ??
   "C:/Program Files/Google/Chrome/Application/chrome.exe";
 const PORT = Number(process.env.APEX_CDP_PORT ?? 9333);
-const BASE = process.env.APEX_RAIL_URL ?? "http://127.0.0.1:8792";
-const PAGES = process.argv.slice(2).length ? process.argv.slice(2) : ["studio.html"];
+const BASE = process.env.APEX_RAIL_URL ?? "http://127.0.0.1:8788";
+const SITE = path.resolve(import.meta.dirname, "..", "verse-site");
+/**
+ * Every page in the rail, not a hand-kept list: a page added to the directory is measured by the
+ * next run without anyone remembering to add it here. Pass paths as arguments to narrow it.
+ */
+const PAGES = process.argv.slice(2).length
+  ? process.argv.slice(2)
+  : readdirSync(SITE).filter((f) => f.endsWith(".html")).sort();
 const WIDTHS = [
   { w: 390, h: 844, label: "phone" },
   { w: 768, h: 1024, label: "tablet" },
   { w: 1440, h: 900, label: "desktop" },
 ];
 
-const profile = mkdtempSync(path.join(os.tmpdir(), "apex-layout-"));
-const chrome = spawn(
+/**
+ * Chrome paints its own "refused to connect" page when nothing is serving, and an error page
+ * never scrolls sideways — so a dead server used to print a wall of PASS lines about a page
+ * nobody measured. Answering the rail before opening a browser is the difference between a
+ * verdict and a silence.
+ */
+try {
+  const preflight = await fetch(`${BASE}/${PAGES[0]}`);
+  if (!preflight.ok) {
+    console.log(`RAIL NOT SERVING — ${BASE}/${PAGES[0]} answered HTTP ${preflight.status}`);
+    process.exit(2);
+  }
+} catch {
+  console.log(
+    `RAIL NOT SERVING — nothing answered ${BASE}. Start it first: node scripts/serve-rail.mjs <port in ${BASE}>`,
+  );
+  process.exit(2);
+}
+
+const profile = mkdtempSync(path.join(os.tmpdir(), "apex-layout-"));const chrome = spawn(
   CHROME,
   ["--headless=new", "--enable-unsafe-swiftshader", `--remote-debugging-port=${PORT}`, `--user-data-dir=${profile}`, "about:blank"],
   { stdio: "ignore" },
@@ -112,7 +138,7 @@ const MEASURE = `(() => {
     const p = t.parentElement;
     return { id: t.id || t.className, w: Math.round(r.width), right: Math.round(r.right), parent: p.id || p.className, ox: getComputedStyle(p).overflowX, pw: p.clientWidth };
   });
-  return { vw, vh: window.innerHeight, scrollWidth: scrollW, overflowing: wide.slice(0, 6), atEdge: [...new Set(atEdge)].slice(0, 6), tables, boxes: [".act", "h1.mast", "p.lede", "#scroll-hint"].map(box).filter(Boolean) };
+  return { vw, vh: window.innerHeight, scrollWidth: scrollW, title: document.title, nodes: document.querySelectorAll("body *").length, overflowing: wide.slice(0, 6), atEdge: [...new Set(atEdge)].slice(0, 6), tables, boxes: [".act", "h1.mast", "p.lede", "#scroll-hint"].map(box).filter(Boolean) };
 })()`;
 
 let failures = 0;
@@ -128,10 +154,13 @@ for (const page of PAGES) {
     const m = result.value;
     // A phone that lays out at 954px has not "fitted" the page: the browser widened the layout
     // viewport to contain something, so every word on the page is drawn at a third of its size.
-    const over = m.scrollWidth > m.vw + 1 || m.vw > w + 1;
+    // A page with no title and no body children is not one of ours — it is the browser's own
+    // error screen, which sits perfectly still and would otherwise be read as a clean layout.
+    const arrived = Boolean(m.title) && m.nodes > 20;
+    const over = !arrived || m.scrollWidth > m.vw + 1 || m.vw > w + 1;
     if (over) failures += 1;
     console.log(
-      `${over ? "FAIL" : "PASS"}  ${page.padEnd(16)} ${label.padEnd(8)} ${String(w).padStart(4)}px  scrollWidth=${m.scrollWidth} innerWidth=${m.vw}`,
+      `${over ? "FAIL" : "PASS"}  ${page.padEnd(16)} ${label.padEnd(8)} ${String(w).padStart(4)}px  scrollWidth=${m.scrollWidth} innerWidth=${m.vw}${arrived ? "" : `   <- nothing was served (title="${m.title}", ${m.nodes} nodes)`}`,
     );
     if (m.atEdge?.length) console.log(`        widens the document: ${m.atEdge.join(" , ")}`);
     for (const t of m.tables ?? []) console.log(`        table ${String(t.id).padEnd(10)} w=${t.w} right=${t.right} parent=#${t.parent} overflowX=${t.ox} parentW=${t.pw}`);
@@ -154,5 +183,5 @@ for (const page of PAGES) {
 
 ws.close();
 chrome.kill();
-console.log(failures ? `\nFAIL  ${failures} viewport(s) can scroll sideways` : "\nPASS  no page scrolls sideways at phone, tablet or desktop width");
+console.log(failures ? `\nFAIL  ${failures} viewport(s) failed: scrolls sideways, lays out at the wrong width, or never served a rail page` : `\nPASS  ${PAGES.length} page(s) of the rail, none scrolls sideways at phone, tablet or desktop width`);
 process.exit(failures ? 1 : 0);

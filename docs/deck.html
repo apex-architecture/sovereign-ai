@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Camera Deck — the shape, the glass, and the pixels each commits to | Sovereign AI Film Verse</title>
+<meta name="description" content="A working camera deck: pick an aspect ratio and an aperture and read the exact raster the encoder will deliver, the size a diffusion generator is really asked for, the ffmpeg flags and the prompt clauses. Two frames rendered at 1920x804 and 1920x1080 from one plate prove it.">
+<meta name="theme-color" content="#06050a">
+<meta name="color-scheme" content="dark">
+<link rel="preload" href="fonts/BebasNeue-400.woff2" as="font" type="woff2" crossorigin>
+<link rel="stylesheet" href="fonts.css">
+<link rel="stylesheet" href="styles.css">
+<script src="deck.data.min.js" defer></script>
+<script src="shell.min.js" defer></script>
+<!-- apex-meta:start -->
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+<link rel="canonical" href="https://filmverse-1mil8xwzv4y.qoder.website/deck.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Sovereign AI Film Verse">
+<meta property="og:title" content="Camera Deck">
+<meta property="og:description" content="A working camera deck: pick an aspect ratio and an aperture and read the exact raster the encoder will deliver, the size a diffusion generator is really asked for, the ffmpeg flags and the prompt clauses. Two frames rendered at 1920x804 and 1920x1080 from one plate prove it.">
+<meta property="og:url" content="https://filmverse-1mil8xwzv4y.qoder.website/deck.html">
+<meta property="og:image" content="https://filmverse-1mil8xwzv4y.qoder.website/assets/dailies/frame-at-2s.jpg">
+<meta property="og:image:width" content="1280">
+<meta property="og:image:height" content="720">
+<meta property="og:image:alt" content="One frame from the pipeline's own master, extracted at two seconds.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Camera Deck">
+<meta name="twitter:description" content="A working camera deck: pick an aspect ratio and an aperture and read the exact raster the encoder will deliver, the size a diffusion generator is really asked for, the ffmpeg flags and the prompt clauses. Two frames rendered at 1920x804 and 1920x1080 from one plate prove it.">
+<meta name="twitter:image" content="https://filmverse-1mil8xwzv4y.qoder.website/assets/dailies/frame-at-2s.jpg">
+<!-- apex-meta:end -->
+</head>
+<body data-page="deck" data-crumb="Camera Deck">
+<div class="shell">
+  <div class="main">
+    <main class="page">
+
+      <header class="section" style="margin-top:0">
+        <h1>Camera Deck</h1>
+        <p class="note" style="max-width:78ch;margin-top:10px">
+          A film is not widescreen because a page says so. It is widescreen because the file that
+          leaves the encoder is 1920 pixels wide and 804 tall. This deck sets that number, and every
+          figure on this page is read out of the module, the command line and the delivered files
+          that produce it — pick a shape and see the pixels it commits to.
+        </p>
+      </header>
+
+      <!-- ---------------------------------------------------- the surface itself -->
+      <section class="section" aria-labelledby="h-set">
+        <h2 id="h-set">Set the deck</h2>
+        <div class="card gold">
+          <div class="row" id="shapes" role="group" aria-label="Aspect ratio"></div>
+
+          <div class="grid g-side" style="margin-top:16px">
+            <div>
+              <div id="finder" style="position:relative;border:1px solid var(--line);background:#000;overflow:hidden">
+                <img id="finder-img" src="assets/dailies/plate-shot02.jpg" alt="" style="width:100%;height:100%;object-fit:cover;display:block">
+              </div>
+              <p class="note" id="finder-cap" style="margin-top:8px"></p>
+            </div>
+            <div>
+              <table class="t" aria-label="What this shape means in pixels">
+                <tbody id="readout"></tbody>
+              </table>
+            </div>
+          </div>
+
+          <h3 style="margin-top:20px">Aperture</h3>
+          <div class="row" id="stops" role="group" aria-label="Aperture"></div>
+          <p class="note" id="stop-says" style="margin-top:8px"></p>
+
+          <div class="row" style="margin-top:16px">
+            <a class="btn ghost" href="engines.html">What plugs in to shoot it</a>
+            <a class="btn ghost" href="mission.html">Walk one idea to a master</a>
+          </div>
+        </div>
+      </section>
+
+      <!-- ---------------------------------------------------- what the machine is told -->
+      <section class="section" aria-labelledby="h-told">
+        <h2 id="h-told">What the machine is actually told</h2>
+        <p class="note" style="max-width:78ch">
+          Two things carry a shape downstream: the flags the craft chain runs with, and the words
+          the prompt compiler weights in. Both are printed here as the code returns them for the
+          shape you picked above — not as a description of them.
+        </p>
+        <div class="stack" style="margin-top:14px">
+          <div class="card">
+            <h3>The encoder's command line</h3>
+            <p class="note" id="argv-note"></p>
+            <div class="mono" id="argv-grade" style="margin-top:10px;font-size:11px;line-height:1.7;color:var(--muted);word-break:break-all"></div>
+            <div class="mono" id="argv-finish" style="margin-top:10px;font-size:11px;line-height:1.7;color:var(--muted);word-break:break-all"></div>
+          </div>
+          <div class="card">
+            <h3>The prompt clauses</h3>
+            <div class="mono" id="clauses" style="font-size:12px;line-height:1.9"></div>
+            <p class="note" id="prompt-full-note" style="margin-top:12px"></p>
+            <div class="mono" id="prompt-full" style="margin-top:8px;font-size:11.5px;line-height:1.7;color:var(--muted);word-break:break-word"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ---------------------------------------------------- the whole deck -->
+      <section class="section" aria-labelledby="h-table">
+        <h2 id="h-table">Every shape on the deck</h2>
+        <p class="note" style="max-width:78ch">
+          A diffusion engine cannot be asked for the delivered size. Its latent grid is downsampled
+          by 8 and then patched by 2, so every side must divide by 16 — which is why CinemaScope is
+          asked for as 832x352 (2.364:1) and delivered as 1920x804 (2.388:1). The name is the
+          intention; the last two columns are the numbers. Nothing here is rounded up to sound exact.
+        </p>
+        <div style="overflow-x:auto;margin-top:14px">
+          <table class="t" id="deck-table">
+            <thead>
+              <tr>
+                <th scope="col">Shape</th>
+                <th scope="col">Sold as</th>
+                <th scope="col">Delivered</th>
+                <th scope="col">Actually</th>
+                <th scope="col">Asked of a generator</th>
+                <th scope="col">Exact?</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- ---------------------------------------------------- the proof -->
+      <section class="section" aria-labelledby="h-proof">
+        <h2 id="h-proof">Two frames, one plate, two shapes</h2>
+        <p class="note" style="max-width:78ch" id="proof-note"></p>
+        <div class="frames" id="proof-frames" style="margin-top:14px"></div>
+        <p class="note" style="margin-top:12px">
+          Both files are on this site and both dimensions above were read out of their own headers
+          by the build that wrote this page. Re-render them yourself with
+          <span class="mono">node --experimental-strip-types scripts/camera-deck-selftest.mjs --render</span>.
+        </p>
+      </section>
+
+      <!-- ---------------------------------------------------- what the deck does not drive -->
+      <section class="section" aria-labelledby="h-not">
+        <h2 id="h-not">What the deck drives, and what it does not</h2>
+        <div class="grid g2">
+          <div class="card">
+            <h3>Set on the deck</h3>
+            <ul style="margin:0;padding-left:18px;font-size:13px;line-height:1.9">
+              <li><b>Shape</b> — the delivery raster, the latent size and one weighted framing clause.</li>
+              <li><b>Aperture</b> — one weighted depth-of-field clause. It cannot add a lens that is not there.</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3>Chosen somewhere else</h3>
+            <p class="note" style="margin-bottom:8px">The focal length is picked per shot in the shot list, because
+            a scene moves through glass. The compiler reads it from the framing, so a wide establishing
+            shot asks for 24mm and a close-up asks for 85mm without the deck deciding for the director.</p>
+            <div class="mono" id="lens-list" style="font-size:11.5px;line-height:1.8;color:var(--muted)"></div>
+          </div>
+        </div>
+        <div class="fence" style="margin-top:16px">
+          <b>What this page is not:</b> a rendered film. The viewfinder shows the proportions of the
+          shape, drawn from the same plate the two proof frames were made from — it is not a preview of
+          what a model will generate. The deck changes the raster and the words; it does not make an
+          engine understand anamorphic flare, and no lens, matte box or shutter is simulated here.
+        </div>
+      </section>
+
+      <footer class="foot">
+        <span id="gen-line"></span>
+        <span>ROCKYFILMS888 PTY LTD · Melbourne</span>
+      </footer>
+
+    </main>
+  </div>
+</div>
+
+<script>
+(function () {
+  // deck.data.min.js is deferred, so it runs after this block parses. Nothing may be read off
+  // window.APEX_DECK until the document has finished loading, or the page prints its empty state
+  // and every control below stays unbuilt.
+  document.addEventListener("DOMContentLoaded", start);
+
+  function start() {
+  const D = window.APEX_DECK;
+  const byId = (id) => document.getElementById(id);
+  const esc = (s) => String(s == null ? "" : s).replace(/[&<>"']/g, (c) => "&#" + c.charCodeAt(0) + ";");
+  const n4 = (x) => Number(x).toFixed(4);
+
+  if (!D || !D.aspects || !D.aspects.length) {
+    byId("shapes").innerHTML = '<div class="empty">The deck data did not load — this page prints nothing it cannot measure.</div>';
+    return;
+  }
+
+  const BASE = D.aspects.find((a) => a.id === D.defaultAspect) || D.aspects[0];
+  let shape = BASE.id;
+  let stop = null;
+
+  const aspectOf = (id) => D.aspects.find((a) => a.id === id);
+
+  /* ---------------------------------------------------------------- pickers */
+  byId("shapes").innerHTML = D.aspects.map((a) =>
+    `<button type="button" class="btn ghost" data-shape="${esc(a.id)}" aria-pressed="false">${esc(a.label)}</button>`
+  ).join("");
+  byId("stops").innerHTML =
+    `<button type="button" class="btn ghost" data-stop="" aria-pressed="false">None</button>` +
+    D.stops.map((s) =>
+      `<button type="button" class="btn ghost" data-stop="${esc(s.id)}" aria-pressed="false">${esc(s.label)}</button>`
+    ).join("");
+
+  function paint(group, key, active) {
+    for (const b of group.querySelectorAll("button")) {
+      const on = b.dataset[key] === active;
+      b.classList.toggle("solid", on);
+      b.classList.toggle("ghost", !on);
+      b.setAttribute("aria-pressed", on ? "true" : "false");
+    }
+  }
+
+  /* ---------------------------------------------------------------- readout */
+  const row = (k, v) => `<tr><th scope="row" style="white-space:nowrap">${k}</th><td class="mono">${v}</td></tr>`;
+
+  function render() {
+    const a = aspectOf(shape);
+    const s = stop ? D.stops.find((x) => x.id === stop) : null;
+
+    paint(byId("shapes"), "shape", shape);
+    paint(byId("stops"), "stop", stop || "");
+
+    byId("finder").style.aspectRatio = a.encode.width + " / " + a.encode.height;
+    byId("finder-cap").innerHTML =
+      `${esc(a.encode.width)}&times;${esc(a.encode.height)} at ${n4(a.encodeRatio)}:1 — the proportions this shape commits to, ` +
+      `drawn over the plate ${esc(D.plate.width)}&times;${esc(D.plate.height)} the proof frames were made from. Proportions only, not a render.`;
+
+    const areaVs = Math.round(((a.encode.width * a.encode.height) / (BASE.encode.width * BASE.encode.height)) * 100);
+    const pixels = a.encode.width * a.encode.height;
+    byId("readout").innerHTML = [
+      row("Delivered raster", `${a.encode.width}x${a.encode.height}`),
+      row("True ratio", `${n4(a.encodeRatio)}:1`),
+      row("Sold as", esc(a.soldAs)),
+      row("Asked of a generator", `${a.latent.width}x${a.latent.height} (${n4(a.latentRatio)}:1)`),
+      row("Total pixels", pixels.toLocaleString("en-AU")),
+      row(`Against ${esc(BASE.label)}`, `${areaVs}%`),
+      row("In the graph", esc(a.graphLatent)),
+    ].join("");
+
+    byId("stop-says").innerHTML = s
+      ? `<b>${esc(s.label)}</b> — ${esc(s.dof)}.`
+      : "No aperture set. The brief's own words decide the depth of field, and the deck adds none.";
+
+    /* the flags, exactly as the driver returns them for this shape */
+    const f = D.flags[shape] || {};
+    byId("argv-note").innerHTML =
+      `The argv <span class="mono">src/lib/apex/drivers/ffmpeg.ts</span> returns for a job carrying shape ` +
+      `<b>${esc(a.label)}</b>, verbatim. Source hash ${esc((D.sourceHash || "").slice(0, 12))}.`;
+    byId("argv-grade").innerHTML = f.grade
+      ? `<b style="color:var(--gold-lbl)">grade</b>  ${esc(f.grade)}`
+      : "not returned by this driver";
+    byId("argv-finish").innerHTML = f.finish
+      ? `<b style="color:var(--gold-lbl)">finish</b>  ${esc(f.finish)}`
+      : "not returned by this driver";
+
+    /* the clauses, weighted as the compiler weighted them */
+    const parts = [
+      `<b>${esc(a.clause)}</b> <span style="color:var(--muted)">— the shape you picked</span>`,
+      s
+        ? `<b>${esc(s.clause)}</b> <span style="color:var(--muted)">— the aperture you picked</span>`
+        : `<span style="color:var(--muted)">no aperture clause — with no stop set the deck adds none, and the brief's own words decide the depth of field</span>`,
+    ];
+    byId("clauses").innerHTML = parts.join("<br>");
+    byId("prompt-full-note").innerHTML =
+      `One real compiled shot for the fixed brief below, at CinemaScope and f/2.8, straight out of ` +
+      `<span class="mono">compileMatrix()</span> — the whole positive prompt, so you can see the deck ` +
+      `sitting inside the rest of the direction rather than being quoted at you.`;
+    byId("prompt-full").innerHTML =
+      `<span style="color:var(--gold-lbl)">brief</span>  ${esc(D.compiled.brief)}<br>` +
+      `<span style="color:var(--gold-lbl)">latent</span>  ${esc(D.compiled.latent)}<br>` +
+      `<span style="color:var(--gold-lbl)">prompt</span>  ${esc(D.compiled.positive)}`;
+  }
+
+  byId("shapes").addEventListener("click", (e) => {
+    const b = e.target.closest("button[data-shape]");
+    if (b) { shape = b.dataset.shape; render(); }
+  });
+  byId("stops").addEventListener("click", (e) => {
+    const b = e.target.closest("button[data-stop]");
+    if (b) { stop = b.dataset.stop || null; render(); }
+  });
+
+  /* ---------------------------------------------------------------- the deck table */
+  document.querySelector("#deck-table tbody").innerHTML = D.aspects.map((a) => `
+    <tr>
+      <td><b>${esc(a.label)}</b><div class="note" style="margin-top:4px">${esc(a.note)}</div></td>
+      <td class="mono">${esc(a.soldAs)}</td>
+      <td class="mono">${a.encode.width}x${a.encode.height}</td>
+      <td class="mono">${n4(a.encodeRatio)}:1</td>
+      <td class="mono">${a.latent.width}x${a.latent.height}<div class="note">${n4(a.latentRatio)}:1</div></td>
+      <td>${a.latentIsExact && Math.abs(a.encodeRatio - a.nominal) < 1e-9
+            ? '<span class="chip ok">exact</span>'
+            : '<span class="chip warn">nearest the grid allows</span>'}</td>
+    </tr>`).join("");
+
+  /* ---------------------------------------------------------------- the proof */
+  byId("proof-note").innerHTML = D.plate.sameBytes
+    ? `One plate — <span class="mono">${esc(D.plate.file)}</span>, ${esc(D.plate.width)}x${esc(D.plate.height)}, `
+      + `sha256 ${esc(D.plate.sha256)} — through the same grade and finishing pass, at two shapes. `
+      + `The copy the driver read carries the same hash, so these two frames differ by nothing but the deck.`
+    : `The rail's copy of the plate and the copy the driver read do not carry the same hash this run — `
+      + `treat the two frames below as separate renders, not as a controlled pair.`;
+
+  byId("proof-frames").innerHTML = D.proofs.filter((p) => p.present).map((p) => {
+    const a = aspectOf(p.aspect);
+    return `<figure class="fr">
+      <img src="${esc(p.file)}" alt="A delivered frame at ${esc(a.encode.width)} by ${esc(a.encode.height)}" loading="lazy"
+           style="aspect-ratio:${a.encode.width}/${a.encode.height};object-fit:cover">
+      <figcaption>
+        <b>${esc(a.label)}</b>
+        <span class="t">${esc(p.width)}x${esc(p.height)} measured in the file · ${n4(p.ratio)}:1 · mean luma ${p.meanLuma === null ? "not measured on this build machine" : esc(p.meanLuma)} · ${(p.bytes / 1024).toFixed(1)} KB</span>
+      </figcaption>
+    </figure>`;
+  }).join("");
+
+  byId("lens-list").innerHTML = D.lenses.map((l) => `${esc(l.label)} — ${esc(l.look)}`).join("<br>");
+
+  byId("gen-line").innerHTML =
+    `Deck data generated ${esc((D.generatedAt || "").slice(0, 10))} · source ${esc((D.sourceHash || "").slice(0, 12))} · ` +
+    `regenerate: node --experimental-strip-types scripts/camera-deck-data.mjs`;
+
+  render();
+  }
+})();
+</script>
+</body>
+</html>

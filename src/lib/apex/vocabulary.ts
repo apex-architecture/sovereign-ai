@@ -45,6 +45,7 @@ export const CONCEPTS: Concept[] = [
   { id: "studio", label: "Studio", purpose: "Your desk: ideas, renders and the pipeline", group: "Make", app: "/", rail: "studio.html", built: true },
   { id: "create", label: "Create", purpose: "Make a shot, an image or a clip", group: "Make", app: "/create", rail: null, built: true },
   { id: "director", label: "Director", purpose: "Lay the scene out, shot by shot", group: "Make", app: "/director", rail: null, built: true },
+  { id: "deck", label: "Camera Deck", purpose: "Pick the shape, the glass and the aperture — and see the pixels each one commits to", group: "Make", app: null, rail: "deck.html", built: true },
   { id: "oracle", label: "Oracle", purpose: "Turn a plain idea into a cinematic prompt", group: "Make", app: "/oracle", rail: null, built: true },
   { id: "mission", label: "Mission", purpose: "One idea walked from story to master", group: "Make", app: null, rail: "mission.html", built: true },
 

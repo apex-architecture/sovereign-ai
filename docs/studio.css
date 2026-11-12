@@ -212,7 +212,7 @@
   background: var(--panel); border: 1px solid rgba(216, 178, 92, .14);
 }
 .fw-stage { font: 400 11px/1 var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--gold-lbl); }
-.fw-engines { flex: 1; font: 400 11px/1.4 var(--sans); color: #cfc8dd; }
+.fw-engines { flex: 1; min-width: 0; font: 400 11px/1.4 var(--sans); color: #cfc8dd; }
 .fw-state { font: 400 9.5px/1 var(--mono); letter-spacing: .18em; text-transform: uppercase; }
 .fw-state.runs { color: #7fd08a; }
 .fw-state.gated { color: var(--gold); }

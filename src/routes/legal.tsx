@@ -16,7 +16,7 @@ export const Route = createFileRoute("/legal")({
 
 const SECTIONS: { t: string; p: string[] }[] = [
   { t: "1. What this is", p: [
-    "Sovereign AI Filmverse is a prototype software tool for creativity, filmmaking and experimentation. It is provided for testing and evaluation.",
+    "Sovereign AI Filmverse is a software platform for creativity, filmmaking and content creation.",
     "It is not a law firm, certifier, notified body, insurer, broker or financial service. Nothing on this platform is legal, financial or professional advice.",
   ]},
   { t: "2. Provided as is", p: [
@@ -45,7 +45,7 @@ const SECTIONS: { t: string; p: string[] }[] = [
     "A receipt proves that an exact file or record existed in that state at or before a time, and was signed by the holder of a key. It does not prove that the content is true, original, lawful or that the signer is its author. Sealing a lie produces a verifiable lie.",
   ]},
   { t: "8. Payments and renders", p: [
-    "During testing, rendering on cloud GPUs is limited to the studio owner because each render has a real cost. No pricing, revenue or investment claim on this platform is an offer.",
+    "Video rendering on the studio's cloud GPUs is opened by the studio owner because each render has a real cost. Script and storyboard drafts are free within a daily allowance. No pricing, revenue or investment claim on this platform is an offer.",
   ]},
   { t: "9. Privacy", p: [
     "We store only what is needed to run the studio (such as render records). Do not enter personal or confidential data you do not want processed by AI services.",
@@ -69,7 +69,7 @@ function Legal() {
           </section>
         ))}
       </div>
-      <p className="mt-8 text-[12px] text-muted-foreground">Prototype terms, last updated 7 November 2026. Have a qualified lawyer review before commercial launch.</p>
+      <p className="mt-8 text-[12px] text-muted-foreground">Terms last updated 9 November 2026.</p>
       <Link to="/guide" className="mt-4 inline-block text-[13px] text-primary">Read the platform guide →</Link>
     </main>
   );

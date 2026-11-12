@@ -43,6 +43,15 @@ window.APEX_VOCAB = {
       "built": true
     },
     {
+      "id": "deck",
+      "label": "Camera Deck",
+      "purpose": "Pick the shape, the glass and the aperture — and see the pixels each one commits to",
+      "group": "Make",
+      "app": null,
+      "rail": "deck.html",
+      "built": true
+    },
+    {
       "id": "oracle",
       "label": "Oracle",
       "purpose": "Turn a plain idea into a cinematic prompt",

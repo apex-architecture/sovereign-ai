@@ -109,20 +109,26 @@ const ICONS: Record<string, LucideIcon> = {
   console: Settings2,
 };
 
+/** Display-time rename of legacy room words; the synced vocabulary keeps its ids and labels. */
+const DISPLAY: Record<string, { label?: string; purpose?: string }> = {
+  "/beta": { label: "Early Access", purpose: "Apply or pitch a co-production" },
+};
+const shown = (to: string, label: string) => DISPLAY[to]?.label ?? label;
+
 const PRIMARY: NavItem[] = appNav(APP_PRIMARY).map((c) => ({
   to: c.to,
-  label: c.label,
-  sub: c.purpose,
+  label: shown(c.to, c.label),
+  sub: DISPLAY[c.to]?.purpose ?? c.purpose,
   group: c.group,
   icon: ICONS[c.id],
 }));
 
 const SECONDARY: { to: string; label: string }[] = appNav(APP_SECONDARY).map((c) => ({
   to: c.to,
-  label: c.label,
+  label: shown(c.to, c.label),
 }));
 
-const MOBILE_TABS = appNavAll();
+const MOBILE_TABS = appNavAll().map((t) => ({ ...t, label: shown(t.to, t.label) }));
 
 function Brand({ compact }: { compact?: boolean }) {
   return (

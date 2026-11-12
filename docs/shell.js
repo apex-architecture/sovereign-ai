@@ -20,6 +20,7 @@
   const NAV = [
     { group: "Make", items: [
       { id: "studio", href: "studio.html", label: "Studio", ico: "⌂" },
+      { id: "deck", href: "deck.html", label: "Camera Deck", ico: "◫" },
       { id: "mission", href: "mission.html", label: "Mission", ico: "✦" },
     ]},
     { group: "Watch", items: [

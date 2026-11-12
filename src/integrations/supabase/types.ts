@@ -38,6 +38,30 @@ export type Database = {
         }
         Relationships: []
       }
+      compute_nodes: {
+        Row: {
+          gpu: string | null
+          jobs_done: number
+          jobs_failed: number
+          last_seen: string
+          node_id: string
+        }
+        Insert: {
+          gpu?: string | null
+          jobs_done?: number
+          jobs_failed?: number
+          last_seen?: string
+          node_id: string
+        }
+        Update: {
+          gpu?: string | null
+          jobs_done?: number
+          jobs_failed?: number
+          last_seen?: string
+          node_id?: string
+        }
+        Relationships: []
+      }
       free_quota: {
         Row: {
           bucket: string
@@ -125,6 +149,51 @@ export type Database = {
           status?: string
           video_pipeline_url?: string | null
           vote_count?: number
+        }
+        Relationships: []
+      }
+      node_jobs: {
+        Row: {
+          claimed_at: string | null
+          created_at: string
+          error: string | null
+          finished_at: string | null
+          id: string
+          label: string
+          node_gpu: string | null
+          node_id: string | null
+          output_mime: string | null
+          output_path: string | null
+          status: string
+          workflow: Json
+        }
+        Insert: {
+          claimed_at?: string | null
+          created_at?: string
+          error?: string | null
+          finished_at?: string | null
+          id?: string
+          label?: string
+          node_gpu?: string | null
+          node_id?: string | null
+          output_mime?: string | null
+          output_path?: string | null
+          status?: string
+          workflow: Json
+        }
+        Update: {
+          claimed_at?: string | null
+          created_at?: string
+          error?: string | null
+          finished_at?: string | null
+          id?: string
+          label?: string
+          node_gpu?: string | null
+          node_id?: string | null
+          output_mime?: string | null
+          output_path?: string | null
+          status?: string
+          workflow?: Json
         }
         Relationships: []
       }
@@ -278,6 +347,13 @@ export type Database = {
           _limit: number
         }
         Returns: number
+      }
+      claim_node_job: {
+        Args: { _gpu: string; _node: string }
+        Returns: {
+          id: string
+          workflow: Json
+        }[]
       }
       free_quota_used: {
         Args: { _bucket: string; _kind: string }

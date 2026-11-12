@@ -83,11 +83,11 @@ function Guide() {
               </li>
             ))}
           </ul>
-          <p className="pt-2 text-[13px]">"Ready · your machine" means it runs once you connect a computer with that tool; "Ready · your account" runs from this website. Others or are hand-offs to the tool's own app. Nothing is shown as working when it isn't.</p>
+          <p className="pt-2 text-[13px]">"Ready · your machine" means it runs once you connect a computer with that tool; "Ready · your account" runs from this website. Others are listed in the catalogue or hand off to the tool's own app. Nothing is shown as working when it isn't.</p>
         </Card>
       </div>
 
-      <p className="mt-8 text-[12px] text-muted-foreground">Prototype. See <Link to="/legal" className="text-primary">Legal &amp; Disclaimers</Link>.</p>
+      <p className="mt-8 text-[12px] text-muted-foreground">See <Link to="/legal" className="text-primary">Legal &amp; Disclaimers</Link>.</p>
     </main>
   );
 }

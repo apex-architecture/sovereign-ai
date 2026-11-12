@@ -28,6 +28,10 @@ import { Route as VaultRouteImport } from './routes/vault'
 import { Route as VerifyRouteImport } from './routes/verify'
 import { Route as ApiPublicRenderRouteImport } from './routes/api/public/render'
 import { Route as ApiPublicFrameIdRouteImport } from './routes/api/public/frame.$id'
+import { Route as ApiPublicNodesClaimRouteImport } from './routes/api/public/nodes.claim'
+import { Route as ApiPublicNodesCompleteRouteImport } from './routes/api/public/nodes.complete'
+import { Route as ApiPublicNodesFailRouteImport } from './routes/api/public/nodes.fail'
+import { Route as ApiPublicNodesJobsRouteImport } from './routes/api/public/nodes.jobs'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -124,6 +128,26 @@ const ApiPublicFrameIdRoute = ApiPublicFrameIdRouteImport.update({
   path: '/api/public/frame/$id',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiPublicNodesClaimRoute = ApiPublicNodesClaimRouteImport.update({
+  id: '/api/public/nodes/claim',
+  path: '/api/public/nodes/claim',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiPublicNodesCompleteRoute = ApiPublicNodesCompleteRouteImport.update({
+  id: '/api/public/nodes/complete',
+  path: '/api/public/nodes/complete',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiPublicNodesFailRoute = ApiPublicNodesFailRouteImport.update({
+  id: '/api/public/nodes/fail',
+  path: '/api/public/nodes/fail',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiPublicNodesJobsRoute = ApiPublicNodesJobsRouteImport.update({
+  id: '/api/public/nodes/jobs',
+  path: '/api/public/nodes/jobs',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -145,6 +169,10 @@ export interface FileRoutesByFullPath {
   '/verify': typeof VerifyRoute
   '/api/public/render': typeof ApiPublicRenderRoute
   '/api/public/frame/$id': typeof ApiPublicFrameIdRoute
+  '/api/public/nodes/claim': typeof ApiPublicNodesClaimRoute
+  '/api/public/nodes/complete': typeof ApiPublicNodesCompleteRoute
+  '/api/public/nodes/fail': typeof ApiPublicNodesFailRoute
+  '/api/public/nodes/jobs': typeof ApiPublicNodesJobsRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -166,6 +194,10 @@ export interface FileRoutesByTo {
   '/verify': typeof VerifyRoute
   '/api/public/render': typeof ApiPublicRenderRoute
   '/api/public/frame/$id': typeof ApiPublicFrameIdRoute
+  '/api/public/nodes/claim': typeof ApiPublicNodesClaimRoute
+  '/api/public/nodes/complete': typeof ApiPublicNodesCompleteRoute
+  '/api/public/nodes/fail': typeof ApiPublicNodesFailRoute
+  '/api/public/nodes/jobs': typeof ApiPublicNodesJobsRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -188,6 +220,10 @@ export interface FileRoutesById {
   '/verify': typeof VerifyRoute
   '/api/public/render': typeof ApiPublicRenderRoute
   '/api/public/frame/$id': typeof ApiPublicFrameIdRoute
+  '/api/public/nodes/claim': typeof ApiPublicNodesClaimRoute
+  '/api/public/nodes/complete': typeof ApiPublicNodesCompleteRoute
+  '/api/public/nodes/fail': typeof ApiPublicNodesFailRoute
+  '/api/public/nodes/jobs': typeof ApiPublicNodesJobsRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -211,6 +247,10 @@ export interface FileRouteTypes {
     | '/verify'
     | '/api/public/render'
     | '/api/public/frame/$id'
+    | '/api/public/nodes/claim'
+    | '/api/public/nodes/complete'
+    | '/api/public/nodes/fail'
+    | '/api/public/nodes/jobs'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -232,6 +272,10 @@ export interface FileRouteTypes {
     | '/verify'
     | '/api/public/render'
     | '/api/public/frame/$id'
+    | '/api/public/nodes/claim'
+    | '/api/public/nodes/complete'
+    | '/api/public/nodes/fail'
+    | '/api/public/nodes/jobs'
   id:
     | '__root__'
     | '/'
@@ -253,6 +297,10 @@ export interface FileRouteTypes {
     | '/verify'
     | '/api/public/render'
     | '/api/public/frame/$id'
+    | '/api/public/nodes/claim'
+    | '/api/public/nodes/complete'
+    | '/api/public/nodes/fail'
+    | '/api/public/nodes/jobs'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -275,6 +323,10 @@ export interface RootRouteChildren {
   VerifyRoute: typeof VerifyRoute
   ApiPublicRenderRoute: typeof ApiPublicRenderRoute
   ApiPublicFrameIdRoute: typeof ApiPublicFrameIdRoute
+  ApiPublicNodesClaimRoute: typeof ApiPublicNodesClaimRoute
+  ApiPublicNodesCompleteRoute: typeof ApiPublicNodesCompleteRoute
+  ApiPublicNodesFailRoute: typeof ApiPublicNodesFailRoute
+  ApiPublicNodesJobsRoute: typeof ApiPublicNodesJobsRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -412,6 +464,34 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiPublicFrameIdRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/public/nodes/claim': {
+      id: '/api/public/nodes/claim'
+      path: '/api/public/nodes/claim'
+      fullPath: '/api/public/nodes/claim'
+      preLoaderRoute: typeof ApiPublicNodesClaimRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/public/nodes/complete': {
+      id: '/api/public/nodes/complete'
+      path: '/api/public/nodes/complete'
+      fullPath: '/api/public/nodes/complete'
+      preLoaderRoute: typeof ApiPublicNodesCompleteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/public/nodes/fail': {
+      id: '/api/public/nodes/fail'
+      path: '/api/public/nodes/fail'
+      fullPath: '/api/public/nodes/fail'
+      preLoaderRoute: typeof ApiPublicNodesFailRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/public/nodes/jobs': {
+      id: '/api/public/nodes/jobs'
+      path: '/api/public/nodes/jobs'
+      fullPath: '/api/public/nodes/jobs'
+      preLoaderRoute: typeof ApiPublicNodesJobsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -435,6 +515,10 @@ const rootRouteChildren: RootRouteChildren = {
   VerifyRoute: VerifyRoute,
   ApiPublicRenderRoute: ApiPublicRenderRoute,
   ApiPublicFrameIdRoute: ApiPublicFrameIdRoute,
+  ApiPublicNodesClaimRoute: ApiPublicNodesClaimRoute,
+  ApiPublicNodesCompleteRoute: ApiPublicNodesCompleteRoute,
+  ApiPublicNodesFailRoute: ApiPublicNodesFailRoute,
+  ApiPublicNodesJobsRoute: ApiPublicNodesJobsRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

@@ -108,7 +108,7 @@ export function DreamGate({ children }: { children: ReactNode }) {
         {/* ── HERO ─────────────────────────────────────────── */}
         <section className="relative flex min-h-[100dvh] flex-col">
           <div className="hud relative z-10 flex items-center justify-between gap-3 border-b border-hairline bg-screen/40 px-4 py-2.5 text-[9px] backdrop-blur sm:px-8">
-            <span className="flex items-center gap-2"><span className="h-1.5 w-1.5 animate-pulse-dot rounded-full bg-primary" /> Live prototype</span>
+            <span className="flex items-center gap-2"><span className="h-1.5 w-1.5 animate-pulse-dot rounded-full bg-primary" /> Live · open to everyone</span>
             <span className="hidden sm:inline">24 fps · 2.39:1 · Reel 01</span>
             <Timecode />
           </div>
@@ -172,14 +172,14 @@ export function DreamGate({ children }: { children: ReactNode }) {
                 <button key={t.id} type="button" role="tab" id={`gate-tab-${t.id}`} aria-selected={on} aria-controls="gate-panel"
                   onClick={() => showTab(t.id)}
                   className={cn(
-                    "relative flex flex-col items-center gap-1 px-1 py-3 transition-colors sm:items-start sm:px-5 sm:py-4",
+                    "relative flex flex-col items-center gap-1 px-1 py-3 transition-colors md:items-start md:px-5 md:py-4",
                     on ? "text-primary" : "text-muted-foreground hover:text-foreground",
                   )}>
                   <span className={cn("font-mono text-[10px]", on ? "text-primary" : "text-muted-foreground/70")}>{t.n}</span>
-                  <span className="font-display text-[12px] font-semibold uppercase tracking-[0.08em] sm:hidden">{t.short}</span>
-                  <span className="hidden font-display text-[16px] font-semibold uppercase tracking-[0.06em] sm:block">{t.label}</span>
+                  <span className="font-display text-[12px] font-semibold uppercase tracking-[0.08em] sm:text-[14px] md:hidden">{t.short}</span>
+                  <span className="hidden whitespace-nowrap font-display text-[15px] font-semibold uppercase tracking-[0.06em] md:block lg:text-[16px]">{t.label}</span>
                   <span className="hud hidden text-[8.5px] lg:block">{t.sub}</span>
-                  {on && <span className="absolute inset-x-2 bottom-0 h-0.5 bg-primary shadow-[0_0_12px_var(--primary)] sm:inset-x-5" />}
+                  {on && <span className="absolute inset-x-2 bottom-0 h-0.5 bg-primary shadow-[0_0_12px_var(--primary)] md:inset-x-5" />}
                 </button>
               );
             })}
@@ -230,7 +230,7 @@ export function DreamGate({ children }: { children: ReactNode }) {
             <div className="mt-4"><EnterButton onClick={() => go()} big /></div>
             <div className="hud text-[9.5px] tracking-[0.35em]">Your ideas · your control · no limits</div>
             <p className="max-w-xl text-[11px] leading-relaxed text-muted-foreground">
-              Prototype creative tool, provided as is. Independent — not affiliated with any studio or trademark owner.
+              Creative software, provided as is. Independent — not affiliated with any studio or trademark owner.
               All characters are original. You own and are responsible for what you create. Business plans shown are
               plans, not offers. <GoLink to="/guide">Guide</GoLink> · <GoLink to="/legal">Legal &amp; disclaimers</GoLink>
             </p>

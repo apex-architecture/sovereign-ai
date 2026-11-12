@@ -6,3 +6,7 @@
 - [x] Door C: free script + storyboard for everyone, video stays owner-only
 - [x] One-screen film maker (Script → Board → Render → Cut) on Create
 - [ ] Top up the cloud engine account so free drafts and renders run (waiting on owner)
+- [x] Final polish: drop "prototype" wording, present as the full platform, fix overlapping text/images on every page
+- [x] Handover kit: GPU node job queue + worker (workers/), Akash setup, revenue-split contract (contracts/), developer handover guide
+- [ ] Run the node worker on a real GPU / Akash lease (waiting on owner: GPU or AKT wallet)
+- [ ] Audit + testnet deploy of the revenue splitter before real money (waiting on owner)

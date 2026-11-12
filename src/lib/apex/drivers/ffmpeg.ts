@@ -8,6 +8,7 @@
 import type { JobInput, JobResult, ToolDriver } from "./contract.ts";
 import { exec, firstLine, tail } from "./exec.ts";
 import { R } from "../schema.ts";
+import { encodeRaster } from "../camera-deck.ts";
 
 const record = R({
   name: "FFmpeg",
@@ -92,20 +93,32 @@ export const ffmpegDriver: ToolDriver = {
 /**
  * Five tasks cover what the film pipeline actually needs from FFmpeg.
  * Anything else is a missing driver, and we say so instead of guessing at flags.
+ *
+ * Exported for the guard: `scripts/camera-deck-selftest.mjs` reads the argv it would have sent,
+ * so the shape claim is checked against the flags themselves rather than against a description
+ * of them. Same reason `graphProblems` is exported from the prompt compiler.
  */
-function argsFor(input: JobInput): string[] | null {
+export function argsFor(input: JobInput): string[] | null {
   const [srcA, srcB] = input.inputs;
   // An extension is not decoration: ffmpeg chooses the muxer from it, so a nameless target makes
   // every job fail before it starts. The stage is in the name because one scene passes through
   // several stages — without it, edit would overwrite the shot and the chain could not form.
+  // The shape joins that same argument: a director cutting a scope version and a vertical version
+  // of one scene is making two films, and the second render must not silently replace the first.
+  // A job with no deck set keeps the pre-deck name exactly, so every existing run sheet still
+  // names a file that exists.
   const dir = process.env.APEX_RUN_DIR ?? ".";
-  const out = (ext: string) => `${dir}/${input.projectId}-${input.stage}-${input.sceneId}.${ext}`;
+  const tag = input.aspect ? `-${input.aspect}` : "";
+  const out = (ext: string) => `${dir}/${input.projectId}-${input.stage}-${input.sceneId}${tag}.${ext}`;
   if (input.task === "concat" && srcA && srcB) {
     // Shots arrive at different sizes now that the generator is in the chain — a plate move is
     // 1920x1080/23.976, a Wan take is 832x480/16. Concatenating mismatched streams does not fail
     // loudly, it produces a file that breaks on the second shot, so everything is fitted to one
     // raster and one rate here. A 480p take is fitted up, not pretended to be native 1080p.
-    const vf = "scale=1920:1080:force_original_aspect_ratio=decrease,pad=1920:1080:(ow-iw)/2:(oh-ih)/2,setsar=1,fps=24000/1001,format=yuv420p";
+    // The raster is the deck's, not a constant: a scope reel that concatenates back to 16:9 is a
+    // film whose shape was decided by the last stage in the chain instead of by the director.
+    const { width, height } = encodeRaster(input.aspect);
+    const vf = `scale=${width}:${height}:force_original_aspect_ratio=decrease,pad=${width}:${height}:(ow-iw)/2:(oh-ih)/2,setsar=1,fps=24000/1001,format=yuv420p`;
     return ["-y", "-f", "concat", "-safe", "0", "-i", srcA, "-vf", vf, "-c:v", "libx264", "-preset", "medium", "-crf", "18", "-an", out("mp4")];
   }
   if (input.task === "loudnorm" && srcA) {
@@ -128,10 +141,11 @@ function argsFor(input: JobInput): string[] | null {
    */
   if ((input.task === "grade" || input.task === "t2v") && srcA) {
     const seconds = Math.max(1, Math.min(30, Number(input.variant ?? 5)));
+    const { width, height } = encodeRaster(input.aspect);
     const vf = [
-      "scale=1920:1080:force_original_aspect_ratio=increase",
-      "crop=1920:1080",
-      `zoompan=z='min(zoom+0.0012,1.12)':d=${seconds * 24}:x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)':s=1920x1080:fps=24000/1001`,
+      `scale=${width}:${height}:force_original_aspect_ratio=increase`,
+      `crop=${width}:${height}`,
+      `zoompan=z='min(zoom+0.0012,1.12)':d=${seconds * 24}:x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)':s=${width}x${height}:fps=24000/1001`,
       "format=yuv420p",
     ].join(",");
     return [
@@ -167,15 +181,21 @@ function argsFor(input: JobInput): string[] | null {
    */
   if (input.task === "finish" && srcA) {
     const shutter = input.variant === "shutter";
+    const { width, height } = encodeRaster(input.aspect);
+    const bloom = Math.max(2, Math.round((8 * height) / 1080));
     const vf = [
       "fps=24000/1001",
       "format=gbrp",
       "rgbashift=rh=-1:bh=1",
       "split=2[base][hl]",
-      "[hl]curves=master='0/0 0.60/0 0.85/0.5 1/1',gblur=sigma=8,colorchannelmixer=rr=1:gg=0.5:bb=0.28[bloom]",
+      // The bloom was measured at 1080 rows, and a blur is denominated in pixels, not in picture.
+      // Left at sigma=8 a scope frame is only 804 rows tall, so the same grade would read as a
+      // heavier filter on a smaller file. Scaling sigma with the raster keeps the look proportional
+      // and returns exactly 8 at 16:9, which is what every master before the deck was graded with.
+      `[hl]curves=master='0/0 0.60/0 0.85/0.5 1/1',gblur=sigma=${bloom},colorchannelmixer=rr=1:gg=0.5:bb=0.28[bloom]`,
       "[base][bloom]blend=all_mode=screen:all_opacity=0.6",
       "crop=iw-5:ih-5:x='2.5+1.5*sin(2*PI*t*0.9)+1*sin(2*PI*t*0.37)':y='2.5+1.5*sin(2*PI*t*1.1)+1*sin(2*PI*t*0.53)'",
-      "scale=1920:1080,setsar=1",
+      `scale=${width}:${height},setsar=1`,
       "noise=c0s=11:c0f=t+u:c1s=3:c1f=t:c2s=3:c2f=t",
       "curves=master='0/0.012 0.25/0.265 0.5/0.515 0.75/0.785 1/0.965'",
       "colorbalance=rs=0.03:gs=-0.008:bs=-0.018:rm=0.012:bm=-0.008:rh=-0.025:gh=-0.006:bh=0.045",

@@ -35,7 +35,7 @@ const railHref = (href) => href.replace(/^index\.html/, HOME);
 
 /** Decorative glyphs for the public rail sidebar. Names come from the vocabulary, never here. */
 const GLYPH = {
-  studio: "⌂", create: "✚", director: "◑", oracle: "◌", mission: "✦",
+  studio: "⌂", create: "✚", director: "◑", oracle: "◌", mission: "✦", deck: "◫",
   theater: "◐", library: "▤", connect: "⌁", registry: "◈", pipeline: "≡",
   opensource: "✧", projects: "▣", foreman: "◔", verify: "✓", passport: "◉",
   rights: "§", console: "▮", cost: "◧", broadcast: "➤", guide: "✎",

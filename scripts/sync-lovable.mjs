@@ -9,6 +9,9 @@
  *   - it never force-pushes. Git refuses a non-fast-forward push, so a divergence stops
  *     the run instead of overwriting Lovable's commits,
  *   - it never rewrites history. It merges, it does not rebase or reset,
+ *   - it pulls in EVERY remote branch that holds commits we do not have, not just main.
+ *     Lovable's work once sat on a side branch, and a push that ignored that branch
+ *     replaced the work in Lovable's eyes even though git had kept it,
  *   - it prints exactly what it did and what is left for a human.
  *
  *   node scripts/sync-lovable.mjs            merge + push both branches
@@ -36,6 +39,12 @@ function step(label, fn) {
   if (out) process.stdout.write(`  ${out.split("\n").join("\n  ")}\n`);
 }
 
+function remoteBranches() {
+  return git(["for-each-ref", "--format=%(refname:short)", "refs/remotes/origin"])
+    .split("\n")
+    .filter((r) => r && !r.endsWith("/HEAD"));
+}
+
 const head = git(["rev-parse", "--short", "HEAD"]);
 step(`on ${git(["rev-parse", "--abbrev-ref", "HEAD"])} at ${head}`, () => "");
 
@@ -44,24 +53,25 @@ step("fetching origin", () => {
   return git(["log", "--oneline", "-1", "origin/main"]);
 });
 
-const behind = git(["rev-list", "--count", `HEAD..origin/main`]);
-const ahead = git(["rev-list", "--count", `origin/main..HEAD`]);
-
-if (behind !== "0") {
-  step(`merging origin/main (${behind} commit(s) we do not have)`, () => {
+// Every remote branch, not just main. A builder's work can sit on any branch, and a push
+// that leaves a branch behind replaces that work in the builder's eyes even when git kept it.
+for (const remote of remoteBranches()) {
+  const missing = git(["rev-list", "--count", `HEAD..${remote}`]);
+  if (missing === "0") continue;
+  step(`merging ${remote} (${missing} commit(s) we do not have)`, () => {
     if (DRY) return "dry run — would merge";
     try {
-      git(["merge", "origin/main", "--no-edit"]);
+      git(["merge", remote, "--no-edit"]);
     } catch {
       // A conflict stops the run. It is never resolved by taking one side automatically:
       // choosing "ours" would silently delete work from one of the two builders.
-      throw new Error("merge conflict — resolve it by hand, then run this script again. Nothing was pushed.");
+      throw new Error(`merge conflict with ${remote} — resolve it by hand, then run this script again. Nothing was pushed.`);
     }
     return git(["log", "--oneline", "-1"]);
   });
-} else {
-  step("origin/main is already inside this branch", () => "");
 }
+
+const ahead = git(["rev-list", "--count", `origin/main..HEAD`]);
 
 if (ahead !== "0") {
   step(`pushing ${BRANCH}`, () => {
@@ -91,12 +101,17 @@ step("fast-forwarding main so the site builds this code too", () => {
 });
 
 step("final state", () => {
-  return [
+  const lines = [
     `branch:  ${git(["rev-parse", "--abbrev-ref", "HEAD"])}`,
     `local:   ${git(["rev-parse", "--short", "HEAD"])}`,
     `main:    ${git(["rev-list", "--count", "HEAD..origin/main"], true) === "0" ? "up to date" : "behind"}`,
     `apex:    ${git(["rev-list", "--count", "HEAD..origin/" + BRANCH], true) === "0" ? "up to date" : "behind"}`,
-  ].join("\n  ");
+  ];
+  for (const remote of remoteBranches()) {
+    const missing = git(["rev-list", "--count", `HEAD..${remote}`], true);
+    if (missing !== "0") lines.push(`${remote}: ${missing} commit(s) not in this branch`);
+  }
+  return lines.join("\n  ");
 });
 
 console.log("\nSYNC COMPLETE — the platform and Lovable now build from the same commit.");

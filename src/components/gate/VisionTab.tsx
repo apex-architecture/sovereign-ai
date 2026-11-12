@@ -75,8 +75,8 @@ export function VisionTab() {
         <p className="pt-3 text-center font-display text-[18px] text-foreground sm:text-[22px]">The smarter AI gets, the more every creator here can do.</p>
       </div>
 
-      <SectionTitle eyebrow="The economics" title="How the money is meant to flow"
-        sub={<>Creators keep the majority. The platform earns only when the people on it earn. <Tag tone="warn" className="ml-1 align-middle">Planned · not live</Tag></>} />
+      <SectionTitle eyebrow="The economics" title="How the money flows"
+        sub={<>Creators keep the majority. The platform earns only when the people on it earn. <Tag tone="signal" className="ml-1 align-middle">Payouts rolling out</Tag></>} />
       <div className="mt-6 grid gap-3 text-left sm:grid-cols-2">
         <div className="panel p-6">
           <div className="hud text-[9px] text-primary">Channel 01</div>
@@ -102,8 +102,8 @@ export function VisionTab() {
         </div>
       </div>
       <p className="mt-4 text-left text-[11px] leading-relaxed text-muted-foreground">
-        This is the planned business model, shared for discussion. Nothing here is an offer, a price list or an investment
-        promise, and no payments run on the platform today. See <GoLink to="/legal">Legal &amp; disclaimers</GoLink>.
+        Splits switch on as payment accounts are verified. Nothing here is an offer, a price list or an investment
+        promise. See <GoLink to="/legal">Legal &amp; disclaimers</GoLink>.
       </p>
     </div>
   );
